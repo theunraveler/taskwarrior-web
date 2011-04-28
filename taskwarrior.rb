@@ -5,19 +5,37 @@ require 'sinatra'
 require 'erb'
 require 'parseconfig'
 
+# Require all model files
+Dir['./models/*.rb'].each do |file|
+  require file
+end
+
 # Root
 get '/' do
-  redirect '/tasks/pending'
+  redirect '/pending'
 end
 
 # Task routes
-get '/tasks/pending' do
+get '/pending/?' do
   @title = 'Pending Tasks'
-  taskrc = ParseConfig.new("#{Dir.home}/.taskrc")
-  @task_dir = taskrc.get_value('data.location')
+  @task_dir = Taskwarrior::Task.directory
   erb :index  
 end
 
-get '/tasks/completed' do
+get '/completed' do
+
+end
+
+# Projects
+get '/projects' do
+
+end
+
+get 'projects/:name/tasks' do
+
+end
+
+# Reporting
+get '/reports' do
 
 end
