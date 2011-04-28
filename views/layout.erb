@@ -5,15 +5,23 @@
     <!-- Styles -->
     <link rel="stylesheet" href="/css/jquery-ui.css">
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/gh-buttons.css">
 
     <!-- Scripts -->
     <script type="text/javascript" src="/js/jquery.min.js"></script>
     <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/js/application.js"></script>
   </head>
 
   <body>
     <div id="page">
-      <header><h1><%= @title %></h1></header>
+      <header>
+        <h1><%= @title %></h1>
+        <div id="polling-info">
+          <a href="javascript:void(0);" class="button icon clock">Stop polling</a>
+        </div>
+      </header>
+      <div class="clearer"></div>
       <section class="content">
         <%= yield %>
       </section>

@@ -1,16 +1,21 @@
 module Taskwarrior
-  # A class to get a list of tasks
   class Task
 
-    attr_accessor :project, :uuid
+    attr_accessor :entry, :project, :uuid, :description, :status, :due, :tags
 
     ####################################
     # MODEL METHODS FOR INDIVIDUAL TASKS
     ####################################
 
-    def save!
+    def initialize(attributes = {})
+      attributes.each do |attr, value|
+        send("#{attr}=", value)  
+      end  
     end
 
+    def save!
+    end
+    
     ##################################
     # CLASS METHODS FOR QUERYING TASKS
     ##################################
@@ -30,7 +35,7 @@ module Taskwarrior
       file.each_line("\n") do |row|
         # Ugly, ugly, ugly.
         row.gsub!('[', '{"').gsub!(']', '}').gsub!(':', '":').gsub!('" ', '","')
-        out << JSON.parse(row).to_s
+        out << Task.new(JSON.parse(row))
       end
       return out
     end

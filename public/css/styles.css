@@ -1,1 +1,7 @@
-#page { width: 700px; margin: 10px auto; }
+.clearer { clear: both; }
+
+
+#page { width: 700px; margin: 30px auto; }
+
+h1 { float: left; padding-top: 0px; margin-top: 0px; }
+#polling-info { width: auto; float: right; }

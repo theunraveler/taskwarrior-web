@@ -1,5 +1,10 @@
-<ul>
-  <% @tasks.each do |task| %>
-    <li><%= task.to_s %></li>
-  <% end %>
-</ul>
+<div id="listing">
+  <ul>
+    <% @tasks.each do |task| %>
+      <li>
+        <%= task.description %><br />
+        Project: <%= task.project %>
+      </li>
+    <% end %>
+  </ul>
+</div>
