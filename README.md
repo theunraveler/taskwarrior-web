@@ -1,4 +1,4 @@
-## Web Interface for Taskwarrior
+# Web Interface for Taskwarrior
 
 This will eventually be a lightweight, Sinatra-based web interface for the
 wonderful (Taskwarrior)[http://taskwarrior.org/] todo application.
