@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title><%= @title %> | Taskwarrior</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/jquery-ui.css">
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <!-- Scripts -->
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+  </head>
+
+  <body>
+    <div id="page">
+      <header><h1><%= @title %></h1></header>
+      <section class="content">
+        <%= yield %>
+      </section>
+    </div>
+  </body>
+
+</html>
