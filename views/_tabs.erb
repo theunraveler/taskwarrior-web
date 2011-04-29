@@ -1,0 +1,8 @@
+<% tabs = { '/pending' => 'Pending', '/completed' => 'Completed' } %>
+<nav id="navigation">
+  <ul class="tabs">
+    <% tabs.each_pair do |path, text| %>
+      <li><a href="<%= path %>"<%= ' class="selected"' if @current_page == path %>><%= text %></a></li>
+    <% end %>
+  </ul>
+</nav>

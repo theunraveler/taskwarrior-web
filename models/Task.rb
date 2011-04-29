@@ -1,7 +1,7 @@
 module Taskwarrior
   class Task
 
-    attr_accessor :entry, :project, :uuid, :description, :status, :due, :tags
+    attr_accessor :entry, :project, :uuid, :description, :status, :due, :start, :end, :tags
 
     ####################################
     # MODEL METHODS FOR INDIVIDUAL TASKS

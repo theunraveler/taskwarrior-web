@@ -6,23 +6,28 @@
     <link rel="stylesheet" href="/css/jquery-ui.css">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/gh-buttons.css">
+    <link rel="stylesheet" href="/css/tipsy.css">
 
     <!-- Scripts -->
     <script type="text/javascript" src="/js/jquery.min.js"></script>
     <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/js/jquery.tipsy.js"></script>
     <script type="text/javascript" src="/js/application.js"></script>
   </head>
 
   <body>
     <div id="page">
       <header>
-        <h1><%= @title %></h1>
+        <h1>Taskwarrior</h1>
         <div id="polling-info">
-          <a href="javascript:void(0);" class="button icon clock">Stop polling</a>
+          <a href="javascript:void(0);" class="button icon clock tooltip" data-tooltip="If polling is on, the page will be reloaded automatically every 3 seconds.">Stop polling</a>
         </div>
       </header>
       <div class="clearer"></div>
+      <%= erb :_tabs %>
       <section class="content">
+        <h2><%= @title %></h2>
         <%= yield %>
       </section>
     </div>

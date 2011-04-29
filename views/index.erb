@@ -1,10 +1,20 @@
 <div id="listing">
-  <ul>
-    <% @tasks.each do |task| %>
-      <li>
-        <%= task.description %><br />
-        Project: <%= task.project %>
-      </li>
-    <% end %>
-  </ul>
+  <table>
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Project</th>
+        <th>Due</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tasks.each do |task| %>
+        <tr>
+          <td><%= task.description %></td>
+          <td><%= task.project %></td>
+          <td><%= task.due %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
