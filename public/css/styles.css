@@ -16,6 +16,8 @@ h1 {
   text-indent: -9999px;
 }
 
+th { text-align: left; }
+
 #polling-info {
   width: auto;
   float: right;
@@ -23,10 +25,13 @@ h1 {
   top: 15px;
 }
 
+/********************************
+ * NAVIGATION
+ *******************************/
 #navigation ul.tabs {
     background: url("/images/tab_background.gif") repeat-x scroll 0 0 transparent;
     border: 1px solid #DDDDDD;
-    border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 0 0;
     height: 26px;
     margin: 10px 0 0;
     padding: 6px 10px;
@@ -69,3 +74,105 @@ h1 {
     position: relative;
     top: -1px;
 }
+
+/********************************
+ * SUB-NAVIGATION
+ *******************************/
+#subnav-bar {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: url("/images/subnav_background.gif") repeat-x scroll 0 0 transparent;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-color: #FAFAFA #DDDDDD #D2D2D2;
+    border-left: 1px solid #DDDDDD;
+    border-right: 1px solid #DDDDDD;
+    border-style: solid;
+    border-width: 1px;
+    height: 30px;
+    padding: 0 10px;
+    position: relative;
+    z-index: 3;
+}
+#subnav-bar > ul {
+    margin: 4px 0 0 -25px;
+    position: relative;
+}
+#subnav-bar > ul > li {
+    float: left;
+    list-style-type: none;
+    margin-right: 10px;
+    position: relative;
+}
+#subnav-bar > ul > li > a {
+    border: 1px solid transparent;
+    border-radius: 3px 3px 3px 3px;
+    color: #666666;
+    display: block;
+    font-size: 11px;
+    height: 15px;
+    padding: 3px 5px;
+    position: relative;
+    text-decoration: none;
+    z-index: 5;
+}
+#subnav-bar > ul > li:hover > a {
+    background-color: #F8F8F8;
+    border-color: #CCCCCC;
+    color: #333333;
+}
+#subnav-bar > ul > li > a.selected {
+    background: none repeat scroll 0 0 #DDDDDD;
+    border-color: #C5C5C5 #EEEEEE #EEEEEE #C5C5C5;
+    color: #000000;
+    cursor: default;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.6);
+}
+#subnav-bar > ul > li > ul {
+    background: none repeat scroll 0 0 #F8F8F8;
+    border: 1px solid #CCCCCC;
+    display: none;
+    max-height: 275px;
+    overflow: auto;
+    position: absolute;
+    top: 22px;
+    z-index: 4;
+}
+#subnav-bar > ul > li:hover > ul {
+    display: block;
+    margin: 0;
+    min-width: 180px;
+}
+#subnav-bar > ul > li > ul > li {
+    border-top: 1px solid #E2E2E2;
+    font-size: 11px;
+    list-style-type: none;
+    margin: 0;
+}
+#subnav-bar > ul > li > ul > li:first-child {
+    border-top: medium none;
+}
+#subnav-bar > ul > li > ul > li > a, .subnav-bar > ul > li > ul > li > strong {
+    display: block;
+    font-weight: normal;
+    padding: 4px 5px;
+}
+#subnav-bar > ul > li > ul > li > a {
+    font-weight: bold;
+}
+#subnav-bar > ul > li > ul > li > a:hover {
+    background-color: #EEEEEE;
+    text-decoration: none;
+}
+
+ul.view-mode-group { float: right; position: relative; top: -32px; right: 10px; }
+li.view-mode a { height: 12px; width: 12px; }
+/********************************
+ * LISTING STYLES
+ *******************************/
+#listing table tr { border-bottom: 1px solid #c9c9c9; }
+#listing table tr td { padding: 5px 10px; }
