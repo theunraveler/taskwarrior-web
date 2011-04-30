@@ -18,11 +18,24 @@ end
 
 # Helpers
 helpers do
+
   def format_date(timestamp)
     format = Taskwarrior::Config.file.get_value('dateformat') || 'm/d/Y'
     subbed = format.gsub(/([a-zA-Z])/, '%\1')
     Time.at(timestamp.to_i).strftime(subbed)
   end
+
+  def colorize_date(timestamp)
+    return if timestamp.nil?
+    due_def = Taskwarrior::Config.file.get_value('due').to_i || 5
+    case true
+      when Time.now.to_date == Time.at(timestamp.to_i).to_date then 'today'
+      when Time.now.to_i > timestamp.to_i then 'overdue'
+      when (Time.now.to_i - timestamp.to_i) < (due_def * 86400) then 'due'
+      else 'regular'
+    end
+  end
+
 end
 
 # Redirects

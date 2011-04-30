@@ -1,10 +1,62 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/********************************
+ * UTILITY CLASSES
+ *******************************/
 .clearer { clear: both; }
 
 body {
   font: 13.34px helvetica,arial,sans-serif;
 }
 
-#page { width: 700px; margin: 30px auto; }
+#page { width: 960px; margin: 30px auto; }
 
 h1 { 
   float: left; 
@@ -16,8 +68,13 @@ h1 {
   text-indent: -9999px;
 }
 
+h2 { font-size: 1.5em; font-weight: bold; margin: 20px 0; }
+
 th { text-align: left; }
 
+/********************************
+ * POLLING
+ *******************************/
 #polling-info {
   width: auto;
   float: right;
@@ -98,7 +155,7 @@ th { text-align: left; }
     z-index: 3;
 }
 #subnav-bar > ul {
-    margin: 4px 0 0 -25px;
+    margin: 4px 0 0 1px;
     position: relative;
 }
 #subnav-bar > ul > li {
@@ -171,8 +228,19 @@ th { text-align: left; }
 
 ul.view-mode-group { float: right; position: relative; top: -32px; right: 10px; }
 li.view-mode a { height: 12px; width: 12px; }
+
 /********************************
  * LISTING STYLES
  *******************************/
-#listing table tr { border-bottom: 1px solid #c9c9c9; }
-#listing table tr td { padding: 5px 10px; }
+#listing table { width: 100%; }
+#listing table tr td,
+#listing table tr th { padding: 5px 10px 5px 0; border-bottom: 1px solid #ddd; }
+
+/********************************
+ * TASK COLORS
+ *******************************/
+#listing table tr.overdue { background: #fdd; }
+#listing table tr.today { background: #ffc; }
+#listing table tr.due { background: #BBFFB6; }
+#listing table tr.done { color: #c9c9c9; text-decoration: line-through; }
+#listing table tr.deleted {  }

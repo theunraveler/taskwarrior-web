@@ -1,7 +1,7 @@
-<% tabs = { '/tasks/pending' => 'Tasks', '/projects' => 'Projects', '/reports' => 'Reports' } %>
+<% tabs = { '/tasks' => 'Tasks', '/projects' => 'Projects', '/reports' => 'Reports' } %>
 <nav id="navigation">
   <ul class="tabs">
-    <% tabs.each_pair do |path, text| %>
+    <% tabs.each do |path, text| %>
       <li><a href="<%= path %>"<%= ' class="selected"' if @current_page.index(path) == 0 %>><%= text %></a></li>
     <% end %>
   </ul>
@@ -13,7 +13,7 @@
 <nav id="subnav-bar">
   <ul>
     <% if @subnav %>
-      <% @subnav.each_pair do |path, text| %>
+      <% @subnav.each do |path, text| %>
         <li><a href="<%= path %>"<%= ' class="selected"' if @current_page.index(path) == 0 %>><%= text %></a></li>
       <% end %>
     <% end %>

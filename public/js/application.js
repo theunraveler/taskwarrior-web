@@ -44,5 +44,6 @@ var refreshPageContents = function() {
 var initTooltips = function() {
 	$('.tooltip').tipsy({
 		title: 'data-tooltip',
+		gravity: 's'
 	});
 };
