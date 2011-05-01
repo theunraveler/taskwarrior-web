@@ -22,17 +22,26 @@ helpers do
   def format_date(timestamp)
     format = Taskwarrior::Config.file.get_value('dateformat') || 'm/d/Y'
     subbed = format.gsub(/([a-zA-Z])/, '%\1')
-    Time.at(timestamp.to_i).strftime(subbed)
+    Time.parse(timestamp).strftime(subbed)
   end
 
   def colorize_date(timestamp)
     return if timestamp.nil?
     due_def = Taskwarrior::Config.file.get_value('due').to_i || 5
+    time = Time.parse(timestamp)
     case true
-      when Time.now.to_date == Time.at(timestamp.to_i).to_date then 'today'
-      when Time.now.to_i > timestamp.to_i then 'overdue'
-      when (Time.now.to_i - timestamp.to_i) < (due_def * 86400) then 'due'
+      when Time.now.to_date == time.to_date then 'today'
+      when Time.now.to_i > time.to_i then 'overdue'
+      when (Time.now.to_i - time.to_i) < (due_def * 86400) then 'due'
       else 'regular'
+    end
+  end
+
+  def subnav(type)
+    case type
+      when 'task' then
+        { '/tasks/pending' => 'Pending', '/tasks/completed' => 'Completed', '/tasks/deleted' => 'Deleted' }
+
     end
   end
 
@@ -47,17 +56,10 @@ get '/tasks/?' do
 end
 
 # Task routes
-get '/tasks/pending/?' do
-  @title = 'Pending Tasks'
-  @subnav = { '/tasks/pending' => 'Pending', '/tasks/completed' => 'Completed' }
-  @tasks = Taskwarrior::Task.tasks
-  erb :listing  
-end
-
-get '/tasks/completed/?' do
-  @title = 'Completed Tasks'
-  @subnav = { '/tasks/pending' => 'Pending', '/tasks/completed' => 'Completed' }
-  @tasks = Taskwarrior::Task.tasks(:completed)
+get '/tasks/:status/?' do
+  @title = "#{params[:status].capitalize} Tasks"
+  @subnav = subnav('task')
+  @tasks = Taskwarrior::Task.find_by_status(params[:status])
   erb :listing
 end
 

@@ -12,11 +12,11 @@
     <tbody>
       <% @tasks.each do |task| %>
         <tr class="<%= colorize_date(task.due) %>">
-          <td><input type="checkbox" class="tooltip" data-task="<%= task.uuid %>" data-tooltip="Mark as complete" /></td>
+          <td><input type="checkbox" <%= 'checked="checked" ' if task.status == 'completed' %>class="tooltip" data-task="<%= task.uuid %>" data-tooltip="Mark as complete" /></td>
           <td><%= task.description %></td>
           <td><%= task.project %></td>
           <td><%= format_date(task.due) unless task.due.nil? %></td>
-          <td><%= task.tags.gsub(',', ', ') unless task.tags.nil? %></td>
+          <td><%= task.tags.join(', ') unless task.tags.nil? %></td>
         </tr>
       <% end %>
     </tbody>

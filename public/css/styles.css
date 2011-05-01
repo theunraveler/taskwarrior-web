@@ -233,6 +233,7 @@ li.view-mode a { height: 12px; width: 12px; }
  * LISTING STYLES
  *******************************/
 #listing table { width: 100%; }
+#listing table tr th { background: #eaeaea;  color: #222; }
 #listing table tr td,
 #listing table tr th { padding: 5px 10px 5px 0; border-bottom: 1px solid #ddd; }
 
