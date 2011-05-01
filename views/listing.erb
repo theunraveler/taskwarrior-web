@@ -13,7 +13,7 @@
       <% @tasks.each do |task| %>
         <tr class="<%= colorize_date(task.due) %>">
           <% if task.status == 'pending' %>
-            <td><input type="checkbox" <%= 'checked="checked" ' if task.status == 'completed' %> class="tooltip <%= task.status %>" data-task="<%= task.id %>" data-tooltip="Mark as complete" /></td>
+            <td><input type="checkbox" <%= 'checked="checked" ' if task.status == 'completed' %> class="<%= task.status %>" data-task="<%= task.id %>" /></td>
           <% else %>
             <td></td>
           <% end %>

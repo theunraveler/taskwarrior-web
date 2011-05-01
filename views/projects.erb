@@ -1,0 +1,29 @@
+<div id="listing">
+  <% @tasks.each do |proj, tasks| %>
+    <% doneness = (tasks.select { |t| t.status == 'completed' }.count.to_f / tasks.count.to_f) * 100 %>
+    <h3 class="project <%= doneness == 100.0 ? 'done' : 'pending' %>"><%= proj %></h3>
+    <div class="doneness-container">
+      <div class="doneness-measure" style="width: <%= doneness.to_i * 2 %>px;"><%= doneness.to_i %>%</div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Due</th>
+          <th>Tags</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% tasks.each do |task| %>
+          <% if task.status == 'pending' %>
+            <tr class="<%= colorize_date(task.due) %>">
+              <td><%= task.description %></td>
+              <td><%= format_date(task.due) unless task.due.nil? %></td>
+              <td><%= task.tags.join(', ') unless task.tags.nil? %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>

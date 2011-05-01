@@ -50,7 +50,7 @@ var initTooltips = function() {
 };
 
 var initCompleteTask = function() {
-	$('input.pending').change(function() {
+	$('input.pending').live('change', function() {
 		var checkbox = $(this);
 		var row = checkbox.closest('tr');
 		var task_id = $(this).data('task');
@@ -61,8 +61,16 @@ var initCompleteTask = function() {
 				checkbox.replaceWith('<img src="/images/ajax-loader.gif" />');
 			},
 			success: function(data) {
-				set_message('Task ' + task_id + ' completed.');
-				row.fadeOut('slow', function() { row.remove(); });
+				row.fadeOut('slow', function() {
+					row.remove();
+					// TODO: Wow. This is nasty.
+					var subnavItem = $('#subnav-bar ul li:first-child a');
+					var oldCount = subnavItem.text().match(/((\d))/);
+					var newCount = parseInt(oldCount[0]) - 1
+					var newVal = subnavItem.text().replace(oldCount[0], newCount);
+					console.log(newVal);
+					subnavItem.text(newVal);
+				});
 			}
 		});
 	});
@@ -70,6 +78,5 @@ var initCompleteTask = function() {
 
 function set_message(msg, severity) {
 	severity = severity ? severity : 'info';
-
 	$('#flash-messages').append('<div class="message ' + severity + '">' + msg + '</div>');
 }

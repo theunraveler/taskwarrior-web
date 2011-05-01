@@ -1,28 +1,11 @@
 module Taskwarrior
-
-  ###########################################
-  # UTILITY CLASS FOR DYNAMIC FINDER MATCHING
-  ###########################################
-  class TaskDynamicFinderMatch
-
-    attr_accessor :attribute
-
-    def initialize(method_sym)
-      if method_sym.to_s =~ /^find_by_(.*)$/
-        @attribute = $1
-      end
-    end
-    
-    def match?
-      @attribute != nil
-    end
-
-  end
   
   #################
   # MAIN TASK CLASS
   #################
   class Task
+
+    TASK_BIN = 'task'
 
     attr_accessor :id, :entry, :project, :uuid, :description, :status, :due, :start, :end, :tags
 
@@ -38,10 +21,6 @@ module Taskwarrior
 
     def save!
     end
-
-    def complete!
-      `task #{id} done`
-    end
     
     ##################################
     # CLASS METHODS FOR QUERYING TASKS
@@ -52,10 +31,10 @@ module Taskwarrior
       tasks = []
       count = 1
   
-      stdout = 'task _query'
+      stdout =  TASK_BIN + ' _query'
       args.each do |param|
         param.each do |attr, value|
-          stdout << " #{attr}:#{value}"
+          stdout << " #{attr.to_s}:#{value}"
         end
       end
 
@@ -92,12 +71,46 @@ module Taskwarrior
       end
     end
 
-    ###############################
-    # CLASS METHODS FOR INTERACTING
-    ###############################
+    # Get the number of tasks for some paramters
+    def self.count(*args)
+      statement = TASK_BIN + ' count'
+      args.each do |param|
+        param.each do |attr, value|
+          statement << " #{attr.to_s}:#{value}"
+        end
+      end
+      return `#{statement}`.strip!
+    end
 
+    ###############################################
+    # CLASS METHODS FOR INTERACTING WITH TASKS
+    # (THESE WILL PROBABLY BECOME INSTANCE METHODS)
+    ###############################################
+
+    # Mark a task as complete
+    # TODO: Make into instance method when `task` supports finding by UUID.
     def self.complete!(task_id)
-      `task #{task_id} done`
+      statement = TASK_BIN + " #{task_id} done"
+      `#{statement}`
+    end
+
+  end
+
+  ###########################################
+  # UTILITY CLASS FOR DYNAMIC FINDER MATCHING
+  ###########################################
+  class TaskDynamicFinderMatch
+
+    attr_accessor :attribute
+
+    def initialize(method_sym)
+      if method_sym.to_s =~ /^find_by_(.*)$/
+        @attribute = $1
+      end
+    end
+    
+    def match?
+      @attribute != nil
     end
 
   end

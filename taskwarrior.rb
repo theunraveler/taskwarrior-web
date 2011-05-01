@@ -40,8 +40,12 @@ helpers do
   def subnav(type)
     case type
       when 'task' then
-        { '/tasks/pending' => 'Pending', '/tasks/completed' => 'Completed', '/tasks/deleted' => 'Deleted' }
-
+        { '/tasks/pending' => "Pending (#{Taskwarrior::Task.count(:status => 'pending')})", 
+          '/tasks/completed' => "Completed",
+          '/tasks/deleted' => 'Deleted'
+        }
+      else
+        { }
     end
   end
 
@@ -57,9 +61,10 @@ end
 
 # Task routes
 get '/tasks/:status/?' do
+  pass unless ['pending', 'completed', 'deleted'].include?(params[:status])
   @title = "#{params[:status].capitalize} Tasks"
   @subnav = subnav('task')
-  @tasks = Taskwarrior::Task.find_by_status(params[:status])
+  @tasks = Taskwarrior::Task.find_by_status(params[:status]).sort_by! { |x| [x.due.nil?.to_s, x.due.to_s, x.project.to_s] }
   erb :listing
 end
 
@@ -70,14 +75,19 @@ end
 
 # Projects
 get '/projects' do
-
+  @title = 'Projects'
+  @tasks = Taskwarrior::Task.query('status.not' => 'deleted', 'project.not' => '').group_by { |x| x.project.to_s }
+  erb :projects
 end
 
 get 'projects/:name/tasks' do
-
 end
 
 # Reporting
 get '/reports' do
+end
 
+# Error handling
+not_found do
+  "Aww bummer. Taskwarrior doesn't know what to do with #{request.path_info}."
 end

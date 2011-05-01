@@ -69,6 +69,7 @@ h1 {
 }
 
 h2 { font-size: 1.5em; font-weight: bold; margin: 20px 0; }
+h3 { font-size: 1.25em; font-weight: bold; margin: 20px 0; }
 
 th { text-align: left; }
 
@@ -236,6 +237,7 @@ li.view-mode a { height: 12px; width: 12px; }
 #listing table tr th { background: #eaeaea;  color: #222; }
 #listing table tr td,
 #listing table tr th { padding: 5px 10px 5px 0; border-bottom: 1px solid #ddd; }
+#listing table tr td:first-child { padding-left: 10px; }
 
 /********************************
  * TASK COLORS
@@ -245,3 +247,7 @@ li.view-mode a { height: 12px; width: 12px; }
 #listing table tr.due { background: #BBFFB6; }
 #listing table tr.done { color: #c9c9c9; text-decoration: line-through; }
 #listing table tr.deleted {  }
+
+h3.project { width: 500px; float: left; }
+.doneness-container { border: 1px solid #eee; float: right; margin-top: 20px; width: 200px; height: 20px; }
+.doneness-measure { background: #BBFFB6; height: 16px; text-align: center; padding-top: 4px; color: #c9c9c9; font-size: 0.8em; }
