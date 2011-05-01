@@ -24,7 +24,7 @@ module Taskwarrior
   #################
   class Task
 
-    attr_accessor :entry, :project, :uuid, :description, :status, :due, :start, :end, :tags
+    attr_accessor :id, :entry, :project, :uuid, :description, :status, :due, :start, :end, :tags
 
     ####################################
     # MODEL METHODS FOR INDIVIDUAL TASKS
@@ -38,6 +38,10 @@ module Taskwarrior
 
     def save!
     end
+
+    def complete!
+      `task #{id} done`
+    end
     
     ##################################
     # CLASS METHODS FOR QUERYING TASKS
@@ -46,23 +50,25 @@ module Taskwarrior
     # Run queries on tasks.
     def self.query(*args)
       tasks = []
+      count = 1
   
       stdout = 'task _query'
       args.each do |param|
         param.each do |attr, value|
-          stdout << " | grep '\"#{attr}\":\"#{value}\"'"
+          stdout << " #{attr}:#{value}"
         end
       end
 
       # Process the JSON data.
       json = `#{stdout}`
       json.strip!
-      json.chop! unless json.match(/[.*]?}$/)
       json = '[' + json + ']'
-      raw = JSON.parse(json)
+      results = JSON.parse(json)
 
-      raw.each do |line|
-        tasks << Task.new(line)
+      results.each do |result|
+        result[:id] = count
+        tasks << Task.new(result)
+        count = count + 1
       end
       return tasks
     end
@@ -84,6 +90,14 @@ module Taskwarrior
       else
         super
       end
+    end
+
+    ###############################
+    # CLASS METHODS FOR INTERACTING
+    ###############################
+
+    def self.complete!(task_id)
+      `task #{task_id} done`
     end
 
   end

@@ -63,6 +63,11 @@ get '/tasks/:status/?' do
   erb :listing
 end
 
+post '/tasks/:id/complete' do
+  Taskwarrior::Task.complete!(params[:id])
+  redirect '/tasks/pending'
+end
+
 # Projects
 get '/projects' do
 
