@@ -33,7 +33,7 @@ helpers do
     case true
       when Time.now.to_date == time.to_date then 'today'
       when Time.now.to_i > time.to_i then 'overdue'
-      when (Time.now.to_i - time.to_i) < (due_def * 86400) then 'due'
+      when (time.to_i - Time.now.to_i) < (due_def * 86400) then 'due'
       else 'regular'
     end
   end
