@@ -2,6 +2,7 @@ $(document).ready(function() {
 	initPolling();
 	initTooltips();
 	initCompleteTask();
+	initInPlaceEditing();
 });
 
 var initPolling = function() {
@@ -73,6 +74,34 @@ var initCompleteTask = function() {
 				});
 			}
 		});
+	});
+};
+
+var initInPlaceEditing = function() {
+	// Hide it initially.
+	$('.inplace-edit').hide();
+	$('#listing table td').live('mouseover mouseout', function(e) {
+		if (e.type == 'mouseover')  {
+			$('.inplace-edit', this).show();
+		} else {
+			$('.inplace-edit', this).hide();
+		}
+	});
+
+	$('.inplace-edit').live('click', function() {
+		var field = $($(this).siblings('span')[0]);
+		var formElement = '<input type="text" class="inplace-text" value="'+field.text()+'" />';
+		formElement += '<button type="submit" class="inplace-submit">Update</button>';
+		formElement += '<a href="javascript:void(0);" class="inplace-cancel">Cancel</a>';
+		field.replaceWith(formElement);
+		$(this).remove();
+	});
+
+	$('.inplace-cancel').live('click', function() {
+		var td = $(this).closest('td');
+		var oldField = '<span class="description">'+$($(this).siblings('.inplace-text')[0]).val()+'</span>';
+		oldField += '<a class="inplace-edit" href="javascript:void(0);">Edit</a>';
+		td.html(oldField);
 	});
 };
 

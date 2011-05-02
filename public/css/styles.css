@@ -236,8 +236,9 @@ li.view-mode a { height: 12px; width: 12px; }
 #listing table { width: 100%; }
 #listing table tr th { background: #eaeaea;  color: #222; }
 #listing table tr td,
-#listing table tr th { padding: 5px 10px 5px 0; border-bottom: 1px solid #ddd; }
-#listing table tr td:first-child { padding-left: 10px; }
+#listing table tr th { padding: 10px 10px 10px 0; border-bottom: 1px solid #ddd; }
+#listing table tr td:first-child,
+#listing table tr th:first-child { padding-left: 10px; }
 
 /********************************
  * TASK COLORS
@@ -245,9 +246,17 @@ li.view-mode a { height: 12px; width: 12px; }
 #listing table tr.overdue { background: #fdd; }
 #listing table tr.today { background: #ffc; }
 #listing table tr.due { background: #BBFFB6; }
-#listing table tr.done { color: #c9c9c9; text-decoration: line-through; }
+#listing table tr.completed { text-decoration: line-through; }
 #listing table tr.deleted {  }
 
-h3.project { width: 500px; float: left; }
+#listing .project-container { margin-bottom: 10px; }
+h3.project { width: 500px; float: left; margin-bottom: 10px; }
+h3.project.done { color: #ddd; }
 .doneness-container { border: 1px solid #eee; float: right; margin-top: 20px; width: 200px; height: 20px; }
-.doneness-measure { background: #BBFFB6; height: 16px; text-align: center; padding-top: 4px; color: #c9c9c9; font-size: 0.8em; }
+.doneness-measure { background: #BBFFB6; height: 16px; text-align: center; padding-top: 4px; color: #bbb; font-size: 0.8em; }
+
+/********************************
+ * INPLACE EDITING
+ *******************************/
+.inplace-text { width: 250px; height: 30px; padding: 5px; }
+.inplace-edit, .inplace-cancel { font-style: italic; }
