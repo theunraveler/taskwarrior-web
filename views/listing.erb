@@ -18,11 +18,8 @@
             <tr class="<%= task.status %>">
               <td></td>
           <% end %>
-          <td>
-            <span class="description"><%= task.description %></span>
-            <a class="inplace-edit" href="javascript:void(0);">Edit</a>
-          </td>
-          <td><%= task.project %></td>
+          <td><%= task.description %></td>
+          <td><a href="/projects/<%= linkify(task.project, :project) %>"><%= task.project %></a></td>
           <td><%= format_date(task.due) unless task.due.nil? %></td>
           <td><%= task.tags.join(', ') unless task.tags.nil? %></td>
         </tr>

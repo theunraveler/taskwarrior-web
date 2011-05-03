@@ -4,7 +4,7 @@
     <% unless doneness == 100.0 %>
       <div class="project-container">
         <h3 class="project <%= doneness == 100.0 ? 'done' : 'pending' %>">
-          <a href="/projects/<%= proj.downcase.gsub('.', '--') %>"><%= proj %></a>
+          <a href="/projects/<%= linkify(proj, :project) %>"><%= proj %></a>
         </h3>
         <div class="doneness-container">
           <div class="doneness-measure" style="width: <%= doneness.to_i * 2 %>px;"><%= doneness.to_i %>%</div>

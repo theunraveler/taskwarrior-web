@@ -38,6 +38,14 @@ helpers do
     end
   end
 
+  def linkify(item, method)
+    return if item.nil?
+    case method.to_s
+      when 'project'
+        item.downcase.gsub('.', '--')
+    end
+  end
+
   def subnav(type)
     case type
       when 'tasks' then

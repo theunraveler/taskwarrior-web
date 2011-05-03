@@ -2,7 +2,6 @@ $(document).ready(function() {
 	initPolling();
 	initTooltips();
 	initCompleteTask();
-	initInPlaceEditing();
 });
 
 var initPolling = function() {
