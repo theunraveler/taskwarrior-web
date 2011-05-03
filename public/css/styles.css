@@ -250,8 +250,19 @@ li.view-mode a { height: 12px; width: 12px; }
 #listing table tr.deleted {  }
 
 #listing .project-container { margin-bottom: 10px; }
-h3.project { width: 500px; float: left; margin-bottom: 10px; }
-h3.project.done { color: #ddd; }
+h3.project a {
+  color: #000;
+  text-decoration: none;
+  width: auto;
+  float: left;
+  margin-bottom: 10px;
+  background: url(/images/arrow_right_grey.png) no-repeat right center;
+  padding-right: 20px;
+}
+h3.project a:hover {
+  background: url(/images/arrow_right_black.png) no-repeat right center;
+}
+h3.project.done a { color: #ddd; }
 .doneness-container { border: 1px solid #eee; float: right; margin-top: 20px; width: 200px; height: 20px; }
 .doneness-measure { background: #BBFFB6; height: 16px; text-align: center; padding-top: 4px; color: #bbb; font-size: 0.8em; }
 

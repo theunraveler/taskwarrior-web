@@ -40,10 +40,14 @@ helpers do
 
   def subnav(type)
     case type
-      when 'task' then
+      when 'tasks' then
         { '/tasks/pending' => "Pending (#{Taskwarrior::Task.count(:status => 'pending')})", 
           '/tasks/completed' => "Completed",
           '/tasks/deleted' => 'Deleted'
+        }
+      when 'projects'
+        {
+          '/projects/overview' => 'Overview'
         }
       else
         { }
@@ -64,7 +68,7 @@ end
 get '/tasks/:status/?' do
   pass unless ['pending', 'completed', 'deleted'].include?(params[:status])
   @title = "#{params[:status].capitalize} Tasks"
-  @subnav = subnav('task')
+  @subnav = subnav('tasks')
   @tasks = Taskwarrior::Task.find_by_status(params[:status]).sort_by! { |x| [x.due.nil?.to_s, x.due.to_s, x.project.to_s] }
   erb :listing
 end
@@ -76,12 +80,23 @@ end
 
 # Projects
 get '/projects' do
+  redirect '/projects/overview'
+end
+
+get '/projects/overview/?' do
   @title = 'Projects'
+  @subnav = subnav('projects')
   @tasks = Taskwarrior::Task.query('status.not' => 'deleted', 'project.not' => '').group_by { |x| x.project.to_s }
   erb :projects
 end
 
-get 'projects/:name/tasks' do
+get '/projects/:name/?' do
+  @subnav = subnav('projects')
+  subbed = params[:name].gsub('--', '.') 
+  @tasks = Taskwarrior::Task.query('status.not' => 'deleted', 'project' => subbed).sort_by! { |x| [x.due.nil?.to_s, x.due.to_s] }
+  regex = Regexp.new("^#{subbed}$", Regexp::IGNORECASE)
+  @title = @tasks.select { |t| t.project.match(regex) }.first.project
+  erb :project
 end
 
 # Reporting
@@ -90,5 +105,7 @@ end
 
 # Error handling
 not_found do
-  "Aww bummer. Taskwarrior doesn't know what to do with #{request.path_info}."
+  @title = 'Page Not Found'
+  @referrer = request.referrer
+  erb :'404'
 end

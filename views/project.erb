@@ -1,0 +1,30 @@
+<a href="/projects">Back to Projects</a>
+<div id="listing">
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Description</th>
+        <th>Project</th>
+        <th>Due</th>
+        <th>Tags</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tasks.each do |task| %>
+        <% if task.status == 'pending' %>
+          <tr class="<%= colorize_date(task.due) %>">
+            <td><input type="checkbox" <%= 'checked="checked" ' if task.status == 'completed' %> class="<%= task.status %>" data-task="<%= task.id %>" /></td>
+            <td>
+              <span class="description"><%= task.description %></span>
+              <a class="inplace-edit" href="javascript:void(0);">Edit</a>
+            </td>
+            <td><%= task.project %></td>
+            <td><%= format_date(task.due) unless task.due.nil? %></td>
+            <td><%= task.tags.join(', ') unless task.tags.nil? %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
