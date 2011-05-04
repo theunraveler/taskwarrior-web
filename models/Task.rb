@@ -20,8 +20,19 @@ module Taskwarrior
     end
 
     def save!
+      exclude = ['@description', '@tags']
       command = TASK_BIN + ' add'
       command << " '#{description}'"
+      instance_variables.each do |ivar|
+        subbed = ivar.to_s.gsub('@', '')
+        command << " #{subbed}:#{send(subbed.to_sym)}" unless exclude.include?(ivar.to_s)
+      end
+      unless tags.nil?
+        tags.gsub(', ', ',').split(',').each do |tag|
+          command << " +#{tag}"
+        end
+      end
+      puts command
       `#{command}` 
     end
     

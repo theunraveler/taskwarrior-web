@@ -107,7 +107,7 @@ var initInPlaceEditing = function() {
 
 var initDatePicker = function() {
 	$('.datefield input').datepicker({
-		dateFormat: $(this).data('format'),
+		dateFormat: $('.datefield input').data('format'),
 		autoSize: true
 	});
 };
