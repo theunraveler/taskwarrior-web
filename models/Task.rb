@@ -20,6 +20,9 @@ module Taskwarrior
     end
 
     def save!
+      command = TASK_BIN + ' add'
+      command << " '#{description}'"
+      `#{command}` 
     end
     
     ##################################

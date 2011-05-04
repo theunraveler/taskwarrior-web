@@ -68,7 +68,7 @@ h1 {
   text-indent: -9999px;
 }
 
-h2 { font-size: 1.5em; font-weight: bold; margin: 20px 0; }
+h2 { font-size: 1.5em; font-weight: bold; margin: 20px 0; width: 70%; float: left; }
 h3 { font-size: 1.25em; font-weight: bold; margin: 20px 0; }
 
 th { text-align: left; }
@@ -230,6 +230,7 @@ th { text-align: left; }
 ul.view-mode-group { float: right; position: relative; top: -32px; right: 10px; }
 li.view-mode a { height: 12px; width: 12px; }
 
+a#task-add { float: right; margin: 20px 0; }
 /********************************
  * LISTING STYLES
  *******************************/
@@ -271,3 +272,11 @@ h3.project.done a { color: #ddd; }
  *******************************/
 .inplace-text { width: 250px; height: 30px; padding: 5px; }
 .inplace-edit, .inplace-cancel { font-style: italic; }
+
+/********************************
+ * TASK FORM
+ *******************************/
+.form-element { padding: 10px 0; }
+.form-element label { width: 200px; }
+input[type=textfield] { width: 300px; height: 25px; padding: 5px; }
+.form-element .description { font-size: 0.8em; font-style: italic; color: #999; }

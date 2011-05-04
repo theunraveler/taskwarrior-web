@@ -1,0 +1,23 @@
+<form id="new-task-form" action="/tasks/new" method="post">
+
+  <div class="textfield form-element">
+    <label for="task-description">Description</label>
+    <input type="textfield" id="task-description" name="task[description]" value="<%= @task.description unless @task.nil? %>" />
+  </div>
+
+  <div class="datefield form-element">
+    <label for="task-due">Due Date</label>
+    <input type="textfield" id="task-due" name="task[due]" value="<%= @task.due unless @task.nil? %>" data-format="<%= @date_format %>" />
+  </div>
+
+  <div class="textfield form-element">
+    <label for="task-tags">Tags</label>
+    <input type="textfield" id="task-tags" name="task[tags]" value="<%= @task.tags unless @task.nil? %>" />
+    <div class="description">Enter tags separated by commas</div>
+  </div>
+
+  <div class="submit form-element">
+    <button type="submit" class="button">Create Task</button>
+  </div>
+
+</form>

@@ -2,6 +2,7 @@ $(document).ready(function() {
 	initPolling();
 	initTooltips();
 	initCompleteTask();
+	initDatePicker();
 });
 
 var initPolling = function() {
@@ -101,6 +102,13 @@ var initInPlaceEditing = function() {
 		var oldField = '<span class="description">'+$($(this).siblings('.inplace-text')[0]).val()+'</span>';
 		oldField += '<a class="inplace-edit" href="javascript:void(0);">Edit</a>';
 		td.html(oldField);
+	});
+};
+
+var initDatePicker = function() {
+	$('.datefield input').datepicker({
+		dateFormat: $(this).data('format'),
+		autoSize: true
 	});
 };
 

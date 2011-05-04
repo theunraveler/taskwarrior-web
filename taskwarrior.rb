@@ -81,6 +81,30 @@ get '/tasks/:status/?' do
   erb :listing
 end
 
+get '/tasks/new/?' do
+  @title = 'New Task'
+  @subnav = subnav('tasks')
+  @date_format = Taskwarrior::Config.file.get_value('dateformat') || 'm/d/yy'
+  @date_format.gsub!('Y', 'yy')
+  erb :task_form
+end
+
+post '/tasks/new/?' do
+  results = passes_validation(params[:task], :task)
+  if results.empty?
+    task = Taskwarrior::Task.new(params[:task])
+    task.save!.to_s
+    redirect '/tasks'
+  else
+    @task = params[:task]
+    @messages = []
+    results.each do |result|
+      @messages << { :severity => 'error', :message => result }
+    end
+    redirect '/tasks/new'
+  end
+end
+
 post '/tasks/:id/complete' do
   Taskwarrior::Task.complete!(params[:id])
   redirect '/tasks/pending'
@@ -116,4 +140,15 @@ not_found do
   @title = 'Page Not Found'
   @referrer = request.referrer
   erb :'404'
+end
+
+def passes_validation(item, method)
+  results = [] 
+  case method.to_s
+    when 'task'
+      if item['description'].empty?
+        results << 'You must provide a description'
+      end
+  end
+  results
 end

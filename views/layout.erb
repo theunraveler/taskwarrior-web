@@ -28,7 +28,15 @@
       <%= erb :_navigation %>
       <section class="content">
         <h2><%= @title %></h2>
-        <div id="flash-messages"></div>
+        <a href="/tasks/new" id="task-add" class="button icon add">Add a Task</a>
+        <div class="clearer"></div>
+        <div id="flash-messages">
+          <% if @messages %>
+            <% @messages.each do |message| %>
+              <div class="message <%= message.severity %>"><%= message.message %></div>
+            <% end %>
+          <% end %>
+        </div>
         <%= yield %>
       </section>
     </div>
