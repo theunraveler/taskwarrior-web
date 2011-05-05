@@ -3,6 +3,7 @@ $(document).ready(function() {
 	initTooltips();
 	initCompleteTask();
 	initDatePicker();
+	initAutocomplete();
 });
 
 var initPolling = function() {
@@ -109,6 +110,17 @@ var initDatePicker = function() {
 	$('.datefield input').datepicker({
 		dateFormat: $('.datefield input').data('format'),
 		autoSize: true
+	});
+};
+
+var initAutocomplete = function() {
+	$('#task-project').autocomplete({
+		source: '/ajax/projects'
+	});
+
+	$('#task-tags').tagsInput({
+		autocomplete_url: '/ajax/tags',
+		defaultText: ''
 	});
 };
 

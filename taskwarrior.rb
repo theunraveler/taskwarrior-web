@@ -135,6 +135,20 @@ end
 get '/reports' do
 end
 
+# AJAX callbacks
+get '/ajax/projects/?' do
+  projects = Taskwarrior::Task.query('status.not' => 'deleted').collect { |t| t.project }
+  projects.compact!.uniq!.to_json
+end
+
+get '/ajax/tags/?' do
+  tags = []
+  Taskwarrior::Task.query('status.not' => 'deleted').each do |task|
+    tags = tags + task.tags
+  end
+  tags.compact!.uniq!.to_json
+end
+
 # Error handling
 not_found do
   @title = 'Page Not Found'

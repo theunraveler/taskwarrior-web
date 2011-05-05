@@ -5,6 +5,11 @@
     <input type="textfield" id="task-description" name="task[description]" value="<%= @task.description unless @task.nil? %>" />
   </div>
 
+  <div class="textfield autocomplete form-element">
+    <label for="task-project">Project</label>
+    <input type="textfield" id="task-project" name="task[project]" value="<%= @task.project unless @task.nil? %>" />
+  </div>
+
   <div class="datefield form-element">
     <label for="task-due">Due Date</label>
     <input type="textfield" id="task-due" name="task[due]" value="<%= @task.due unless @task.nil? %>" data-format="<%= @date_format %>" />

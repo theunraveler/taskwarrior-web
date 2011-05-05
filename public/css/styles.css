@@ -280,3 +280,4 @@ h3.project.done a { color: #ddd; }
 .form-element label { width: 200px; }
 input[type=textfield] { width: 300px; height: 25px; padding: 5px; }
 .form-element .description { font-size: 0.8em; font-style: italic; color: #999; }
+#task-tags_tag { border: none; -webkit-box-shadow: none, -moz-box-shadow: none; box-shadow: none; }
