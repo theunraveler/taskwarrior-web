@@ -10,13 +10,13 @@ Gem::Specification.new do |s|
   s.email       = ["jake@theunraveler.com"]
   s.homepage    = "http://taskwarrior.org"
   s.summary     = %q{Web frontend for taskwarrior command line task manager.}
-  s.description = %q{TODO: Write a gem description}
+  s.description = %q{This gem provides a graphical frontend for the Taskwarrior task manager. It is based on Sinatra.}
 
   s.rubyforge_project = "taskwarrior-web"
 
-  s.add_dependancy('sinatra')
-  s.add_dependancy('parseconfig')
-  s.add_dependancy('vegas')
+  s.add_dependency('sinatra')
+  s.add_dependency('parseconfig')
+  s.add_dependency('vegas')
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
