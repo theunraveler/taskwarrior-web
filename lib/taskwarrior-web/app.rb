@@ -4,10 +4,15 @@ require 'sinatra'
 require 'erb'
 require 'parseconfig'
 require 'json'
+require 'time'
 
 module TaskwarriorWeb
   class App < Sinatra::Base
 
+    @@root = File.expand_path(File.join(File.dirname(__FILE__), '..', '..'))
+    set :root,  @@root    
+    set :app_file, __FILE__
+    
     # Before filter
     before do
       @current_page = request.path_info
@@ -17,14 +22,14 @@ module TaskwarriorWeb
     helpers do
 
       def format_date(timestamp)
-        format = Taskwarrior::Config.file.get_value('dateformat') || 'm/d/Y'
+        format = TaskwarriorWeb::Config.file.get_value('dateformat') || 'm/d/Y'
         subbed = format.gsub(/([a-zA-Z])/, '%\1')
         Time.parse(timestamp).strftime(subbed)
       end
 
       def colorize_date(timestamp)
         return if timestamp.nil?
-        due_def = Taskwarrior::Config.file.get_value('due').to_i || 5
+        due_def = TaskwarriorWeb::Config.file.get_value('due').to_i || 5
         time = Time.parse(timestamp)
         case true
           when Time.now.to_date == time.to_date then 'today'
@@ -45,7 +50,7 @@ module TaskwarriorWeb
       def subnav(type)
         case type
           when 'tasks' then
-            { '/tasks/pending' => "Pending (#{Taskwarrior::Task.count(:status => 'pending')})", 
+            { '/tasks/pending' => "Pending (#{TaskwarriorWeb::Task.count(:status => 'pending')})", 
               '/tasks/completed' => "Completed",
               '/tasks/deleted' => 'Deleted'
             }
@@ -73,14 +78,14 @@ module TaskwarriorWeb
       pass unless ['pending', 'completed', 'deleted'].include?(params[:status])
       @title = "#{params[:status].capitalize} Tasks"
       @subnav = subnav('tasks')
-      @tasks = Taskwarrior::Task.find_by_status(params[:status]).sort_by! { |x| [x.due.nil?.to_s, x.due.to_s, x.project.to_s] }
+      @tasks = TaskwarriorWeb::Task.find_by_status(params[:status]).sort_by! { |x| [x.due.nil?.to_s, x.due.to_s, x.project.to_s] }
       erb :listing
     end
 
     get '/tasks/new/?' do
       @title = 'New Task'
       @subnav = subnav('tasks')
-      @date_format = Taskwarrior::Config.file.get_value('dateformat') || 'm/d/yy'
+      @date_format = TaskwarriorWeb::Config.file.get_value('dateformat') || 'm/d/yy'
       @date_format.gsub!('Y', 'yy')
       erb :task_form
     end
@@ -88,7 +93,7 @@ module TaskwarriorWeb
     post '/tasks/new/?' do
       results = passes_validation(params[:task], :task)
       if results.empty?
-        task = Taskwarrior::Task.new(params[:task])
+        task = TaskwarriorWeb::Task.new(params[:task])
         task.save!.to_s
         redirect '/tasks'
       else
@@ -102,7 +107,7 @@ module TaskwarriorWeb
     end
 
     post '/tasks/:id/complete' do
-      Taskwarrior::Task.complete!(params[:id])
+      TaskwarriorWeb::Task.complete!(params[:id])
       redirect '/tasks/pending'
     end
 
@@ -114,14 +119,14 @@ module TaskwarriorWeb
     get '/projects/overview/?' do
       @title = 'Projects'
       @subnav = subnav('projects')
-      @tasks = Taskwarrior::Task.query('status.not' => 'deleted', 'project.not' => '').group_by { |x| x.project.to_s }
+      @tasks = TaskwarriorWeb::Task.query('status.not' => 'deleted', 'project.not' => '').group_by { |x| x.project.to_s }
       erb :projects
     end
 
     get '/projects/:name/?' do
       @subnav = subnav('projects')
       subbed = params[:name].gsub('--', '.') 
-      @tasks = Taskwarrior::Task.query('status.not' => 'deleted', 'project' => subbed).sort_by! { |x| [x.due.nil?.to_s, x.due.to_s] }
+      @tasks = TaskwarriorWeb::Task.query('status.not' => 'deleted', 'project' => subbed).sort_by! { |x| [x.due.nil?.to_s, x.due.to_s] }
       regex = Regexp.new("^#{subbed}$", Regexp::IGNORECASE)
       @title = @tasks.select { |t| t.project.match(regex) }.first.project
       erb :project
@@ -133,13 +138,13 @@ module TaskwarriorWeb
 
     # AJAX callbacks
     get '/ajax/projects/?' do
-      projects = Taskwarrior::Task.query('status.not' => 'deleted').collect { |t| t.project }
+      projects = TaskwarriorWeb::Task.query('status.not' => 'deleted').collect { |t| t.project }
       projects.compact!.uniq!.to_json
     end
 
     get '/ajax/tags/?' do
       tags = []
-      Taskwarrior::Task.query('status.not' => 'deleted').each do |task|
+      TaskwarriorWeb::Task.query('status.not' => 'deleted').each do |task|
         tags = tags + task.tags
       end
       tags.compact!.uniq!.to_json

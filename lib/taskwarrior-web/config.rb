@@ -1,4 +1,4 @@
-module Taskwarrior
+module TaskwarriorWeb
   module Config
 
     extend self

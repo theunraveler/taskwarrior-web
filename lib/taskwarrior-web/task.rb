@@ -1,4 +1,4 @@
-module Taskwarrior
+module TaskwarriorWeb
   
   #################
   # MAIN TASK CLASS
