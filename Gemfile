@@ -1,5 +1,4 @@
 source "http://rubygems.org"
 
-gem "sinatra"
-gem "thin"
-gem "parseconfig"
+# Specify your gem's dependencies in taskwarrior-web.gemspec
+gemspec
