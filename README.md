@@ -28,3 +28,11 @@ The current featureset includes:
 
 I'm looking to include more features once `task` supports issuing commands via
 UUID.
+
+## Known Issues
+
+* The "View as list"/"View as Grid" links do nothing right now. (They will
+  soon).
+* There are occasionally pretty severe race conditions due to the way that
+  `task` assigns IDs to tasks. This will no longer be the case when UUIDs are
+  implemented in `task`.
