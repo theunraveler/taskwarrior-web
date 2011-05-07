@@ -32,7 +32,7 @@ module TaskwarriorWeb
         due_def = TaskwarriorWeb::Config.file.get_value('due').to_i || 5
         time = Time.parse(timestamp)
         case true
-          when Time.now.to_date == time.to_date then 'today'
+          when Time.now.strftime('%D') == time.strftime('%D') then 'today'
           when Time.now.to_i > time.to_i then 'overdue'
           when (time.to_i - Time.now.to_i) < (due_def * 86400) then 'due'
           else 'regular'
