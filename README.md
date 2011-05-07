@@ -25,6 +25,9 @@ The current featureset includes:
 * Viewing tasks (duh) sorted and grouped in various ways.
 * Marking a pending task as done.
 * Creating a new task with a due date, project, and tags.
+* `task-web` will pull your `task` config (from `.taskrc`) and use it to
+  determine date formatting and when an upcoming task should be marked as
+  "due".
 
 I'm looking to include more features once `task` supports issuing commands via
 UUID.
