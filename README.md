@@ -39,3 +39,8 @@ UUID.
 * There are occasionally pretty severe race conditions due to the way that
   `task` assigns IDs to tasks. This will no longer be the case when UUIDs are
   implemented in `task`.
+
+## Marginalia
+
+This project is not developed by the Taskwarrior team. Obviously,
+taskwarrior-web extends Taskwarrior, but the projects are separate.
