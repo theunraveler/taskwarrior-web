@@ -7,6 +7,7 @@
         <th>Description</th>
         <th>Due</th>
         <th>Tags</th>
+        <th>Priority</th>
       </tr>
     </thead>
     <tbody>
@@ -17,6 +18,7 @@
             <td><%= task.description %></td>
             <td><%= format_date(task.due) unless task.due.nil? %></td>
             <td><%= task.tags.join(', ') unless task.tags.nil? %></td>
+            <td><%= task.priority unless task.priority.nil? %></td>
           </tr>
         <% end %>
       <% end %>

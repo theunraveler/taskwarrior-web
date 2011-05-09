@@ -78,7 +78,7 @@ module TaskwarriorWeb
       pass unless ['pending', 'completed', 'deleted'].include?(params[:status])
       @title = "#{params[:status].capitalize} Tasks"
       @subnav = subnav('tasks')
-      @tasks = TaskwarriorWeb::Task.find_by_status(params[:status]).sort_by! { |x| [x.due.nil?.to_s, x.due.to_s, x.project.to_s] }
+      @tasks = TaskwarriorWeb::Task.find_by_status(params[:status]).sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s, x.project.to_s] }
       erb :listing
     end
 
@@ -119,14 +119,14 @@ module TaskwarriorWeb
     get '/projects/overview/?' do
       @title = 'Projects'
       @subnav = subnav('projects')
-      @tasks = TaskwarriorWeb::Task.query('status.not' => 'deleted', 'project.not' => '').group_by { |x| x.project.to_s }
+      @tasks = TaskwarriorWeb::Task.query('status.not' => 'deleted', 'project.not' => '').sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s] }.group_by { |x| x.project.to_s }
       erb :projects
     end
 
     get '/projects/:name/?' do
       @subnav = subnav('projects')
       subbed = params[:name].gsub('--', '.') 
-      @tasks = TaskwarriorWeb::Task.query('status.not' => 'deleted', 'project' => subbed).sort_by! { |x| [x.due.nil?.to_s, x.due.to_s] }
+      @tasks = TaskwarriorWeb::Task.query('status.not' => 'deleted', 'project' => subbed).sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s] }
       regex = Regexp.new("^#{subbed}$", Regexp::IGNORECASE)
       @title = @tasks.select { |t| t.project.match(regex) }.first.project
       erb :project
