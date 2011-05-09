@@ -3,7 +3,6 @@
   <table>
     <thead>
       <tr>
-        <th></th>
         <th>Description</th>
         <th>Due</th>
         <th>Tags</th>
@@ -14,7 +13,6 @@
       <% @tasks.each do |task| %>
         <% if task.status == 'pending' %>
           <tr class="<%= colorize_date(task.due) %>">
-            <td><input type="checkbox" <%= 'checked="checked" ' if task.status == 'completed' %> class="<%= task.status %>" data-task="<%= task.id %>" /></td>
             <td><%= task.description %></td>
             <td><%= format_date(task.due) unless task.due.nil? %></td>
             <td><%= task.tags.join(', ') unless task.tags.nil? %></td>

@@ -1,3 +1,9 @@
+## v0.0.4 (5/9/11)
+
+* Quick bugfix to remove checkboxes from project page. Race conditions prevent
+  the IDs from actually being correct, so the wrong task would be marked as
+  done.
+
 ## v0.0.3 (5/9/11)
 
 * Fixed floating issue in FF4 on /projects page
