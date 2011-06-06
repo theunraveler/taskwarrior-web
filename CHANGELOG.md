@@ -1,3 +1,8 @@
+## v0.0.5 (6/5/11)
+
+* Added "depends" method to task model so that tasks that use depends will not
+  throw errors.
+
 ## v0.0.4 (5/9/11)
 
 * Quick bugfix to remove checkboxes from project page. Race conditions prevent
