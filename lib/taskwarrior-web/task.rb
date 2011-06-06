@@ -7,7 +7,7 @@ module TaskwarriorWeb
 
     TASK_BIN = 'task'
 
-    attr_accessor :id, :entry, :project, :priority, :uuid, :description, :status, :due, :start, :end, :tags
+    attr_accessor :id, :entry, :project, :priority, :uuid, :description, :status, :due, :start, :end, :tags, :depends
 
     ####################################
     # MODEL METHODS FOR INDIVIDUAL TASKS
