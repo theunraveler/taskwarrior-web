@@ -5,8 +5,6 @@ module TaskwarriorWeb
   #################
   class Task
 
-    TASK_BIN = 'task'
-
     attr_accessor :id, :entry, :project, :priority, :uuid, :description, :status,
                   :due, :start, :end, :tags, :depends, :wait
 
@@ -22,7 +20,7 @@ module TaskwarriorWeb
 
     def save!
       exclude = ['@description', '@tags']
-      command = TASK_BIN + ' add'
+      command = 'add'
       command << " '#{description}'"
       instance_variables.each do |ivar|
         subbed = ivar.to_s.gsub('@', '')
@@ -33,8 +31,7 @@ module TaskwarriorWeb
           command << " +#{tag}"
         end
       end
-      puts command
-      `#{command}` 
+      TaskwarriorWeb::Runner.run(command)
     end
     
     ##################################
@@ -46,15 +43,15 @@ module TaskwarriorWeb
       tasks = []
       count = 1
   
-      stdout =  TASK_BIN + ' _query'
+      command =  '_query'
       args.each do |param|
         param.each do |attr, value|
-          stdout << " #{attr.to_s}:#{value}"
+          command << " #{attr.to_s}:#{value}"
         end
       end
 
       # Process the JSON data.
-      json = `#{stdout}`
+      json = TaskwarriorWeb::Runner.run(command)
       json.strip!
       json = '[' + json + ']'
       results = json == '[No matches.]' ? [] : JSON.parse(json)
@@ -88,13 +85,13 @@ module TaskwarriorWeb
 
     # Get the number of tasks for some paramters
     def self.count(*args)
-      statement = TASK_BIN + ' count'
+      command = 'count'
       args.each do |param|
         param.each do |attr, value|
-          statement << " #{attr.to_s}:#{value}"
+          command << " #{attr.to_s}:#{value}"
         end
       end
-      return `#{statement}`.strip!
+      return TaskwarriorWeb::Runner.run(command).strip!
     end
 
     ###############################################
@@ -105,8 +102,7 @@ module TaskwarriorWeb
     # Mark a task as complete
     # TODO: Make into instance method when `task` supports finding by UUID.
     def self.complete!(task_id)
-      statement = TASK_BIN + " #{task_id} done"
-      `#{statement}`
+      TaskwarriorWeb::Runner.run("#{task_id} done")
     end
 
   end
