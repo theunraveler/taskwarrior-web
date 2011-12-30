@@ -8,7 +8,7 @@ module TaskwarriorWeb
     TASK_BIN = 'task'
 
     attr_accessor :id, :entry, :project, :priority, :uuid, :description, :status,
-                  :due, :start, :end, :tags, :depends, :imask, :parent, :recur, :wait
+                  :due, :start, :end, :tags, :depends, :wait
 
     ####################################
     # MODEL METHODS FOR INDIVIDUAL TASKS
@@ -16,7 +16,7 @@ module TaskwarriorWeb
 
     def initialize(attributes = {})
       attributes.each do |attr, value|
-        send("#{attr}=", value)  
+        send("#{attr}=", value) if respond_to?(attr.to_sym)
       end  
     end
 

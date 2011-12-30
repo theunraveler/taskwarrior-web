@@ -1,3 +1,8 @@
+## v0.0.9 (12/30/11)
+
+* Added check to make sure property exists on Task model before assigning.
+* Removing some unused properties from the Task model
+
 ## v0.0.5 (6/5/11)
 
 * Added "depends" method to task model so that tasks that use depends will not
