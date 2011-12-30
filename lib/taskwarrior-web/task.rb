@@ -57,7 +57,7 @@ module TaskwarriorWeb
       json = `#{stdout}`
       json.strip!
       json = '[' + json + ']'
-      results = JSON.parse(json)
+      results = json == '[No matches.]' ? [] : JSON.parse(json)
 
       results.each do |result|
         result[:id] = count
