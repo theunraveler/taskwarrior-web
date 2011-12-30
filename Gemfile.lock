@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    taskwarrior-web (0.0.9)
+    taskwarrior-web (0.0.10)
       parseconfig
       sinatra
       vegas
