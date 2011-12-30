@@ -1,3 +1,7 @@
+## v0.0.10 (12/30/11)
+
+* Quick release to fix JSON parse error when there are no tasks.
+
 ## v0.0.9 (12/30/11)
 
 * Added check to make sure property exists on Task model before assigning.
