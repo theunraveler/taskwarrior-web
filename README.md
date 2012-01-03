@@ -3,6 +3,8 @@
 A lightweight, Sinatra-based web interface for the
 wonderful [Taskwarrior](http://taskwarrior.org/) todo application.
 
+[![Build Status](https://secure.travis-ci.org/theunraveler/taskwarrior-web.png)](http://travis-ci.org/theunraveler/taskwarrior-web)
+
 ## Installation
 
 `gem install taskwarrior-web`
@@ -33,7 +35,6 @@ I'm looking to include more features once `task` supports issuing commands via
 UUID.
 
 ## Known Issues
-[![Build Status](https://secure.travis-ci.org/theunraveler/taskwarrior-web.png)](http://travis-ci.org/theunraveler/taskwarrior-web)
 
 * The "View as list"/"View as Grid" links do nothing right now. (They will
   soon).
