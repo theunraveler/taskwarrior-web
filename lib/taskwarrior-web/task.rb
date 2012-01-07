@@ -1,3 +1,5 @@
+require 'taskwarrior-web/runner'
+
 module TaskwarriorWeb
   
   #################
@@ -61,7 +63,7 @@ module TaskwarriorWeb
         tasks << Task.new(result)
         count = count + 1
       end
-      return tasks
+      tasks
     end
 
     # Define method_missing to implement dynamic finder methods
@@ -91,7 +93,7 @@ module TaskwarriorWeb
           command << " #{attr.to_s}:#{value}"
         end
       end
-      return TaskwarriorWeb::Runner.run(command).strip!
+      TaskwarriorWeb::Runner.run(command).to_s.strip!
     end
 
     ###############################################
