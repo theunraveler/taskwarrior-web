@@ -33,7 +33,7 @@ module TaskwarriorWeb
           command << " +#{tag}"
         end
       end
-      TaskwarriorWeb::Runner.run(command)
+      Runner.run(command)
     end
     
     ##################################
@@ -93,7 +93,7 @@ module TaskwarriorWeb
           command << " #{attr.to_s}:#{value}"
         end
       end
-      TaskwarriorWeb::Runner.run(command).to_s.strip!
+      Runner.run(command).to_s.strip!
     end
 
     ###############################################
@@ -104,7 +104,7 @@ module TaskwarriorWeb
     # Mark a task as complete
     # TODO: Make into instance method when `task` supports finding by UUID.
     def self.complete!(task_id)
-      TaskwarriorWeb::Runner.run("#{task_id} done")
+      Runner.run("#{task_id} done")
     end
 
   end

@@ -10,17 +10,16 @@ module TaskwarriorWeb
       'query' => '_query'
     }
 
-    def self.run(command, *params)
-      command = TASK_BIN + " #{command}"
-      `#{command}`
+    def self.run(command)
+      stdout = TASK_BIN + " #{command}"
+      `#{stdout}`
     end
 
     def self.parse_args(*args)
       String.new.tap do |string|
-        args.each do |param|
-          param.each do |attr, value|
-            string << " #{attr.to_s}:#{value.to_s}"
-          end
+        args = args.last.is_a?(::Hash) ? args.pop : {}
+        args.each do |attr, value|
+          string << " #{attr.to_s}:#{value.to_s}"
         end
       end
     end

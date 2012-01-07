@@ -31,4 +31,14 @@ describe TaskwarriorWeb::Task do
       TaskwarriorWeb::Task.count
     end
   end
+
+  describe '.method_missing' do
+    it 'should make the class respond to find_by queries' do
+      TaskwarriorWeb::Task.should respond_to(:find_by_test)
+    end
+
+    it 'should not add support for obviously bogus methods' do
+      TaskwarriorWeb::Task.should_not respond_to(:wefiohhohiihihih)
+    end
+  end
 end
