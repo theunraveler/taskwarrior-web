@@ -4,25 +4,16 @@ module TaskwarriorWeb
     attr_accessor :command, :id, :params
 
     def initialize(command, id = nil, *args)
-      if command
-        @command = command
-      else
-        raise TaskwarriorWeb::MissingCommandError
-      end
-
+      @command = command if command
       @id = id if id
       @params = args.last.is_a?(::Hash) ? args.pop : {}
     end
 
     def run
-      TaskwarriorWeb::Runner.run(self)
-    end
-
-    private
-
-    def parse_params
-      String.new.tap do |string|
-        @params.each { |attr, value| string << " #{attr.to_s}:#{value.to_s}" }
+      if @command
+        TaskwarriorWeb::Runner.run(self)
+      else
+        raise MissingCommandError
       end
     end
 

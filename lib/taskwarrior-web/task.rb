@@ -1,3 +1,4 @@
+require 'json'
 require 'taskwarrior-web/runner'
 
 module TaskwarriorWeb
@@ -21,19 +22,12 @@ module TaskwarriorWeb
     end
 
     def save!
-      exclude = ['@description', '@tags']
-      command = 'add'
-      command << " '#{description}'"
       instance_variables.each do |ivar|
         subbed = ivar.to_s.gsub('@', '')
-        command << " #{subbed}:#{send(subbed.to_sym)}" unless exclude.include?(ivar.to_s)
+        command << " #{subbed}:#{send(subbed.to_sym)}"
       end
-      unless tags.nil?
-        tags.gsub(', ', ',').split(',').each do |tag|
-          command << " +#{tag}"
-        end
-      end
-      Runner.run(command)
+      tags = tags.gsub(', ', ',').split(',')
+      Command.new(:add, nil, :tags => tags).run
     end
     
     ##################################
@@ -44,19 +38,12 @@ module TaskwarriorWeb
     def self.query(*args)
       tasks = []
       count = 1
-  
-      command =  '_query'
-      args.each do |param|
-        param.each do |attr, value|
-          command << " #{attr.to_s}:#{value}"
-        end
-      end
 
       # Process the JSON data.
-      json = TaskwarriorWeb::Runner.run(command)
+      json = Command.new(:query, nil, args).run
       json.strip!
       json = '[' + json + ']'
-      results = json == '[No matches.]' ? [] : JSON.parse(json)
+      results = json == '[No matches.]' ? [] : ::JSON.parse(json)
 
       results.each do |result|
         result[:id] = count
@@ -70,7 +57,7 @@ module TaskwarriorWeb
     def self.method_missing(method_sym, *arguments, &block)
       match = TaskDynamicFinderMatch.new(method_sym)
       if match.match? 
-        self.query(match.attribute => arguments.first)
+        self.query(match.attribute.to_s => arguments.first.to_s)
       else
         super
       end
@@ -87,13 +74,7 @@ module TaskwarriorWeb
 
     # Get the number of tasks for some paramters
     def self.count(*args)
-      command = 'count'
-      args.each do |param|
-        param.each do |attr, value|
-          command << " #{attr.to_s}:#{value}"
-        end
-      end
-      Runner.run(command).to_s.strip!
+      Command.new(:count, nil, args).run.to_s.strip!
     end
 
     ###############################################
@@ -104,7 +85,7 @@ module TaskwarriorWeb
     # Mark a task as complete
     # TODO: Make into instance method when `task` supports finding by UUID.
     def self.complete!(task_id)
-      Runner.run("#{task_id} done")
+      Command.new(:complete, task_id).run
     end
 
   end

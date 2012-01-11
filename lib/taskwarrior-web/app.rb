@@ -2,8 +2,6 @@
 
 require 'sinatra'
 require 'erb'
-require 'parseconfig'
-require 'json'
 require 'time'
 
 module TaskwarriorWeb
@@ -50,7 +48,7 @@ module TaskwarriorWeb
       def subnav(type)
         case type
           when 'tasks' then
-            { '/tasks/pending' => "Pending (#{TaskwarriorWeb::Task.count(:status => 'pending')})", 
+            { '/tasks/pending' => "Pending (#{TaskwarriorWeb::Task.count(:status => :pending)})", 
               '/tasks/completed' => "Completed",
               '/tasks/deleted' => 'Deleted'
             }
@@ -126,9 +124,8 @@ module TaskwarriorWeb
     get '/projects/:name/?' do
       @subnav = subnav('projects')
       subbed = params[:name].gsub('--', '.') 
-      @tasks = TaskwarriorWeb::Task.query('status.not' => 'deleted', 'project' => subbed).sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s] }
-      regex = Regexp.new("^#{subbed}$", Regexp::IGNORECASE)
-      @title = @tasks.select { |t| t.project.match(regex) }.first.project
+      @tasks = TaskwarriorWeb::Task.query('status.not' => 'deleted', :project => subbed).sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s] }
+      @title = @tasks.select { |t| t.project.match(/^#{subbed}$/i) }.first.project
       erb :project
     end
 

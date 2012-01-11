@@ -1,9 +1,9 @@
+require 'parseconfig'
+
 module TaskwarriorWeb
-  module Config
+  class Config
 
-    extend self
-
-    def file
+    def self.file
       @file ||= ParseConfig.new("#{Dir.home}/.taskrc")
     end
 

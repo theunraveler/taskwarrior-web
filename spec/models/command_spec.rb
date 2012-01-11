@@ -12,10 +12,6 @@ describe TaskwarriorWeb::Command do
       end
     end
 
-    it 'should raise an exception if no command is specified' do
-      expect { TaskwarriorWeb::Command.new(nil, 4) }.to raise_error(TaskwarriorWeb::MissingCommandError)
-    end
-
     it 'should not set an @id if none is passed' do
       command = TaskwarriorWeb::Command.new('test', nil, :hello => :hi, :none => :none)
       command.command.should eq('test')
@@ -33,15 +29,11 @@ describe TaskwarriorWeb::Command do
       TaskwarriorWeb::Runner.should_receive(:run).with(@command).and_return('{}')
       @command.run
     end
-  end
 
-  describe '#parse_params' do
-    before do
-      @command = TaskwarriorWeb::Command.new('test', nil, :hello => :hi, :none => :some)
+    it 'should raise an exception if no command is specified' do
+      command = TaskwarriorWeb::Command.new(nil, 5)
+      expect { command.run }.to raise_error(TaskwarriorWeb::MissingCommandError)
     end
 
-    it 'should return a string like "param:value param:value' do
-      @command.send(:parse_params).should eq(' hello:hi none:some')
-    end
   end
 end
