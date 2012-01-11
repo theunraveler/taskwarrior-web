@@ -15,11 +15,20 @@
         <% if task.status == 'pending' %>
           <tr class="<%= colorize_date(task.due) %>">
             <td><input type="checkbox" <%= 'checked="checked" ' if task.status == 'completed' %> class="<%= task.status %>" data-task="<%= task.id %>" /></td>
-        <% else %>
-          <tr class="<%= task.status %>">
-            <td></td>
-        <% end %>
-          <td><%= task.description %></td>
+          <% else %>
+            <tr class="<%= task.status %>">
+              <td></td>
+          <% end %>
+          <td>
+            <%= task.description %>
+            <% unless task.annotations.nil? || task.annotations.empty? %>
+              <ul>
+                <% task.annotations.each do |annotation| %>
+                  <li><%= format_date(annotation['entry']) %>: <%= auto_link(annotation['description']) %></li>
+                <% end %>
+              </ul>
+            <% end %>
+          </td>
           <td><a href="/projects/<%= linkify(task.project, :project) %>"><%= task.project %></a></td>
           <td><%= format_date(task.due) unless task.due.nil? %></td>
           <td><%= task.tags.join(', ') unless task.tags.nil? %></td>

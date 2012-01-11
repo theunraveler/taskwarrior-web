@@ -1,8 +1,9 @@
 PATH
   remote: .
   specs:
-    taskwarrior-web (0.0.10)
+    taskwarrior-web (0.0.11)
       parseconfig
+      rinku
       sinatra
       vegas
 
@@ -27,6 +28,7 @@ GEM
       rack
     rake (0.9.2.2)
     rb-fsevent (0.4.3.1)
+    rinku (1.5.0)
     rspec (2.8.0)
       rspec-core (~> 2.8.0)
       rspec-expectations (~> 2.8.0)

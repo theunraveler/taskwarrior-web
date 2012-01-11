@@ -1,3 +1,8 @@
+## v0.0.11 (1/10/12)
+
+* Added annotations to task listing, complete with autolinking (turns URLs into
+  links)
+
 ## v0.0.10 (12/30/11)
 
 * Quick release to fix JSON parse error when there are no tasks.

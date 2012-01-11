@@ -3,6 +3,7 @@
 require 'sinatra'
 require 'erb'
 require 'time'
+require 'rinku'
 
 module TaskwarriorWeb
   class App < Sinatra::Base
@@ -43,6 +44,10 @@ module TaskwarriorWeb
           when 'project'
             item.downcase.gsub('.', '--')
         end
+      end
+
+      def auto_link(text)
+        Rinku.auto_link(text, :all, 'target="_blank"')
       end
 
       def subnav(type)
