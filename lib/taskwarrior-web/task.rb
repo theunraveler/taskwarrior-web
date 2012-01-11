@@ -1,3 +1,5 @@
+require 'taskwarrior-web/runner'
+
 module TaskwarriorWeb
   
   #################
@@ -6,7 +8,8 @@ module TaskwarriorWeb
   class Task
 
     attr_accessor :id, :entry, :project, :priority, :uuid, :description, :status,
-                  :due, :start, :end, :tags, :depends, :wait
+                  :due, :start, :end, :tags, :depends, :wait, :annotations
+    alias :annotate= :annotations=
 
     ####################################
     # MODEL METHODS FOR INDIVIDUAL TASKS
