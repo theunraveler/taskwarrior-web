@@ -1,3 +1,5 @@
+require 'sinatra'
+require 'rack/test'
 require 'rspec'
 
 # Simplecov

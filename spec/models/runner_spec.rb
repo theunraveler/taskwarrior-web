@@ -48,17 +48,17 @@ describe TaskwarriorWeb::Runner do
   describe '.parsed_params' do
     it 'should create a string from the passed paramters' do
       command = TaskwarriorWeb::Command.new(:query, nil, :test => 14, :none => :none, :hello => :hi)
-      TaskwarriorWeb::Runner.parsed_params(command).should eq(' test:14 none:none hello:hi')
+      TaskwarriorWeb::Runner.parsed_params(command.params).should eq(' test:14 none:none hello:hi')
     end
 
     it 'should prefix tags with a +' do
       command = TaskwarriorWeb::Command.new(:add, nil, :tags => [:today, :tomorrow])
-      TaskwarriorWeb::Runner.parsed_params(command).should eq(' +today +tomorrow') 
+      TaskwarriorWeb::Runner.parsed_params(command.params).should eq(' +today +tomorrow') 
     end
 
     it 'should pull out the description parameter' do
       command = TaskwarriorWeb::Command.new(:add, nil, :description => 'Hello', :status => :pending)
-      TaskwarriorWeb::Runner.parsed_params(command).should eq(" 'Hello' status:pending")
+      TaskwarriorWeb::Runner.parsed_params(command.params).should eq(" 'Hello' status:pending")
     end
   end
 end

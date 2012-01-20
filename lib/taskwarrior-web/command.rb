@@ -1,3 +1,5 @@
+require 'taskwarrior-web/runner'
+
 module TaskwarriorWeb
   class Command
 

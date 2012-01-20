@@ -1,5 +1,5 @@
 require 'json'
-require 'taskwarrior-web/runner'
+require 'taskwarrior-web/command'
 
 module TaskwarriorWeb
   

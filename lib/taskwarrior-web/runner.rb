@@ -7,15 +7,20 @@ module TaskwarriorWeb
       :complete => ':id done',
       :add => 'add',
       :delete => ':id rm',
-      :query => '_query'
+      :query => '_query',
+      :count => 'count'
     }
 
     def self.run(command_obj)
+      command = build(command_obj)
+      `#{TASK_BIN} #{command}`
+    end
+
+    def self.build(command_obj)
       command = task_command(command_obj)
       command = substitute_parts(command, command_obj) if command =~ /:id/
-      params = parsed_params(command_obj)
-      stdout = "#{TASK_BIN} #{command}#{params}"
-      `#{stdout}`
+      params = parsed_params(command_obj.params)
+      "#{command}#{params}"
     end
 
     def self.task_command(command_obj)
@@ -34,16 +39,16 @@ module TaskwarriorWeb
       end
     end
 
-    def self.parsed_params(command_obj)
+    def self.parsed_params(params)
       String.new.tap do |string|
-        string << " '#{command_obj.params.delete(:description)}'" if command_obj.params.has_key?(:description)
+        string << " '#{params.delete(:description)}'" if params.has_key?(:description)
 
-        if command_obj.params.has_key?(:tags)
-          tags = command_obj.params.delete(:tags)
+        if params.has_key?(:tags)
+          tags = params.delete(:tags)
           tags.each { |tag| string << " +#{tag.to_s}" } 
         end
 
-        command_obj.params.each { |attr, value| string << " #{attr.to_s}:#{value.to_s}" }
+        params.each { |attr, value| string << " #{attr.to_s}:#{value.to_s}" }
       end
     end
 
