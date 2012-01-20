@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "taskwarrior-web/version"
 
 Gem::Specification.new do |s|
   s.name        = "taskwarrior-web"
