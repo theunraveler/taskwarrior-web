@@ -6,6 +6,7 @@ require 'parseconfig'
 require 'json'
 require 'time'
 require 'rinku'
+require 'digest'
 
 module TaskwarriorWeb
   class App < Sinatra::Base
@@ -14,9 +15,21 @@ module TaskwarriorWeb
     set :root,  @@root    
     set :app_file, __FILE__
     
+    def protected!
+      response['WWW-Authenticate'] = %(Basic realm="Taskworrior Web") and  throw(:halt, [401, "Not authorized\n"]) and return unless authorized?
+    end
+
+    def authorized?
+      @auth ||=  Rack::Auth::Basic::Request.new(request.env)
+      @auth.provided? && @auth.basic? && @auth.credentials &&
+        @auth.credentials[0] == TaskwarriorWeb::Config.file.get_value('user') &&
+        Digest::MD5.hexdigest(@auth.credentials[1]) == TaskwarriorWeb::Config.file.get_value('passwd')
+    end
+
     # Before filter
     before do
       @current_page = request.path_info
+      protected! unless TaskwarriorWeb::Config.file.get_value('user').nil?
     end
 
     # Helpers
