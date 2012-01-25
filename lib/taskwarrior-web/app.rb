@@ -16,7 +16,7 @@ module TaskwarriorWeb
     set :app_file, __FILE__
     
     def protected!
-      response['WWW-Authenticate'] = %(Basic realm="Taskworrior Web") and  throw(:halt, [401, "Not authorized\n"]) and return unless authorized?
+      response['WWW-Authenticate'] = %(Basic realm="Taskworrior Web") and throw(:halt, [401, "Not authorized\n"]) and return unless authorized?
     end
 
     def authorized?
