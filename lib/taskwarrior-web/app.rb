@@ -22,14 +22,14 @@ module TaskwarriorWeb
     def authorized?
       @auth ||=  Rack::Auth::Basic::Request.new(request.env)
       @auth.provided? && @auth.basic? && @auth.credentials &&
-        @auth.credentials[0] == TaskwarriorWeb::Config.file.get_value('user') &&
-        Digest::MD5.hexdigest(@auth.credentials[1]) == TaskwarriorWeb::Config.file.get_value('passwd')
+        @auth.credentials[0] == TaskwarriorWeb::Config.file.get_value('task-web.user') &&
+        Digest::MD5.hexdigest(@auth.credentials[1]) == TaskwarriorWeb::Config.file.get_value('task-web.passwd')
     end
 
     # Before filter
     before do
       @current_page = request.path_info
-      protected! unless TaskwarriorWeb::Config.file.get_value('user').nil?
+      protected! unless TaskwarriorWeb::Config.file.get_value('task-web.user').nil?
     end
 
     # Helpers
