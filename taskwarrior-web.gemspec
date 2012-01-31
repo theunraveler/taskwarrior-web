@@ -1,10 +1,9 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "taskwarrior-web/version"
 
 Gem::Specification.new do |s|
   s.name        = "taskwarrior-web"
-  s.version     = TaskwarriorWeb::VERSION
+  s.version     = '0.0.11'
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Jake Bell"]
   s.email       = ["jake@theunraveler.com"]

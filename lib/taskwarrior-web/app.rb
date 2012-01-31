@@ -42,7 +42,7 @@ module TaskwarriorWeb
     get '/tasks/new/?' do
       @title = 'New Task'
       @subnav = subnav('tasks')
-      @date_format = TaskwarriorWeb::Config.file.get_value('dateformat') || 'm/d/yy'
+      @date_format = TaskwarriorWeb::Config.dateformat || 'm/d/yy'
       @date_format.gsub!('Y', 'yy')
       erb :task_form
     end

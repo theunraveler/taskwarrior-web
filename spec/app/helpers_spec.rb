@@ -24,11 +24,10 @@ describe TaskwarriorWeb::App::Helpers do
 
     context 'with a specified date format' do
       before do
-        TaskwarriorWeb::Config.stub_chain(:file, :get_value).with('dateformat') { 'd/m/Y' }
+        TaskwarriorWeb::Config.should_receive(:dateformat).any_number_of_times.and_return('d/m/Y')
       end
 
       it 'should format dates using the specified format' do
-        pending
         helpers.format_date('2012-01-11 12:23:00').should == '11/01/2012'
         helpers.format_date('2012-01-11').should == '11/01/2012'
       end

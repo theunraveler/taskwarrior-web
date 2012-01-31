@@ -3,14 +3,14 @@ module TaskwarriorWeb
     module Helpers
 
       def format_date(timestamp)
-        format = TaskwarriorWeb::Config.file.get_value('dateformat') || 'm/d/Y'
+        format = TaskwarriorWeb::Config.dateformat || 'm/d/Y'
         subbed = format.gsub(/([a-zA-Z])/, '%\1')
         Time.parse(timestamp).strftime(subbed)
       end
 
       def colorize_date(timestamp)
         return if timestamp.nil?
-        due_def = TaskwarriorWeb::Config.file.get_value('due').to_i || 5
+        due_def = TaskwarriorWeb::Config.due.to_i || 5
         time = Time.parse(timestamp)
         case true
           when Time.now.strftime('%D') == time.strftime('%D') then 'today'

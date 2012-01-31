@@ -7,5 +7,9 @@ module TaskwarriorWeb
       @file ||= ParseConfig.new("#{Dir.home}/.taskrc")
     end
 
+    def self.method_missing(method)
+      self.file.get_value(method.to_s)
+    end
+
   end
 end
