@@ -13,6 +13,7 @@ module TaskwarriorWeb
 
     def self.run(command_obj)
       command = build(command_obj)
+      puts "Running command: '#{command}'"
       `#{TASK_BIN} #{command}`
     end
 

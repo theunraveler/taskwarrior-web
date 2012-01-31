@@ -30,7 +30,7 @@ describe TaskwarriorWeb::Task do
   describe '.query' do
     it 'should create and run a new Command object' do
       command = TaskwarriorWeb::Command.new(:query)
-      TaskwarriorWeb::Command.should_receive(:new).with(:query, nil, []).and_return(command)
+      TaskwarriorWeb::Command.should_receive(:new).with(:query, nil).and_return(command)
       command.should_receive(:run).and_return('{}')
       TaskwarriorWeb::Task.query
     end
@@ -51,7 +51,7 @@ describe TaskwarriorWeb::Task do
   describe '.count' do
     it 'create and run an new command object' do
       command = TaskwarriorWeb::Command.new(:count)
-      TaskwarriorWeb::Command.should_receive(:new).with(:count, nil, []).and_return(command)
+      TaskwarriorWeb::Command.should_receive(:new).with(:count, nil).and_return(command)
       command.should_receive(:run).and_return('{}')
       TaskwarriorWeb::Task.count
     end

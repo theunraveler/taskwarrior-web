@@ -41,7 +41,7 @@ module TaskwarriorWeb
       count = 1
 
       # Process the JSON data.
-      json = Command.new(:query, nil, args).run
+      json = Command.new(:query, nil, *args).run
       json.strip!
       json = '[' + json + ']'
       results = json == '[No matches.]' ? [] : ::JSON.parse(json)
@@ -75,7 +75,7 @@ module TaskwarriorWeb
 
     # Get the number of tasks for some paramters
     def self.count(*args)
-      Command.new(:count, nil, args).run.to_s.strip!
+      Command.new(:count, nil, *args).run.to_s.strip!
     end
 
     ###############################################
