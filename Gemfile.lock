@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    taskwarrior-web (0.0.11)
+    taskwarrior-web (0.0.12)
       parseconfig
       rinku
       sinatra

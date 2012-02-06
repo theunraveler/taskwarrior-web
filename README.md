@@ -36,6 +36,10 @@ UUID.
 
 ## Known Issues
 
+* Currently, taskwarrior-web does not work with task 2. It will by the time
+  task 2 is out of beta.
+* taskwarrior-web requires Ruby >= 1.9. It will not work with 1.8 and lower.
+  Support for 1.8 will happen at some point.
 * The "View as list"/"View as Grid" links do nothing right now. (They will
   soon).
 * There are occasionally pretty severe race conditions due to the way that

@@ -3,15 +3,17 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "taskwarrior-web"
-  s.version     = '0.0.11'
+  s.version     = '0.0.12'
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Jake Bell"]
   s.email       = ["jake@theunraveler.com"]
-  s.homepage    = "http://taskwarrior.org"
+  s.homepage    = "http://github.com/theunraveler/taskwarrior-web"
   s.summary     = %q{Web frontend for taskwarrior command line task manager.}
   s.description = %q{This gem provides a graphical frontend for the Taskwarrior task manager. It is based on Sinatra.}
 
   s.rubyforge_project = "taskwarrior-web"
+
+  s.required_ruby_version = '>= 1.9.0'
 
   s.add_dependency('sinatra')
   s.add_dependency('parseconfig')
