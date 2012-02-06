@@ -10,6 +10,10 @@ end
 describe TaskwarriorWeb::App::Helpers do
   let(:helpers) { TestHelpers.new }
 
+  before do
+    TaskwarriorWeb::Config.should_receive(:file).any_number_of_times.and_return(ParseConfig.new)
+  end
+
   describe '#format_date' do
     context 'with no format specified' do
       before do

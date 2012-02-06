@@ -7,30 +7,39 @@ describe TaskwarriorWeb::Runner do
   end
 
   describe '.run' do
-    it 'should execute the given command' do
-      TaskwarriorWeb::Runner.should_receive(:`).with('task add')
-      TaskwarriorWeb::Runner.run(@command)
+    context 'valid, without a command' do
+      before do
+        TaskwarriorWeb::Runner.should_receive(:`).and_return('{}')
+      end
+
+      it 'should return the stdout' do
+        TaskwarriorWeb::Runner.run(@command).should eq('{}')
+      end
+
+      it 'should call .substitute_parts if the command needs a task ID' do
+        command = TaskwarriorWeb::Command.new(:complete, 4)
+        TaskwarriorWeb::Runner.should_receive(:substitute_parts).with(anything, command)
+        TaskwarriorWeb::Runner.run(command)
+      end
+
+      it 'should not call .substitute_parts if not necessary' do
+        TaskwarriorWeb::Runner.should_not_receive(:substitute_parts)
+        TaskwarriorWeb::Runner.run(@command)
+      end
     end
 
-    it 'should return the stdout' do
-      TaskwarriorWeb::Runner.should_receive(:`).and_return('{}')
-      TaskwarriorWeb::Runner.run(@command).should eq('{}')
+    context 'invalid' do
+      it 'should throw an exception if the command is not valid' do
+        @command.command = :test
+        expect { TaskwarriorWeb::Runner.run(@command) }.to raise_error(TaskwarriorWeb::InvalidCommandError)
+      end
     end
 
-    it 'should throw an exception if the command is not valid' do
-      @command.command = :test
-      expect { TaskwarriorWeb::Runner.run(@command) }.to raise_error(TaskwarriorWeb::InvalidCommandError)
-    end
-
-    it 'should call .substitute_parts if the command needs a task ID' do
-      command = TaskwarriorWeb::Command.new(:complete, 4)
-      TaskwarriorWeb::Runner.should_receive(:substitute_parts).with(anything, command)
-      TaskwarriorWeb::Runner.run(command)
-    end
-
-    it 'should not call .substitute_parts if not necessary' do
-      TaskwarriorWeb::Runner.should_not_receive(:substitute_parts)
-      TaskwarriorWeb::Runner.run(@command)
+    context 'with a given command' do
+      it 'should execute the given command' do
+        TaskwarriorWeb::Runner.should_receive(:`).with('task add').and_return('{}')
+        TaskwarriorWeb::Runner.run(@command)
+      end
     end
   end
 
