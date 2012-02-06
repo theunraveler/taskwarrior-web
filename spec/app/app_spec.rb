@@ -10,6 +10,10 @@ describe "My App" do
     TaskwarriorWeb::App
   end
 
+  before do
+    TaskwarriorWeb::Config.should_receive(:file).any_number_of_times.and_return(ParseConfig.new)
+  end
+
   describe 'GET /' do
     it 'should redirect to /tasks/pending' do
       get "/"
