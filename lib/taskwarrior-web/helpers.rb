@@ -1,3 +1,5 @@
+require 'taskwarrior-web/config'
+
 module TaskwarriorWeb
   class App < Sinatra::Base
     module Helpers
