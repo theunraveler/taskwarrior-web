@@ -29,7 +29,7 @@ module TaskwarriorWeb
     # Before filter
     before do
       @current_page = request.path_info
-      protected! unless TaskwarriorWeb::Config.file.get_value('task-web.user').nil?
+      protected! if TaskwarriorWeb::Config.file.get_value('task-web.user')
     end
 
     # Helpers
