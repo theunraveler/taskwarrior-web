@@ -23,12 +23,7 @@ module TaskwarriorWeb
     end
 
     def save!
-      instance_variables.each do |ivar|
-        subbed = ivar.to_s.gsub('@', '')
-        command << " #{subbed}:#{send(subbed.to_sym)}"
-      end
-      tags = tags.gsub(', ', ',').split(',')
-      Command.new(:add, nil, :tags => tags).run
+      Command.new(:add, nil, self.to_hash).run
     end
     
     ##################################
@@ -87,6 +82,19 @@ module TaskwarriorWeb
     # TODO: Make into instance method when `task` supports finding by UUID.
     def self.complete!(task_id)
       Command.new(:complete, task_id).run
+    end
+
+    # Make sure that the tags are an array.
+    def tags=(value)
+      if value.is_a?(String)
+        @tags = value.gsub!(', ', ',').split(',')
+      else
+        @tags = value
+      end
+    end
+
+    def to_hash
+      Hash[instance_variables.map { |var| [var[1..-1].to_sym, instance_variable_get(var)] }]
     end
 
   end

@@ -1,3 +1,5 @@
+require 'taskwarrior-web/config'
+
 module TaskwarriorWeb
   class Runner
 
@@ -46,7 +48,8 @@ module TaskwarriorWeb
 
         if params.has_key?(:tags)
           tags = params.delete(:tags)
-          tags.each { |tag| string << " +#{tag.to_s}" } 
+          tag_indicator = TaskwarriorWeb::Config.file.get_value('tag.indicator') || '+'
+          tags.each { |tag| string << " #{tag_indicator}#{tag.to_s}" } 
         end
 
         params.each { |attr, value| string << " #{attr.to_s}:#{value.to_s}" }

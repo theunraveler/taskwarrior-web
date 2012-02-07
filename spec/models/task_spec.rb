@@ -57,6 +57,19 @@ describe TaskwarriorWeb::Task do
     end
   end
 
+  describe '#tags=' do
+    it 'should convert a string to an array when initializing' do
+      task = TaskwarriorWeb::Task.new(:tags => 'hi there, twice')
+      task.tags.should eq(['hi there', 'twice'])
+    end
+
+    it 'should convert a string to an array when setting explicitly' do
+      task = TaskwarriorWeb::Task.new
+      task.tags = 'hello, twice,thrice'
+      task.tags.should eq(['hello', 'twice', 'thrice'])
+    end
+  end
+
   describe '.method_missing' do
     it 'should call the query method for find_by queries' do
       TaskwarriorWeb::Task.should_receive(:query).with('status' => 'pending')
