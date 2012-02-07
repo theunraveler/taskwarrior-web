@@ -12,6 +12,7 @@ describe "My App" do
 
   before do
     TaskwarriorWeb::Config.should_receive(:file).any_number_of_times.and_return(ParseConfig.new)
+    TaskwarriorWeb::Runner.should_receive(:run).any_number_of_times.and_return('{}')
   end
 
   describe 'GET /' do
