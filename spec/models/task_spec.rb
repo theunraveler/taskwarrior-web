@@ -70,6 +70,20 @@ describe TaskwarriorWeb::Task do
     end
   end
 
+  describe '#to_hash' do
+    before do
+      @task = TaskwarriorWeb::Task.new(:description => 'Testing', :due => '12/2/12', :tags => 'hello, twice')
+    end
+
+    it 'should return a hash' do
+      @task.to_hash.should be_a(Hash)
+    end
+
+    it 'should have keys for each of the object\'s instance variables' do
+      @task.to_hash.should eq({:description => 'Testing', :due => '12/2/12', :tags => ['hello', 'twice']})
+    end
+  end
+
   describe '.method_missing' do
     it 'should call the query method for find_by queries' do
       TaskwarriorWeb::Task.should_receive(:query).with('status' => 'pending')
