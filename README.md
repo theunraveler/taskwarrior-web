@@ -30,6 +30,8 @@ The current featureset includes:
 * `task-web` will pull your `task` config (from `.taskrc`) and use it to
   determine date formatting and when an upcoming task should be marked as
   "due".
+* If you are on a Mac and use Fluid.app, you get a dock badge showing the
+  number of pending tasks.
 
 I'm looking to include more features once `task` supports issuing commands via
 UUID.
