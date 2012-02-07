@@ -168,6 +168,10 @@ module TaskwarriorWeb
       tags.compact!.uniq!.to_json
     end
 
+    get '/ajax/count/?' do
+      TaskwarriorWeb::Task.count(:status => :pending).to_s
+    end
+
     # Error handling
     not_found do
       @title = 'Page Not Found'
