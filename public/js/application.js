@@ -4,6 +4,7 @@ $(document).ready(function() {
 	initCompleteTask();
 	initDatePicker();
 	initAutocomplete();
+	refreshDockBadge();
 });
 
 var initPolling = function() {
@@ -40,6 +41,8 @@ var refreshPageContents = function() {
 		url: window.location,
 		success: function(data) {
 			$('#listing').replaceWith($('#listing', data));
+			refreshSubnavCount();
+			refreshDockBadge();
 		}
 	});
 };
@@ -65,13 +68,8 @@ var initCompleteTask = function() {
 			success: function(data) {
 				row.fadeOut('slow', function() {
 					row.remove();
-					// TODO: Wow. This is nasty.
-					var subnavItem = $('#subnav-bar ul li:first-child a');
-					var oldCount = subnavItem.text().match(/((\d))/);
-					var newCount = parseInt(oldCount[0]) - 1
-					var newVal = subnavItem.text().replace(oldCount[0], newCount);
-					console.log(newVal);
-					subnavItem.text(newVal);
+					refreshSubnavCount();
+					refreshDockBadge();
 				});
 			}
 		});
@@ -121,6 +119,27 @@ var initAutocomplete = function() {
 	$('#task-tags').tagsInput({
 		autocomplete_url: '/ajax/tags',
 		defaultText: ''
+	});
+};
+
+// Count updating.
+
+var getCount = function(callback) {
+	$.ajax({
+		url: '/ajax/count',
+		success: callback
+	});
+};
+
+var refreshDockBadge = function() {
+	getCount(function(data) {
+		window.fluid.dockBadge = data;
+	});
+};
+
+var refreshSubnavCount = function() {
+	getCount(function(data) {
+		$('#subnav-bar ul li:first-child a').text('Pending ('+data+')');
 	});
 };
 
