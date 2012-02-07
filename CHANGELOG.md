@@ -1,3 +1,8 @@
+## v0.0.13 (2/6/12)
+
+* Adding Fluid app dock icon. The dock icons should now show a number of
+  pending tasks.
+
 ## v0.0.11 (1/10/12)
 
 * Added annotations to task listing, complete with autolinking (turns URLs into
