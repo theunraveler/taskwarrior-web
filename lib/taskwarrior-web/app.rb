@@ -108,7 +108,7 @@ module TaskwarriorWeb
     # AJAX callbacks
     get '/ajax/projects/?' do
       projects = TaskwarriorWeb::Task.query('status.not' => 'deleted').collect { |t| t.project }
-      projects.compact!.uniq!.to_json
+      projects.compact.uniq.select {|proj| proj.start_with?(params[:term]) }.to_json
     end
 
     get '/ajax/tags/?' do

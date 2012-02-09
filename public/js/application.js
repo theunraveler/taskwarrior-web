@@ -4,12 +4,16 @@ $(document).ready(function() {
 	initCompleteTask();
 	initDatePicker();
 	initAutocomplete();
-	refreshDockBadge();
+
+	// Fluid-specific stuff.
+	if (window.fluid) {
+		refreshDockBadge();
+	}
 });
 
 var initPolling = function() {
-	var polling;
-	if (polling = $.cookie('taskwarrior-web-polling')) {
+	var polling = $.cookie('taskwarrior-web-polling');
+	if (polling) {
 		var pollingInterval = startPolling();
 	} else {
 		$('#polling-info a').text('Start polling');
