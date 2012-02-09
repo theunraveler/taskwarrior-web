@@ -2,10 +2,10 @@
 
 require 'sinatra'
 require 'erb'
-require 'parseconfig'
-require 'json'
 require 'time'
 require 'rinku'
+require 'taskwarrior-web/config'
+require 'taskwarrior-web/helpers'
 require 'digest'
 
 module TaskwarriorWeb
@@ -22,66 +22,18 @@ module TaskwarriorWeb
     def authorized?
       @auth ||=  Rack::Auth::Basic::Request.new(request.env)
       @auth.provided? && @auth.basic? && @auth.credentials &&
-        @auth.credentials[0] == TaskwarriorWeb::Config.file.get_value('task-web.user') &&
-        Digest::MD5.hexdigest(@auth.credentials[1]) == TaskwarriorWeb::Config.file.get_value('task-web.passwd')
+        @auth.credentials[0] == TaskwarriorWeb::Config.property('task-web.user') &&
+        Digest::MD5.hexdigest(@auth.credentials[1]) == TaskwarriorWeb::Config.property('task-web.passwd')
     end
 
     # Before filter
     before do
       @current_page = request.path_info
-      protected! if TaskwarriorWeb::Config.file.get_value('task-web.user')
+      protected! if TaskwarriorWeb::Config.property('task-web.user')
     end
 
     # Helpers
-    helpers do
-
-      def format_date(timestamp)
-        format = TaskwarriorWeb::Config.file.get_value('dateformat') || 'm/d/Y'
-        subbed = format.gsub(/([a-zA-Z])/, '%\1')
-        Time.parse(timestamp).strftime(subbed)
-      end
-
-      def colorize_date(timestamp)
-        return if timestamp.nil?
-        due_def = TaskwarriorWeb::Config.file.get_value('due').to_i || 5
-        time = Time.parse(timestamp)
-        case true
-          when Time.now.strftime('%D') == time.strftime('%D') then 'today'
-          when Time.now.to_i > time.to_i then 'overdue'
-          when (time.to_i - Time.now.to_i) < (due_def * 86400) then 'due'
-          else 'regular'
-        end
-      end
-
-      def linkify(item, method)
-        return if item.nil?
-        case method.to_s
-          when 'project'
-            item.downcase.gsub('.', '--')
-        end
-      end
-
-      def auto_link(text)
-        Rinku.auto_link(text, :all, 'target="_blank"')
-      end
-
-      def subnav(type)
-        case type
-          when 'tasks' then
-            { '/tasks/pending' => "Pending (#{TaskwarriorWeb::Task.count(:status => 'pending')})", 
-              '/tasks/completed' => "Completed",
-              '/tasks/deleted' => 'Deleted'
-            }
-          when 'projects'
-            {
-              '/projects/overview' => 'Overview'
-            }
-          else
-            { }
-        end
-      end
-
-    end
+    helpers TaskwarriorWeb::App::Helpers
 
     # Redirects
     get '/' do
@@ -93,7 +45,7 @@ module TaskwarriorWeb
 
     # Task routes
     get '/tasks/:status/?' do
-      pass unless ['pending', 'completed', 'deleted'].include?(params[:status])
+      pass unless ['pending', 'waiting', 'completed', 'deleted'].include?(params[:status])
       @title = "#{params[:status].capitalize} Tasks"
       @subnav = subnav('tasks')
       @tasks = TaskwarriorWeb::Task.find_by_status(params[:status]).sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s, x.project.to_s] }
@@ -103,7 +55,7 @@ module TaskwarriorWeb
     get '/tasks/new/?' do
       @title = 'New Task'
       @subnav = subnav('tasks')
-      @date_format = TaskwarriorWeb::Config.file.get_value('dateformat') || 'm/d/yy'
+      @date_format = TaskwarriorWeb::Config.dateformat || 'm/d/yy'
       @date_format.gsub!('Y', 'yy')
       erb :task_form
     end
@@ -124,11 +76,6 @@ module TaskwarriorWeb
       end
     end
 
-    post '/tasks/:id/complete' do
-      TaskwarriorWeb::Task.complete!(params[:id])
-      redirect '/tasks/pending'
-    end
-
     # Projects
     get '/projects' do
       redirect '/projects/overview'
@@ -144,9 +91,8 @@ module TaskwarriorWeb
     get '/projects/:name/?' do
       @subnav = subnav('projects')
       subbed = params[:name].gsub('--', '.') 
-      @tasks = TaskwarriorWeb::Task.query('status.not' => 'deleted', 'project' => subbed).sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s] }
-      regex = Regexp.new("^#{subbed}$", Regexp::IGNORECASE)
-      @title = @tasks.select { |t| t.project.match(regex) }.first.project
+      @tasks = TaskwarriorWeb::Task.query('status.not' => 'deleted', :project => subbed).sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s] }
+      @title = @tasks.select { |t| t.project.match(/^#{subbed}$/i) }.first.project
       erb :project
     end
 
@@ -157,7 +103,7 @@ module TaskwarriorWeb
     # AJAX callbacks
     get '/ajax/projects/?' do
       projects = TaskwarriorWeb::Task.query('status.not' => 'deleted').collect { |t| t.project }
-      projects.compact!.uniq!.to_json
+      projects.compact.uniq.select {|proj| proj.start_with?(params[:term]) }.to_json
     end
 
     get '/ajax/tags/?' do
@@ -181,8 +127,8 @@ module TaskwarriorWeb
 
     def passes_validation(item, method)
       results = [] 
-      case method.to_s
-        when 'task'
+      case method
+        when :task
           if item['description'].empty?
             results << 'You must provide a description'
           end

@@ -1,15 +1,18 @@
 $(document).ready(function() {
 	initPolling();
 	initTooltips();
-	initCompleteTask();
 	initDatePicker();
 	initAutocomplete();
-	refreshDockBadge();
+
+	// Fluid-specific stuff.
+	if (window.fluid) {
+		refreshDockBadge();
+	}
 });
 
 var initPolling = function() {
-	var polling;
-	if (polling = $.cookie('taskwarrior-web-polling')) {
+	var polling = $.cookie('taskwarrior-web-polling');
+	if (polling) {
 		var pollingInterval = startPolling();
 	} else {
 		$('#polling-info a').text('Start polling');
@@ -51,56 +54,6 @@ var initTooltips = function() {
 	$('.tooltip').tipsy({
 		title: 'data-tooltip',
 		gravity: 's'
-	});
-};
-
-var initCompleteTask = function() {
-	$('input.pending').live('change', function() {
-		var checkbox = $(this);
-		var row = checkbox.closest('tr');
-		var task_id = $(this).data('task');
-		$.ajax({
-			url: '/tasks/' + task_id + '/complete',
-			type: 'post',
-			beforeSend: function() {
-				checkbox.replaceWith('<img src="/images/ajax-loader.gif" />');
-			},
-			success: function(data) {
-				row.fadeOut('slow', function() {
-					row.remove();
-					refreshSubnavCount();
-					refreshDockBadge();
-				});
-			}
-		});
-	});
-};
-
-var initInPlaceEditing = function() {
-	// Hide it initially.
-	$('.inplace-edit').hide();
-	$('#listing table td').live('mouseover mouseout', function(e) {
-		if (e.type == 'mouseover')  {
-			$('.inplace-edit', this).show();
-		} else {
-			$('.inplace-edit', this).hide();
-		}
-	});
-
-	$('.inplace-edit').live('click', function() {
-		var field = $($(this).siblings('span')[0]);
-		var formElement = '<input type="text" class="inplace-text" value="'+field.text()+'" />';
-		formElement += '<button type="submit" class="inplace-submit">Update</button>';
-		formElement += '<a href="javascript:void(0);" class="inplace-cancel">Cancel</a>';
-		field.replaceWith(formElement);
-		$(this).remove();
-	});
-
-	$('.inplace-cancel').live('click', function() {
-		var td = $(this).closest('td');
-		var oldField = '<span class="description">'+$($(this).siblings('.inplace-text')[0]).val()+'</span>';
-		oldField += '<a class="inplace-edit" href="javascript:void(0);">Edit</a>';
-		td.html(oldField);
 	});
 };
 
