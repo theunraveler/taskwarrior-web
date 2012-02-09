@@ -45,7 +45,7 @@ module TaskwarriorWeb
 
     # Task routes
     get '/tasks/:status/?' do
-      pass unless ['pending', 'completed', 'deleted'].include?(params[:status])
+      pass unless ['pending', 'waiting', 'completed', 'deleted'].include?(params[:status])
       @title = "#{params[:status].capitalize} Tasks"
       @subnav = subnav('tasks')
       @tasks = TaskwarriorWeb::Task.find_by_status(params[:status]).sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s, x.project.to_s] }
@@ -74,11 +74,6 @@ module TaskwarriorWeb
         end
         redirect '/tasks/new'
       end
-    end
-
-    post '/tasks/:id/complete' do
-      TaskwarriorWeb::Task.complete!(params[:id])
-      redirect '/tasks/pending'
     end
 
     # Projects
@@ -132,8 +127,8 @@ module TaskwarriorWeb
 
     def passes_validation(item, method)
       results = [] 
-      case method.to_s
-        when 'task'
+      case method
+        when :task
           if item['description'].empty?
             results << 'You must provide a description'
           end

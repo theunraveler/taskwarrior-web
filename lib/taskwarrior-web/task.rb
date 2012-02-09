@@ -8,7 +8,7 @@ module TaskwarriorWeb
   #################
   class Task
 
-    attr_accessor :id, :entry, :project, :priority, :uuid, :description, :status,
+    attr_accessor :entry, :project, :priority, :uuid, :description, :status,
                   :due, :start, :end, :tags, :depends, :wait, :annotations
     alias :annotate= :annotations=
 
@@ -25,6 +25,15 @@ module TaskwarriorWeb
     def save!
       Command.new(:add, nil, self.to_hash).run
     end
+
+    # Make sure that the tags are an array.
+    def tags=(value)
+      @tags = value.is_a?(String) ? value.gsub(', ', ',').split(',') : value
+    end
+
+    def to_hash
+      Hash[instance_variables.map { |var| [var[1..-1].to_sym, instance_variable_get(var)] }]
+    end
     
     ##################################
     # CLASS METHODS FOR QUERYING TASKS
@@ -33,7 +42,6 @@ module TaskwarriorWeb
     # Run queries on tasks.
     def self.query(*args)
       tasks = []
-      count = 1
 
       # Process the JSON data.
       json = Command.new(:query, nil, *args).run
@@ -41,12 +49,13 @@ module TaskwarriorWeb
       json = '[' + json + ']'
       results = json == '[No matches.]' ? [] : ::JSON.parse(json)
 
-      results.each do |result|
-        result[:id] = count
-        tasks << Task.new(result)
-        count = count + 1
-      end
+      results.each { |result| tasks << Task.new(result) }
       tasks
+    end
+
+    # Get the number of tasks for some paramters
+    def self.count(*args)
+      Command.new(:count, nil, *args).run.to_s.strip!
     end
 
     # Define method_missing to implement dynamic finder methods
@@ -66,31 +75,6 @@ module TaskwarriorWeb
       else
         super
       end
-    end
-
-    # Get the number of tasks for some paramters
-    def self.count(*args)
-      Command.new(:count, nil, *args).run.to_s.strip!
-    end
-
-    ###############################################
-    # CLASS METHODS FOR INTERACTING WITH TASKS
-    # (THESE WILL PROBABLY BECOME INSTANCE METHODS)
-    ###############################################
-
-    # Mark a task as complete
-    # TODO: Make into instance method when `task` supports finding by UUID.
-    def self.complete!(task_id)
-      Command.new(:complete, task_id).run
-    end
-
-    # Make sure that the tags are an array.
-    def tags=(value)
-      @tags = value.is_a?(String) ? value.gsub(', ', ',').split(',') : value
-    end
-
-    def to_hash
-      Hash[instance_variables.map { |var| [var[1..-1].to_sym, instance_variable_get(var)] }]
     end
 
   end

@@ -37,7 +37,8 @@ module TaskwarriorWeb
       def subnav(type)
         case type
           when 'tasks' then
-            { '/tasks/pending' => "Pending (#{TaskwarriorWeb::Task.count(:status => :pending)})", 
+            { '/tasks/pending' => "Pending (#{TaskwarriorWeb::Task.count(:status => :pending)})",
+              '/tasks/waiting' => "Waiting",
               '/tasks/completed' => "Completed",
               '/tasks/deleted' => 'Deleted'
             }

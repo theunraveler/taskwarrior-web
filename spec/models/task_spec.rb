@@ -18,15 +18,6 @@ describe TaskwarriorWeb::Task do
     end
   end
 
-  describe '.complete!' do
-    it 'create and run a new command object with the task ID' do
-      command = TaskwarriorWeb::Command.new(:complete, 3)
-      TaskwarriorWeb::Command.should_receive(:new).with(:complete, 3).and_return(command)
-      command.should_receive(:run).and_return('{}')
-      TaskwarriorWeb::Task.complete! 3
-    end
-  end
-
   describe '.query' do
     it 'should create and run a new Command object' do
       command = TaskwarriorWeb::Command.new(:query)

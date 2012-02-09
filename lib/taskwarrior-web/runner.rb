@@ -6,9 +6,7 @@ module TaskwarriorWeb
     TASK_BIN = 'task'
 
     TASK_COMMANDS = {
-      :complete => ':id done',
       :add => 'add',
-      :delete => ':id rm',
       :query => '_query',
       :count => 'count'
     }
@@ -55,7 +53,6 @@ module TaskwarriorWeb
         params.each { |attr, value| string << " #{attr.to_s}:#{value.to_s}" }
       end
     end
-
 
   end
 

@@ -16,12 +16,6 @@ describe TaskwarriorWeb::Runner do
         TaskwarriorWeb::Runner.run(@command).should eq('{}')
       end
 
-      it 'should call .substitute_parts if the command needs a task ID' do
-        command = TaskwarriorWeb::Command.new(:complete, 4)
-        TaskwarriorWeb::Runner.should_receive(:substitute_parts).with(anything, command)
-        TaskwarriorWeb::Runner.run(command)
-      end
-
       it 'should not call .substitute_parts if not necessary' do
         TaskwarriorWeb::Runner.should_not_receive(:substitute_parts)
         TaskwarriorWeb::Runner.run(@command)
