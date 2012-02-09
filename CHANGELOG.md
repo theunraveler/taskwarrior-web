@@ -1,3 +1,13 @@
+## v0.0.14 (2/9/12)
+
+* Merged in major refactoring to allow for easier support of task 2 and
+  1 simultaneously. Note that taskwarrior-web still only supports task 1, but
+  adding support for task 2 should now be easier.
+* Removed the ability to mark a task as complete. This was really buggy to
+  begin with, and will need to wait until task 2.
+* Fixed project autocomplete. Now it should actually work.
+* Added a new tab for "Waiting" tasks (where status:waiting)
+
 ## v0.0.13 (2/6/12)
 
 * Adding Fluid app dock icon. The dock icons should now show a number of

@@ -25,7 +25,6 @@ an executable, so all options for Vegas are valid for `task-web`. Type
 The current featureset includes:
 
 * Viewing tasks (duh) sorted and grouped in various ways.
-* Marking a pending task as done.
 * Creating a new task with a due date, project, and tags.
 * `task-web` will pull your `task` config (from `.taskrc`) and use it to
   determine date formatting and when an upcoming task should be marked as
@@ -34,7 +33,10 @@ The current featureset includes:
   number of pending tasks.
 
 I'm looking to include more features once `task` supports issuing commands via
-UUID.
+UUID, like:
+
+* Marking a pending task as done.
+* Deleting tasks
 
 ## Known Issues
 
@@ -44,9 +46,6 @@ UUID.
   Support for 1.8 will happen at some point.
 * The "View as list"/"View as Grid" links do nothing right now. (They will
   soon).
-* There are occasionally pretty severe race conditions due to the way that
-  `task` assigns IDs to tasks. This will no longer be the case when UUIDs are
-  implemented in `task`.
 
 ## Marginalia
 
