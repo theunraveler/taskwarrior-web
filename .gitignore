@@ -1,3 +1,4 @@
 .rvmrc
 pkg
 coverage
+Gemfile.lock
