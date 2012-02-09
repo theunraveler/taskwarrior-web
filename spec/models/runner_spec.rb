@@ -60,23 +60,16 @@ describe TaskwarriorWeb::Runner do
       TaskwarriorWeb::Runner.parsed_params(command.params).should eq(' test:14 none:none hello:hi')
     end
 
-    describe 'tags' do
-      before do
-        TaskwarriorWeb::Config.should_receive(:file).any_number_of_times.and_return(ParseConfig.new)
-        @config = TaskwarriorWeb::Config.file
-      end
+    it 'should prefix tags with the tag.indicator if specified' do
+      TaskwarriorWeb::Config.should_receive(:property).with('tag.indicator').and_return(';')
+      command = TaskwarriorWeb::Command.new(:add, nil, :tags => [:today, :tomorrow])
+      TaskwarriorWeb::Runner.parsed_params(command.params).should eq(' ;today ;tomorrow') 
+    end
 
-      it 'should prefix tags with the tag.indicator if specified' do
-        @config.should_receive(:get_value).with('tag.indicator').and_return(';')
-        command = TaskwarriorWeb::Command.new(:add, nil, :tags => [:today, :tomorrow])
-        TaskwarriorWeb::Runner.parsed_params(command.params).should eq(' ;today ;tomorrow') 
-      end
-
-      it 'should prefix tags with a + if no tag.indicator is specified' do
-        @config.should_receive(:get_value).with('tag.indicator').and_return(nil)        
-        command = TaskwarriorWeb::Command.new(:add, nil, :tags => [:today, :tomorrow])
-        TaskwarriorWeb::Runner.parsed_params(command.params).should eq(' +today +tomorrow') 
-      end
+    it 'should prefix tags with a + if no tag.indicator is specified' do
+      TaskwarriorWeb::Config.should_receive(:property).with('tag.indicator').and_return(nil)
+      command = TaskwarriorWeb::Command.new(:add, nil, :tags => [:today, :tomorrow])
+      TaskwarriorWeb::Runner.parsed_params(command.params).should eq(' +today +tomorrow') 
     end
 
     it 'should pull out the description parameter' do

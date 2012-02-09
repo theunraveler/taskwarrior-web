@@ -48,7 +48,7 @@ module TaskwarriorWeb
 
         if params.has_key?(:tags)
           tags = params.delete(:tags)
-          tag_indicator = TaskwarriorWeb::Config.file.get_value('tag.indicator') || '+'
+          tag_indicator = TaskwarriorWeb::Config.property('tag.indicator') || '+'
           tags.each { |tag| string << " #{tag_indicator}#{tag.to_s}" } 
         end
 

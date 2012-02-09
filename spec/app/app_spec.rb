@@ -11,7 +11,7 @@ describe "My App" do
   end
 
   before do
-    TaskwarriorWeb::Config.should_receive(:file).any_number_of_times.and_return(ParseConfig.new)
+    TaskwarriorWeb::Config.should_receive(:property).with('task-web.user').any_number_of_times.and_return(nil)
     TaskwarriorWeb::Runner.should_receive(:run).any_number_of_times.and_return('{}')
   end
 
