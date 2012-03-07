@@ -4,8 +4,12 @@ module TaskwarriorWeb
   class Config
 
     def self.task_version
-      # TODO: Parse the actual task version
-      1
+      unless @task_version
+        version_line = `task version | grep '^task '`
+        @task_version = version_line.split.at(1)
+      end
+
+      @task_version
     end
 
     def self.file
