@@ -34,6 +34,5 @@ describe TaskwarriorWeb::Command do
       command = TaskwarriorWeb::Command.new(nil, 5)
       expect { command.run }.to raise_error(TaskwarriorWeb::MissingCommandError)
     end
-
   end
 end

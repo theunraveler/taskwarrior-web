@@ -7,7 +7,7 @@ describe TaskwarriorWeb::Runner do
   end
 
   describe '.run' do
-    context 'valid, without a command' do
+    context 'when valid, without a command' do
       before do
         TaskwarriorWeb::Runner.should_receive(:`).and_return('{}')
       end
@@ -22,14 +22,14 @@ describe TaskwarriorWeb::Runner do
       end
     end
 
-    context 'invalid' do
+    context 'when given an invalid command' do
       it 'should throw an exception if the command is not valid' do
         @command.command = :test
         expect { TaskwarriorWeb::Runner.run(@command) }.to raise_error(TaskwarriorWeb::InvalidCommandError)
       end
     end
 
-    context 'with a given command' do
+    context 'when given a valid command' do
       it 'should execute the given command' do
         TaskwarriorWeb::Runner.should_receive(:`).with('task add').and_return('{}')
         TaskwarriorWeb::Runner.run(@command)
