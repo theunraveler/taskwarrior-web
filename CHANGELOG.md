@@ -1,3 +1,8 @@
+## v0.0.15 (3/12/12)
+
+* Fixed error in http auth
+* Moved views and public folders into lib
+
 ## v0.0.14 (2/9/12)
 
 * Merged in major refactoring to allow for easier support of task 2 and
