@@ -40,8 +40,8 @@ UUID, like:
 
 ## Known Issues
 
-* Currently, taskwarrior-web does not work with task 2. It will by the time
-  task 2 is out of beta.
+* Currently, taskwarrior-web does not work with task 2. A rewrite is underway
+  to support both task 1 and 2 simultaneously in an automatic way.
 * taskwarrior-web requires Ruby >= 1.9. It will not work with 1.8 and lower.
   Support for 1.8 will happen at some point.
 * The "View as list"/"View as Grid" links do nothing right now. (They will
