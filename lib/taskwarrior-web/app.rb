@@ -23,9 +23,8 @@ module TaskwarriorWeb
 
     def authorized?
       @auth ||=  Rack::Auth::Basic::Request.new(request.env)
-      @auth.provided? && @auth.basic? && @auth.credentials &&
-        @auth.credentials[0] == TaskwarriorWeb::Config.property('task-web.user') &&
-        Digest::MD5.hexdigest(@auth.credentials[1]) == TaskwarriorWeb::Config.property('task-web.passwd')
+      values = [TaskwarriorWeb::Config.property('task-web.user'), TaskwarriorWeb::Config.property('task-web.passwd')]
+      @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == values
     end
 
     # Before filter
