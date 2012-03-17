@@ -7,6 +7,10 @@ module TaskwarriorWeb
       @task_version ||= `task version | grep '^task '`.split.at(1)
     end
 
+    def self.task_major_version
+      self.task_version[0,1].to_i
+    end
+
     def self.file
       @file ||= ParseConfig.new("#{Dir.home}/.taskrc")
     end

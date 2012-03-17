@@ -3,6 +3,9 @@ require 'taskwarrior-web/runner'
 module TaskwarriorWeb
   class Command
 
+    include CommandBuilder
+    include Runner
+
     attr_accessor :command, :id, :params
 
     def initialize(command, id = nil, *args)
@@ -11,15 +14,5 @@ module TaskwarriorWeb
       @params = args.last.is_a?(::Hash) ? args.pop : {}
     end
 
-    def run
-      if @command
-        TaskwarriorWeb::Runner.run(self)
-      else
-        raise MissingCommandError
-      end
-    end
-
   end
-
-  class MissingCommandError < Exception; end
 end

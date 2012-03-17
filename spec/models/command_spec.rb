@@ -20,19 +20,39 @@ describe TaskwarriorWeb::Command do
     end
   end
 
-  describe '#run' do
-    before do
-      @command = TaskwarriorWeb::Command.new('test', 4)
+  # Move these.
+  describe '.substitute_parts' do
+    it 'should replace the :id string with the given task ID' do
+      command = TaskwarriorWeb::Command.new(:complete, 4)
+      TaskwarriorWeb::Runner.substitute_parts(':id done', command).should eq('4 done')
     end
 
-    it 'should pass the object to the Runner' do
-      TaskwarriorWeb::Runner.should_receive(:run).with(@command).and_return('{}')
-      @command.run
-    end
-
-    it 'should raise an exception if no command is specified' do
-      command = TaskwarriorWeb::Command.new(nil, 5)
-      expect { command.run }.to raise_error(TaskwarriorWeb::MissingCommandError)
+    it 'should throw an error if the command has no task ID' do
+      expect { TaskwarriorWeb::Runner.substitute_parts(':id done', @command) }.to raise_error(TaskwarriorWeb::MissingTaskIDError)
     end
   end
+
+  describe '.parsed_params' do
+    it 'should create a string from the passed paramters' do
+      command = TaskwarriorWeb::Command.new(:query, nil, :test => 14, :none => :none, :hello => :hi)
+      TaskwarriorWeb::Runner.parsed_params(command.params).should eq(' test:14 none:none hello:hi')
+    end
+
+    it 'should prefix tags with the tag.indicator if specified' do
+      TaskwarriorWeb::Config.should_receive(:property).with('tag.indicator').and_return(';')
+      command = TaskwarriorWeb::Command.new(:add, nil, :tags => [:today, :tomorrow])
+      TaskwarriorWeb::Runner.parsed_params(command.params).should eq(' ;today ;tomorrow') 
+    end
+
+    it 'should prefix tags with a + if no tag.indicator is specified' do
+      TaskwarriorWeb::Config.should_receive(:property).with('tag.indicator').and_return(nil)
+      command = TaskwarriorWeb::Command.new(:add, nil, :tags => [:today, :tomorrow])
+      TaskwarriorWeb::Runner.parsed_params(command.params).should eq(' +today +tomorrow') 
+    end
+
+    it 'should pull out the description parameter' do
+      command = TaskwarriorWeb::Command.new(:add, nil, :description => 'Hello', :status => :pending)
+      TaskwarriorWeb::Runner.parsed_params(command.params).should eq(" 'Hello' status:pending")
+    end
+  end  
 end

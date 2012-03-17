@@ -3,72 +3,48 @@ require 'taskwarrior-web/runner'
 
 describe TaskwarriorWeb::Runner do
   before do
-    @command = TaskwarriorWeb::Command.new(:add)
+    TestCommandClass.class_eval do |class_name|
+      include TaskwarriorWeb::Runner
+    end
+    @object = TestCommandClass.new
   end
 
-  describe '.run' do
-    context 'when valid, without a command' do
-      before do
-        TaskwarriorWeb::Runner.should_receive(:`).and_return('{}')
-      end
-
-      it 'should return the stdout' do
-        TaskwarriorWeb::Runner.run(@command).should eq('{}')
-      end
-
-      it 'should not call .substitute_parts if not necessary' do
-        TaskwarriorWeb::Runner.should_not_receive(:substitute_parts)
-        TaskwarriorWeb::Runner.run(@command)
-      end
+  describe 'include' do
+    it 'should make the class respond to the run command' do
+      @object.should respond_to(:run)
     end
 
-    context 'when given an invalid command' do
-      it 'should throw an exception if the command is not valid' do
-        @command.command = :test
-        expect { TaskwarriorWeb::Runner.run(@command) }.to raise_error(TaskwarriorWeb::InvalidCommandError)
-      end
-    end
-
-    context 'when given a valid command' do
-      it 'should execute the given command' do
-        TaskwarriorWeb::Runner.should_receive(:`).with('task add').and_return('{}')
-        TaskwarriorWeb::Runner.run(@command)
-      end
+    it 'should add a TASK_VERSION constant' do
+      @object.class.const_get(:TASK_BIN).should eq('task')
     end
   end
 
-  describe '.substitute_parts' do
-    it 'should replace the :id string with the given task ID' do
-      command = TaskwarriorWeb::Command.new(:complete, 4)
-      TaskwarriorWeb::Runner.substitute_parts(':id done', command).should eq('4 done')
+  describe '#run' do
+    before do
+      @object.should_receive(:`).and_return('{"new_thing" => "old_thing"}')
     end
 
-    it 'should throw an error if the command has no task ID' do
-      expect { TaskwarriorWeb::Runner.substitute_parts(':id done', @command) }.to raise_error(TaskwarriorWeb::MissingTaskIDError)
+    context 'when the command has not been built' do
+      it 'should build the command' do
+        @object.should_receive(:build).and_return('build command')
+        @object.run
+      end
+    end
+
+    context 'when the command has been built' do
+      it 'should not build the command' do
+        @object.instance_variable_set(:@built, 'command set manually')
+        @object.should_not_receive(:build)
+        @object.run
+      end
+    end
+
+    it 'should return the stdout' do
+      @object.should_receive(:build).and_return('build command')
+      @object.run.should eq('{"new_thing" => "old_thing"}')
     end
   end
 
-  describe '.parsed_params' do
-    it 'should create a string from the passed paramters' do
-      command = TaskwarriorWeb::Command.new(:query, nil, :test => 14, :none => :none, :hello => :hi)
-      TaskwarriorWeb::Runner.parsed_params(command.params).should eq(' test:14 none:none hello:hi')
-    end
-
-    it 'should prefix tags with the tag.indicator if specified' do
-      TaskwarriorWeb::Config.should_receive(:property).with('tag.indicator').and_return(';')
-      command = TaskwarriorWeb::Command.new(:add, nil, :tags => [:today, :tomorrow])
-      TaskwarriorWeb::Runner.parsed_params(command.params).should eq(' ;today ;tomorrow') 
-    end
-
-    it 'should prefix tags with a + if no tag.indicator is specified' do
-      TaskwarriorWeb::Config.should_receive(:property).with('tag.indicator').and_return(nil)
-      command = TaskwarriorWeb::Command.new(:add, nil, :tags => [:today, :tomorrow])
-      TaskwarriorWeb::Runner.parsed_params(command.params).should eq(' +today +tomorrow') 
-    end
-
-    it 'should pull out the description parameter' do
-      command = TaskwarriorWeb::Command.new(:add, nil, :description => 'Hello', :status => :pending)
-      TaskwarriorWeb::Runner.parsed_params(command.params).should eq(" 'Hello' status:pending")
-    end
-  end
 end
+
+class TestCommandClass; end
