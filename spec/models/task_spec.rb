@@ -19,21 +19,24 @@ describe TaskwarriorWeb::Task do
   end
 
   describe '.query' do
+    before do
+      @command = TaskwarriorWeb::Command.new(:query)
+      TaskwarriorWeb::Command.should_receive(:new).with(:query, nil).and_return(@command)
+    end
+
     it 'should create and run a new Command object' do
-      command = TaskwarriorWeb::Command.new(:query)
-      TaskwarriorWeb::Command.should_receive(:new).with(:query, nil).and_return(command)
-      command.should_receive(:run).and_return('{}')
+      @command.should_receive(:run).and_return('{}')
       TaskwarriorWeb::Task.query
     end
 
     it 'should parse the JSON received from the `task` command' do
-      TaskwarriorWeb::Runner.should_receive(:run).and_return('{}')
+      @command.should_receive(:run).and_return('{}')
       ::JSON.should_receive(:parse).with('[{}]').and_return([])
       TaskwarriorWeb::Task.query
     end
 
     it 'should not parse the results when there are no matching tasks' do
-      TaskwarriorWeb::Runner.should_receive(:run).and_return('No matches.')
+      @command.should_receive(:run).and_return('No matches.')
       ::JSON.should_not_receive(:parse)
       TaskwarriorWeb::Task.query
     end

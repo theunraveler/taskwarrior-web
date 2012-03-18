@@ -1,10 +1,11 @@
+require 'taskwarrior-web/command_builder'
 require 'taskwarrior-web/runner'
 
 module TaskwarriorWeb
   class Command
 
-    include CommandBuilder
-    include Runner
+    include TaskwarriorWeb::CommandBuilder
+    include TaskwarriorWeb::Runner
 
     attr_accessor :command, :id, :params
 
