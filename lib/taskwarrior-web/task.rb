@@ -26,6 +26,10 @@ module TaskwarriorWeb
       Command.new(:add, nil, self.to_hash).run
     end
 
+    def complete!
+      Command.new(:complete, self.uuid).run
+    end
+
     # Make sure that the tags are an array.
     def tags=(value)
       @tags = value.is_a?(String) ? value.gsub(', ', ',').split(',') : value

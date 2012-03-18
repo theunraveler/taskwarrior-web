@@ -119,6 +119,12 @@ module TaskwarriorWeb
       TaskwarriorWeb::Task.count(:status => :pending).to_s
     end
 
+    post '/ajax/task-complete/:id/?' do
+      # Bummer that we have to directly use Command here, but apparently tasks
+      # cannot be filtered by UUID.
+      TaskwarriorWeb::Command.new(:complete, params[:id]).run
+    end
+
     # Error handling
     not_found do
       @title = 'Page Not Found'

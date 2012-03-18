@@ -11,7 +11,4 @@ module TaskwarriorWeb
     end
 
   end
-
-  class InvalidCommandError < Exception; end
-  class MissingTaskIDError < Exception; end
 end

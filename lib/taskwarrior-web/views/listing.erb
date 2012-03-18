@@ -2,6 +2,9 @@
   <table>
     <thead>
       <tr>
+        <% if params[:status] == 'pending' %>
+          <th></th>
+        <% end %>
         <th>Description</th>
         <th>Project</th>
         <th>Due</th>
@@ -16,6 +19,9 @@
         <% else %>
           <tr class="<%= task.status %>">
         <% end %>
+          <% if params[:status] == 'pending' %>
+            <td><input type="checkbox" class="complete" data-task-id="<%= task.uuid %>" /></td>
+          <% end %>
           <td>
             <%= task.description %>
             <% unless task.annotations.nil? || task.annotations.empty? %>

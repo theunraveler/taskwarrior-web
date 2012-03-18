@@ -4,7 +4,7 @@ module TaskwarriorWeb
   class Config
 
     def self.task_version
-      @task_version ||= `task version | grep '^task '`.split.at(1)
+      @task_version ||= `task _version`
     end
 
     def self.task_major_version
