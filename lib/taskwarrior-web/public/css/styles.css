@@ -231,6 +231,7 @@ ul.view-mode-group { float: right; position: relative; top: -32px; right: 10px; 
 li.view-mode a { height: 12px; width: 12px; }
 
 a#task-add { float: right; margin: 20px 0; }
+
 /********************************
  * LISTING STYLES
  *******************************/
@@ -270,10 +271,32 @@ h3.project.done a { color: #ddd; }
 .doneness-measure { background: #BBFFB6; height: 16px; text-align: center; padding-top: 4px; color: #bbb; font-size: 0.8em; }
 
 /********************************
- * INPLACE EDITING
+ * MESSAGES
  *******************************/
-.inplace-text { width: 250px; height: 30px; padding: 5px; }
-.inplace-edit, .inplace-cancel { font-style: italic; }
+#flash-messages .message {
+  background-color: #FCF8E3;
+  border: 1px solid #FBEED5;
+  border-radius: 4px 4px 4px 4px;
+  color: #C09853;
+  margin-bottom: 18px;
+  padding: 8px 35px 8px 14px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+#flash-messages .message.success {
+  background-color: #DFF0D8;
+  border-color: #D6E9C6;
+  color: #468847;
+}
+#flash-messages .message.info {
+  background-color: #D9EDF7;
+  border-color: #BCE8F1;
+  color: #3A87AD;
+}
+#flash-messages .message.error {
+  background-color: #F2DEDE;
+  border-color: #EED3D7;
+  color: #B94A48;
+}
 
 /********************************
  * TASK FORM

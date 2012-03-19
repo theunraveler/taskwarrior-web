@@ -9,7 +9,7 @@ describe TaskwarriorWeb::CommandBuilder do
       it 'should include CommandBuilder V2 module' do
         TaskwarriorWeb::Config.should_receive(:task_version).and_return('2.0.1')
         TestCommandClass.class_eval { include TaskwarriorWeb::CommandBuilder }
-        TestCommandClass.included_modules.should include(TaskwarriorWeb::CommandBuilder::V2)
+        TestCommandClass.should include(TaskwarriorWeb::CommandBuilder::V2)
       end
     end
 
@@ -17,7 +17,7 @@ describe TaskwarriorWeb::CommandBuilder do
       it 'should include CommandBuilder V1 module' do
         TaskwarriorWeb::Config.should_receive(:task_version).and_return('1.9.4')
         TestCommandClass.class_eval { include TaskwarriorWeb::CommandBuilder }
-        TestCommandClass.included_modules.should include(TaskwarriorWeb::CommandBuilder::V1)
+        TestCommandClass.should include(TaskwarriorWeb::CommandBuilder::V1)
       end
     end
 

@@ -11,7 +11,7 @@ module TaskwarriorWeb::CommandBuilder
     def build
       unless @command_string
         task_command
-        substitute_parts if command =~ /:id/
+        substitute_parts if @command_string =~ /:id/
       end
       parse_params
       @built = "#{self.command_string}#{params}"

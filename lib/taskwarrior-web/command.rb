@@ -12,6 +12,7 @@ module TaskwarriorWeb
     def initialize(command, id = nil, *args)
       @command = command if command
       @id = id if id
+      puts "@id in command.rb: #{@id}"
       @params = args.last.is_a?(::Hash) ? args.pop : {}
     end
 
