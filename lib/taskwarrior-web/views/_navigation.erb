@@ -5,10 +5,6 @@
       <li><a href="<%= path %>"<%= ' class="selected"' if @current_page.index(path) == 0 %>><%= text %></a></li>
     <% end %>
   </ul>
-  <ul class="button-group view-mode-group">
-    <li id="view-mode-list" class="view-mode"><a class="button tooltip" data-tooltip="View items in a list" href="javascript:void(0);"><img src="/images/list-view.png" /></a></li>
-    <li id="view-mode-grid" class="view-mode"><a class="button tooltip" data-tooltip="View items in a grid" href="javascript:void(0);"><img src="/images/grid-view.png" /></a></li>
-  </ul>
 </nav>
 <nav id="subnav-bar">
   <ul>

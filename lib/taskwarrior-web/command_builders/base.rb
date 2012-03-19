@@ -28,7 +28,7 @@ module TaskwarriorWeb::CommandBuilder
 
     def substitute_parts
       if @id
-        @command_string.gsub!(':id', @id.to_s)
+        @command_string.gsub!(':id', "uuid:#{@id.to_s}")
         return self
       else
         raise MissingTaskIDError

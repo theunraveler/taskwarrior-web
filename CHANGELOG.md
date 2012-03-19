@@ -1,3 +1,8 @@
+## v1.0.0 (3/19/12)
+
+* Refactored for taskwarrior 2.0 compatibility.
+* Re-added task completion for both v1 and v2.
+
 ## v0.0.15 (3/12/12)
 
 * Fixed error in http auth

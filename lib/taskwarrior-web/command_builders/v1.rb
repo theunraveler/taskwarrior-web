@@ -1,23 +1,35 @@
 require 'taskwarrior-web/command_builders/base'
 
-module TaskwarriorWeb::CommandBuilder
-  module V1
+module TaskwarriorWeb::CommandBuilder::V1
 
-    include TaskwarriorWeb::CommandBuilder::Base
-      
-    # Overridden from TaskwarriorWeb::CommandBuilder::Base
-    #
-    # Substitute the task's ID for its UUID.
-    def substitute_parts
-      assign_id_from_uuid if @id
-      super
+  include TaskwarriorWeb::CommandBuilder::Base
+    
+  def build
+    unless @command_string
+      task_command
+      substitute_parts if @command_string =~ /:id/
     end
-
-    def assign_id_from_uuid
-      @all_tasks ||= TaskwarriorWeb::Task.query('status.not' => [:deleted, :completed])
-      @id = @all_tasks.index { |task| task.uuid == @id } + 1
-      puts "@id in v1.rb:19: #{@id}"
-    end
-
+    parse_params
+    @built = "#{self.command_string}#{params}"
   end
+
+  # Overridden from TaskwarriorWeb::CommandBuilder::Base
+  #
+  # Substitute the task's ID for its UUID.
+  def substitute_parts
+    if @id
+      assign_id_from_uuid
+      @command_string.gsub!(':id', @id.to_s)
+      return self
+    else
+      raise MissingTaskIDError
+    end
+  end
+
+  def assign_id_from_uuid
+    @all_tasks ||= TaskwarriorWeb::Task.query('status.not' => [:deleted, :completed])
+    @id = @all_tasks.index { |task| task.uuid == @id } + 1
+    puts "@id in v1.rb:19: #{@id}"
+  end
+
 end

@@ -3,6 +3,8 @@
 A lightweight, Sinatra-based web interface for the
 wonderful [Taskwarrior](http://taskwarrior.org/) todo application.
 
+**Now compatible with ALL versions of Taskwarrior, including the new 2.0.0**
+
 [![Build Status](https://secure.travis-ci.org/theunraveler/taskwarrior-web.png)](http://travis-ci.org/theunraveler/taskwarrior-web)
 
 ## Installation
@@ -32,20 +34,10 @@ The current featureset includes:
 * If you are on a Mac and use Fluid.app, you get a dock badge showing the
   number of pending tasks.
 
-I'm looking to include more features once `task` supports issuing commands via
-UUID, like:
-
-* Marking a pending task as done.
-* Deleting tasks
-
 ## Known Issues
 
-* Currently, taskwarrior-web does not work with task 2. A rewrite is underway
-  to support both task 1 and 2 simultaneously in an automatic way.
 * taskwarrior-web requires Ruby >= 1.9. It will not work with 1.8 and lower.
   Support for 1.8 will happen at some point.
-* The "View as list"/"View as Grid" links do nothing right now. (They will
-  soon).
 
 ## Marginalia
 
