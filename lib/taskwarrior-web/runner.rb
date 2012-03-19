@@ -8,7 +8,7 @@ module TaskwarriorWeb
     def run
       @built ||= build
       to_run = "#{TASK_BIN} #{@built}"
-      puts "Final command: #{to_run}"
+      puts "Command: #{to_run}"
       `#{to_run}`
     end
 
