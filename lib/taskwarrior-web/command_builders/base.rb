@@ -13,7 +13,6 @@ module TaskwarriorWeb::CommandBuilder
         task_command
         substitute_parts if command =~ /:id/
       end
-      puts @command_string
       parse_params
       @built = "#{self.command_string}#{params}"
     end
@@ -47,10 +46,10 @@ module TaskwarriorWeb::CommandBuilder
       end
 
       @params.each do |attr, value|
-        if value.is_a?(String) || value.is_a?(Symbol)
-          string << " #{attr.to_s}:#{value.to_s}"
-        else
+        if value.respond_to? :each
           value.each { |val| string << " #{attr.to_s}:#{val.to_s}" }
+        else
+          string << " #{attr.to_s}:#{value.to_s}"
         end
       end
 

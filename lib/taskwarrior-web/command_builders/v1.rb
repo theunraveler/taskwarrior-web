@@ -9,19 +9,13 @@ module TaskwarriorWeb::CommandBuilder
     #
     # Substitute the task's ID for its UUID.
     def substitute_parts
-      if @id
-        assign_id_from_uuid
-        puts @id
-        @command_string.gsub!(':id', @id.to_s)
-        return self
-      else
-        raise MissingTaskIDError
-      end
+      assign_id_from_uuid if @id
+      super
     end
 
     def assign_id_from_uuid
-      @all_tasks ||= Task.query('status.not' => [:deleted, :completed])
-      @id = @all_tasks.select { |task| task.uuid == self.id }
+      @all_tasks ||= TaskwarriorWeb::Task.query('status.not' => [:deleted, :completed])
+      @id = @all_tasks.index { |task| task.uuid == @id } + 1
     end
 
   end
