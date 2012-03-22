@@ -6,4 +6,4 @@ script: "rake spec"
 before_install:
   - sudo apt-get install task
 after_install:
-  - cp /home/vagrant/builds/theunraveler/taskwarrior-web/spec/files/taskrc /home/vagrant/.taskrc
+  - cp -v /home/vagrant/builds/theunraveler/taskwarrior-web/spec/files/taskrc /home/vagrant/.taskrc
