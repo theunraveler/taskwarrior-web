@@ -5,5 +5,5 @@ rvm:
 script: "rake spec"
 before_install:
   - sudo apt-get install task
-after_install:
   - cp -v /home/vagrant/builds/theunraveler/taskwarrior-web/spec/files/taskrc /home/vagrant/.taskrc
+  - ls -lah /home/vagrant
