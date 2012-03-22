@@ -1,17 +1,10 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require 'taskwarrior-web/command'
-require 'ostruct'
 
 describe TaskwarriorWeb::CommandBuilder::Base do
   describe '#substitute_parts' do
     before do
       @command = TaskwarriorWeb::Command.new(:complete, 34588)
-    end
-
-    it 'should replace the :id string with the given task ID' do
-      TaskwarriorWeb::Task.should_receive(:query).and_return([OpenStruct.new(:uuid => 34588)])
-      @command.task_command.substitute_parts
-      @command.command_string.should eq('1 done')
     end
 
     it 'should throw an error if the command has no task ID' do
