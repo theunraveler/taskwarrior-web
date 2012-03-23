@@ -110,7 +110,7 @@ module TaskwarriorWeb
     get '/ajax/tags/?' do
       tags = []
       TaskwarriorWeb::Task.query('status.not' => 'deleted').each do |task|
-        tags = tags + task.tags
+        tags.concat(task.tags)
       end
       tags.compact!.uniq!.to_json
     end

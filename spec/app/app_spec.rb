@@ -15,13 +15,33 @@ describe "My App" do
     TaskwarriorWeb::Runner.should_receive(:run).any_number_of_times.and_return('{}')
   end
 
-  describe 'GET /' do
-    it 'should redirect to /tasks/pending' do
-      get "/"
+  ['/', '/tasks'].each do |path|
+    describe "GET #{path}" do
+      it 'should redirect to /tasks/pending' do
+        get path
+        follow_redirect!
+
+        last_request.url.should =~ /tasks\/pending/
+        last_response.should be_ok
+      end
+    end
+  end
+
+  describe 'GET /projects' do
+    it 'should redirect to /projects/overview' do
+      get '/projects'
       follow_redirect!
 
-      last_request.url.should =~ /tasks\/pending/
+      last_request.url.should =~ /projects\/overview/
       last_response.should be_ok
+    end
+  end
+
+  describe 'GET /ajax/count' do
+    it 'should return the current pending task count' do
+      TaskwarriorWeb::Task.should_receive(:count).and_return(15)
+      get '/ajax/count'
+      last_response.body.should eq('15')
     end
   end
 end

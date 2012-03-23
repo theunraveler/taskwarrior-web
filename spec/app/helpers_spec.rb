@@ -30,7 +30,36 @@ describe TaskwarriorWeb::App::Helpers do
         helpers.format_date('2012-01-11').should == '11/01/2012'
       end
     end
+  end
 
+  describe '#colorize_date' do
+    context 'when no timestamp is given' do
+      it 'should simply return' do
+        TaskwarriorWeb::Config.should_not_receive(:due)
+        helpers.colorize_date(nil)
+      end
+    end
+
+    context 'with a due setting specified' do    
+      before do
+        TaskwarriorWeb::Config.should_receive(:due).any_number_of_times.and_return(3)
+      end
+
+      it 'should return "today" when a given date is today' do
+        helpers.colorize_date(Time.now.to_s).should eq('today') 
+      end
+
+      it 'should return "overdue" when a date is before today' do
+        helpers.colorize_date(Time.at(0).to_s).should eq('overdue')
+      end
+    end
+  end
+
+  describe '#auto_link' do
+    it 'should just call Rinku.auto_link' do
+      Rinku.should_receive(:auto_link).with('hello', :all, 'target="_blank"')
+      helpers.auto_link('hello')
+    end
   end
 end
 
