@@ -22,7 +22,7 @@ module TaskwarriorWeb::CommandBuilder::V1
       @command_string.gsub!(':id', @id.to_s)
       return self
     else
-      raise MissingTaskIDError
+      raise TaskwarriorWeb::CommandBuilder::MissingTaskIDError
     end
   end
 
