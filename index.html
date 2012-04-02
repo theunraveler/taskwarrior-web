@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Taskwarrior-web by theunraveler</title>
+    
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Taskwarrior-web</h1>
+        <p>A Sinatra-based web interface for the Taskwarrior todo application. Because being a neck-beard is only fun sometimes.</p>
+        <p class="view"><a href="https://github.com/theunraveler/taskwarrior-web">View the Project on GitHub <small>theunraveler/taskwarrior-web</small></a></p>
+        <ul>
+          <li><a href="https://github.com/theunraveler/taskwarrior-web/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/theunraveler/taskwarrior-web/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/theunraveler/taskwarrior-web">Fork On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>A Web Interface for Taskwarrior</h1>
+
+<p>A lightweight, Sinatra-based web interface for the
+wonderful <a href="http://taskwarrior.org/">Taskwarrior</a> todo application.</p>
+
+<p><strong>Now compatible with ALL versions of Taskwarrior, including the new 2.0.0</strong></p>
+
+<p><a href="http://travis-ci.org/theunraveler/taskwarrior-web"><img src="https://secure.travis-ci.org/theunraveler/taskwarrior-web.png" alt="Build Status"></a></p>
+
+<h2>Installation</h2>
+
+<p><code>gem install taskwarrior-web</code></p>
+
+<p>This will install an executable called <code>task-web</code></p>
+
+<h2>Usage</h2>
+
+<p><code>task-web</code> at your terminal to start it up. This will start the process,
+background it, and open the URL in your browser.</p>
+
+<p>It uses <a href="https://github.com/quirkey/vegas/">Vegas</a> to make the Sinatra app into
+an executable, so all options for Vegas are valid for <code>task-web</code>. Type
+<code>task-web -h</code> for more options.</p>
+
+<h2>Features</h2>
+
+<p>The current featureset includes:</p>
+
+<ul>
+<li>Viewing tasks (duh) sorted and grouped in various ways.</li>
+<li>Creating a new task with a due date, project, and tags.</li>
+<li>
+<code>task-web</code> will pull your <code>task</code> config (from <code>.taskrc</code>) and use it to
+determine date formatting and when an upcoming task should be marked as
+"due".</li>
+<li>If you are on a Mac and use Fluid.app, you get a dock badge showing the
+number of pending tasks.</li>
+</ul><h2>Known Issues</h2>
+
+<ul>
+<li>taskwarrior-web requires Ruby &gt;= 1.9. It will not work with 1.8 and lower.
+Support for 1.8 will happen at some point.</li>
+</ul><h2>Marginalia</h2>
+
+<p>This project is not developed by the Taskwarrior team. Obviously,
+taskwarrior-web extends Taskwarrior, but the projects are separate.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/theunraveler">theunraveler</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+  </body>
+</html>
