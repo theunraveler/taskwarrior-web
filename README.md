@@ -33,6 +33,8 @@ The current featureset includes:
   "due".
 * If you are on a Mac and use Fluid.app, you get a dock badge showing the
   number of pending tasks.
+* Optional Basic HTTP Auth protection. To enable, set `task-web.user` and
+  `task-web.passwd` in your `.taskrc` file.
 
 ## Known Issues
 
