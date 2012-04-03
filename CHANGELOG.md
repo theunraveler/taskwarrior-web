@@ -1,3 +1,7 @@
+## v1.0.2 (4/3/12)
+
+* Hotfix for error in JS file.
+
 ## v1.0.1 (4/3/12)
 
 * Added fadeOut animation to task completion.
