@@ -1,3 +1,7 @@
+## v1.0.1 (4/3/12)
+
+* Added fadeOut animation to task completion.
+
 ## v1.0.0 (3/19/12)
 
 * Refactored for taskwarrior 2.0 compatibility.
