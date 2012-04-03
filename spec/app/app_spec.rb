@@ -12,7 +12,7 @@ describe "My App" do
 
   before do
     TaskwarriorWeb::Config.should_receive(:property).with('task-web.user').any_number_of_times.and_return(nil)
-    TaskwarriorWeb::Runner.should_receive(:run).any_number_of_times.and_return('{}')
+    TaskwarriorWeb::Task.should_receive(:query).any_number_of_times.and_return([])
   end
 
   ['/', '/tasks'].each do |path|
