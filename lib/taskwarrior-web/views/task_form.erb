@@ -17,7 +17,7 @@
   <div class="control-group">
     <label for="task-due" class="control-label">Due Date</label>
     <div class="controls">
-      <input class="date-picker" type="textfield" id="task-due" name="task[due]" value="<%= @task.nil? ? Time.now : @task.due %>" data-format="<%= @date_format %>" />
+      <input class="date-picker" type="textfield" id="task-due" name="task[due]" value="<%= @task.due unless @task.nil? %>" data-date-format="<%= @date_format %>" />
     </div>
   </div>
 

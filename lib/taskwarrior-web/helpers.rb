@@ -26,7 +26,7 @@ module TaskwarriorWeb
         return if item.nil?
         case method.to_s
           when 'project'
-            item.downcase.gsub('.', '--')
+            item.gsub('.', '--')
         end
       end
 
