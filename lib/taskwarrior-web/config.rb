@@ -16,11 +16,11 @@ module TaskwarriorWeb
     end
 
     def self.property(prop)
-      self.file.get_value(prop)
+      self.file[prop]
     end
 
     def self.method_missing(method)
-      self.file.get_value(method)
+      self.file[method]
     end
 
   end

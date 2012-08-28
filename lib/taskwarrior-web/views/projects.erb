@@ -6,11 +6,10 @@
         <h3 class="project <%= doneness == 100.0 ? 'done' : 'pending' %>">
           <a href="/projects/<%= linkify(proj, :project) %>"><%= proj %></a>
         </h3>
-        <div class="doneness-container">
-          <div class="doneness-measure" style="width: <%= doneness.to_i * 2 %>px;"><%= doneness.to_i %>%</div>
+        <div class="progress">
+          <div class="bar" style="width: <%= doneness.to_i %>%;"><%= doneness.to_i %>%</div>
         </div>
-        <div class="clearer"></div>
-        <table>
+        <table class="table table-striped table-hover">
           <thead>
             <tr>
               <th>Description</th>

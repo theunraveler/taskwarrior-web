@@ -47,7 +47,7 @@ module TaskwarriorWeb
     # Task routes
     get '/tasks/:status/?' do
       pass unless ['pending', 'waiting', 'completed', 'deleted'].include?(params[:status])
-      @title = "#{params[:status].capitalize} Tasks"
+      @title = "Tasks"
       @subnav = subnav('tasks')
       @tasks = TaskwarriorWeb::Task.find_by_status(params[:status]).sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s, x.project.to_s] }
       erb :listing
@@ -55,7 +55,6 @@ module TaskwarriorWeb
 
     get '/tasks/new/?' do
       @title = 'New Task'
-      @subnav = subnav('tasks')
       @date_format = TaskwarriorWeb::Config.dateformat || 'm/d/yy'
       @date_format.gsub!('Y', 'yy')
       erb :task_form
@@ -71,7 +70,7 @@ module TaskwarriorWeb
         @task = params[:task]
         @messages = []
         results.each do |result|
-          @messages << { :severity => 'error', :message => result }
+          @messages << { :severity => 'alert-error', :message => result }
         end
         redirect '/tasks/new'
       end
@@ -97,22 +96,13 @@ module TaskwarriorWeb
       erb :project
     end
 
-    # Reporting
-    get '/reports' do
-    end
-
     # AJAX callbacks
     get '/ajax/projects/?' do
-      projects = TaskwarriorWeb::Task.query('status.not' => 'deleted').collect { |t| t.project }
-      projects.compact.uniq.select {|proj| proj.start_with?(params[:term]) }.to_json
+      TaskwarriorWeb::Command.new(:projects).run.split("\n").to_json
     end
 
     get '/ajax/tags/?' do
-      tags = []
-      TaskwarriorWeb::Task.query('status.not' => 'deleted').each do |task|
-        tags.concat(task.tags)
-      end
-      tags.compact!.uniq!.to_json
+      TaskwarriorWeb::Command.new(:tags).run.split("\n").to_json
     end
 
     get '/ajax/count/?' do

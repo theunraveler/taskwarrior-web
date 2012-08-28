@@ -3,45 +3,33 @@
     <title><%= @title %> | Taskwarrior</title>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/css/jquery-ui.css">
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/gh-buttons.css">
-    <link rel="stylesheet" href="/css/tipsy.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/datepicker.css">
     <link rel="stylesheet" href="/css/jquery.tagsinput.css">
+    <link rel="stylesheet" href="/css/styles.css">
 
     <!-- Scripts -->
     <script type="text/javascript" src="/js/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="/js/jquery.cookie.js"></script>
-    <script type="text/javascript" src="/js/jquery.tipsy.js"></script>
     <script type="text/javascript" src="/js/jquery.tagsinput.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="/js/application.js"></script>
   </head>
 
   <body>
-    <div id="page">
-      <header>
-        <h1>Taskwarrior</h1>
-        <div id="polling-info">
-          <a href="javascript:void(0);" class="button icon clock tooltip" data-tooltip="If polling is on, the page will be reloaded automatically every 3 seconds.">Stop polling</a>
-        </div>
-      </header>
-      <div class="clearer"></div>
-      <%= erb :_navigation %>
+    <div id="page" class="container">
+      <%= erb :_topbar %>
+      <%= erb :_subnav %>
       <section class="content">
-        <h2><%= @title %></h2>
-        <a href="/tasks/new" id="task-add" class="button icon add">Add a Task</a>
         <div class="clearer"></div>
         <div id="flash-messages">
           <% if @messages %>
             <% @messages.each do |message| %>
-              <div class="message <%= message.severity %>"><%= message.message %></div>
+              <div class="alert <%= message.severity %>"><%= message.message %></div>
             <% end %>
           <% end %>
         </div>
         <%= yield %>
       </section>
     </div>
-  </body>
-
 </html>

@@ -5,7 +5,9 @@ module TaskwarriorWeb::CommandBuilder
       :add => 'add',
       :query => '_query',
       :count => 'count',
-      :complete => ':id done'
+      :complete => ':id done',
+      :projects => '_projects',
+      :tags => '_tags'
     }    
 
     def build
@@ -14,13 +16,12 @@ module TaskwarriorWeb::CommandBuilder
         substitute_parts if @command_string =~ /:id/
       end
       parse_params
-      @built = "#{self.command_string}#{params}"
+      @built = "#{@command_string}#{@params}"
     end
 
     def task_command
       if TASK_COMMANDS.has_key?(@command.to_sym)
-        @command_string = TASK_COMMANDS[@command.to_sym]
-        return self
+        @command_string = TASK_COMMANDS[@command.to_sym].clone
       else
         raise InvalidCommandError
       end

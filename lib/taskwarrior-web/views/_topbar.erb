@@ -1,0 +1,19 @@
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner"><div class="container">
+    <a href="/" class="brand">Taskwarrior Web</a>
+    <% tabs = { '/tasks' => 'Tasks', '/projects' => 'Projects' } %>
+    <ul class="nav">
+      <% tabs.each do |path, text| %>
+        <li><a href="<%= path %>"<%= ' class="selected"' if @current_page.index(path) == 0 %>><%= text %></a></li>
+      <% end %>
+    </ul>
+    <ul class="nav pull-right">
+      <li>
+        <a href="/tasks/new">
+          <i class="icon-plus"></i>
+          Add a Task
+        </a>
+      </li>
+    </ul>
+  </div></div>
+</div>

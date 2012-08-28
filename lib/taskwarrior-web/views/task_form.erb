@@ -1,28 +1,38 @@
-<form id="new-task-form" action="/tasks/new" method="post">
+<form id="new-task-form" class="form-horizontal" action="/tasks/new" method="post">
 
-  <div class="textfield form-element">
-    <label for="task-description">Description</label>
-    <input type="textfield" id="task-description" name="task[description]" value="<%= @task.description unless @task.nil? %>" />
+  <div class="control-group">
+    <label for="task-description" class="control-label">Description</label>
+    <div class="controls">
+      <input type="textfield" id="task-description" name="task[description]" value="<%= @task.description unless @task.nil? %>" />
+    </div>
   </div>
 
-  <div class="textfield autocomplete form-element">
-    <label for="task-project">Project</label>
-    <input type="textfield" id="task-project" name="task[project]" value="<%= @task.project unless @task.nil? %>" />
+  <div class="control-group">
+    <label for="task-project" class="control-label">Project</label>
+    <div class="controls">
+      <input type="textfield" id="task-project" name="task[project]" value="<%= @task.project unless @task.nil? %>" />
+    </div>
   </div>
 
-  <div class="datefield form-element">
-    <label for="task-due">Due Date</label>
-    <input type="textfield" id="task-due" name="task[due]" value="<%= @task.due unless @task.nil? %>" data-format="<%= @date_format %>" />
+  <div class="control-group">
+    <label for="task-due" class="control-label">Due Date</label>
+    <div class="controls">
+      <input class="date-picker" type="textfield" id="task-due" name="task[due]" value="<%= @task.nil? ? Time.now : @task.due %>" data-format="<%= @date_format %>" />
+    </div>
   </div>
 
-  <div class="textfield form-element">
-    <label for="task-tags">Tags</label>
-    <input type="textfield" id="task-tags" name="task[tags]" value="<%= @task.tags unless @task.nil? %>" />
-    <div class="description">Enter tags separated by commas</div>
+  <div class="control-group">
+    <label for="task-tags" class="control-label">Tags</label>
+    <div class="controls">
+      <input type="textfield" id="task-tags" name="task[tags]" value="<%= @task.tags unless @task.nil? %>" />
+      <div class="description">Enter tags separated by commas</div>
+    </div>
   </div>
 
-  <div class="submit form-element">
-    <button type="submit" class="button">Create Task</button>
+  <div class="control-group">
+    <div class="controls">
+      <button type="submit" class="btn">Create Task</button>
+    </div>
   </div>
 
 </form>
