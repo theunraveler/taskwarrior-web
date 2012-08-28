@@ -38,7 +38,7 @@ module TaskwarriorWeb::CommandBuilder
 
     def parse_params
       string = ''
-      string << " '#{@params.delete(:description)}'" if @params.has_key?(:description)
+      string << " #{@params.delete(:description).shellescape}" if @params.has_key?(:description)
 
       if @params.has_key?(:tags)
         tags = @params.delete(:tags)
