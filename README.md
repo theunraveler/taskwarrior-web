@@ -4,6 +4,8 @@ A lightweight, Sinatra-based web interface for the
 wonderful [Taskwarrior](http://taskwarrior.org/) todo application.
 
 **Now compatible with ALL versions of Taskwarrior, including the new 2.0.0**
+**Also, now including a NEW theme based on Twitter Bootstrap. Mobile version
+forthcoming!**
 
 [![Build Status](https://secure.travis-ci.org/theunraveler/taskwarrior-web.png)](http://travis-ci.org/theunraveler/taskwarrior-web)
 

@@ -1,3 +1,9 @@
+## v1.0.3 (8/27/12)
+
+* Moved to new theme based on Twitter Bootstrap. Hopefully, this will make
+  a mobile theme easier.
+* Fixed bug when completing tasks
+
 ## v1.0.2 (4/3/12)
 
 * Hotfix for error in JS file.
