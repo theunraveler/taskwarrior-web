@@ -14,7 +14,8 @@ describe TaskwarriorWeb::CommandBuilder::V1 do
 
     it 'should replace the :id string with the given task ID' do
       TaskwarriorWeb::Task.should_receive(:query).and_return([OpenStruct.new(:uuid => 34588)])
-      @command.task_command.substitute_parts
+      @command.task_command
+      @command.substitute_parts
       @command.command_string.should eq('1 done')
     end
   end

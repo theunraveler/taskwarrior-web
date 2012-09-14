@@ -26,7 +26,7 @@ describe TaskwarriorWeb::CommandBuilder do
         TaskwarriorWeb::Config.should_receive(:task_version).and_return('95.583.3')
         expect { 
           TestCommandClass.class_eval { include TaskwarriorWeb::CommandBuilder }
-        }.should raise_exception(TaskwarriorWeb::UnrecognizedTaskVersion)
+        }.to raise_exception(TaskwarriorWeb::UnrecognizedTaskVersion)
       end
     end
   end

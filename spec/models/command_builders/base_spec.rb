@@ -37,7 +37,7 @@ describe TaskwarriorWeb::CommandBuilder::Base do
     it 'should pull out the description parameter' do
       command = TaskwarriorWeb::Command.new(:add, nil, :description => 'Hello', :status => :pending)
       command.parse_params
-      command.params.should eq(" 'Hello' status:pending")
+      command.params.should eq(" Hello status:pending")
     end
   end  
 end

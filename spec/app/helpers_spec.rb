@@ -46,11 +46,11 @@ describe TaskwarriorWeb::App::Helpers do
       end
 
       it 'should return "today" when a given date is today' do
-        helpers.colorize_date(Time.now.to_s).should eq('today') 
+        helpers.colorize_date(Time.now.to_s).should eq('success') 
       end
 
       it 'should return "overdue" when a date is before today' do
-        helpers.colorize_date(Time.at(0).to_s).should eq('overdue')
+        helpers.colorize_date(Time.at(0).to_s).should eq('error')
       end
     end
   end
