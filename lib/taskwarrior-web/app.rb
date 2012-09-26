@@ -68,11 +68,14 @@ module TaskwarriorWeb
         redirect '/tasks'
       else
         @task = params[:task]
+        @title = 'New Task'
+        @date_format = TaskwarriorWeb::Config.dateformat || 'm/d/yy'
+        @date_format.gsub!('Y', 'yy')
         @messages = []
         results.each do |result|
           @messages << { :severity => 'alert-error', :message => result }
         end
-        redirect '/tasks/new'
+        erb :task_form
       end
     end
 
@@ -102,7 +105,15 @@ module TaskwarriorWeb
     end
 
     get '/ajax/tags/?' do
-      TaskwarriorWeb::Command.new(:tags).run.split("\n").to_json
+      tags = TaskwarriorWeb::Command.new(:tags).run.split("\n")
+      tags.keep_if { |tag| tag.include?(params[:query]) }
+
+      json = []
+      tags.each do |tag|
+        json << { :name => tag, :id => tag }
+      end
+
+      json.to_json
     end
 
     get '/ajax/count/?' do

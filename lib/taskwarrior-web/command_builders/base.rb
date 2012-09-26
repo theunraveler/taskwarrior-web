@@ -43,12 +43,12 @@ module TaskwarriorWeb::CommandBuilder
       if @params.has_key?(:tags)
         tags = @params.delete(:tags)
         tag_indicator = TaskwarriorWeb::Config.property('tag.indicator') || '+'
-        tags.each { |tag| string << " #{tag_indicator}#{tag.to_s}" } 
+        tags.each { |tag| string << " #{tag_indicator}#{tag.to_s.shellescape}" } 
       end
 
       @params.each do |attr, value|
         if value.respond_to? :each
-          value.each { |val| string << " #{attr.to_s}:#{val.to_s}" }
+          value.each { |val| string << " #{attr.to_s}:#{val.to_s.shellescape}" }
         else
           string << " #{attr.to_s}:#{value.to_s}"
         end
