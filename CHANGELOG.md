@@ -1,3 +1,8 @@
+## v1.0.4 (9/25/12)
+
+* Added TokenInput plugin for tagging tasks
+* Fixed form validation when saving a task
+
 ## v1.0.3 (8/27/12)
 
 * Moved to new theme based on Twitter Bootstrap. Hopefully, this will make
