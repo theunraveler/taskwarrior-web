@@ -1,3 +1,5 @@
+require 'shellwords'
+
 module TaskwarriorWeb::CommandBuilder
   module Base
 
