@@ -1,3 +1,7 @@
+## v1.0.5 (11/6/12)
+
+* Fixed missing "require" statement for shellwords library.
+
 ## v1.0.4 (9/25/12)
 
 * Added TokenInput plugin for tagging tasks
