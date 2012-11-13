@@ -4,7 +4,7 @@
     <% tabs = { '/tasks' => 'Tasks', '/projects' => 'Projects' } %>
     <ul class="nav">
       <% tabs.each do |path, text| %>
-        <li><a href="<%= path %>"<%= ' class="selected"' if @current_page.index(path) == 0 %>><%= text %></a></li>
+        <li<%= ' class="active"' if @current_page.index(path) == 0 %>><a href="<%= path %>"><%= text %></a></li>
       <% end %>
     </ul>
     <ul class="nav pull-right">
