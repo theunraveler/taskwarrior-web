@@ -60,7 +60,7 @@ module TaskwarriorWeb
       erb :task_form
     end
 
-    post '/tasks/new/?' do
+    post '/tasks/?' do
       results = passes_validation(params[:task], :task)
       if results.empty?
         task = TaskwarriorWeb::Task.new(params[:task])
