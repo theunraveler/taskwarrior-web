@@ -40,19 +40,19 @@ module TaskwarriorWeb::CommandBuilder
 
     def parse_params
       string = ''
-      string << " #{@params.delete(:description).shellescape}" if @params.has_key?(:description)
+      string << %Q( #{@params.delete(:description).shellescape}) if @params.has_key?(:description)
 
       if @params.has_key?(:tags)
         tags = @params.delete(:tags)
         tag_indicator = TaskwarriorWeb::Config.property('tag.indicator') || '+'
-        tags.each { |tag| string << " #{tag_indicator}#{tag.to_s.shellescape}" } 
+        tags.each { |tag| string << %Q( #{tag_indicator}#{tag.to_s.shellescape}) } 
       end
 
       @params.each do |attr, value|
         if value.respond_to? :each
-          value.each { |val| string << " #{attr.to_s}:#{val.to_s.shellescape}" }
+          value.each { |val| string << %Q( #{attr.to_s}:\\"#{val.to_s.shellescape}\\") }
         else
-          string << " #{attr.to_s}:#{value.to_s}"
+          string << %Q( #{attr.to_s}:\\"#{value.to_s.shellescape}\\")
         end
       end
 
