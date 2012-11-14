@@ -1,3 +1,9 @@
+## v1.0.6 (11/15/12)
+
+* Fixed escaping issue when viewing or adding projects with spaces.
+* Updating Twitter Bootstrap library.
+* Fixing active trail in top menu.
+
 ## v1.0.5 (11/6/12)
 
 * Fixed missing "require" statement for shellwords library.
