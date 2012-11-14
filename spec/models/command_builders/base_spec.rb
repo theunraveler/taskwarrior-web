@@ -17,7 +17,7 @@ describe TaskwarriorWeb::CommandBuilder::Base do
     it 'should create a string from the passed paramters' do
       command = TaskwarriorWeb::Command.new(:query, nil, :test => 14, :none => :none, :hello => :hi)
       command.parse_params
-      command.params.should eq(' test:14 none:none hello:hi')
+      command.params.should eq(' test:\"14\" none:\"none\" hello:\"hi\"')
     end
 
     it 'should prefix tags with the tag.indicator if specified' do
@@ -37,7 +37,7 @@ describe TaskwarriorWeb::CommandBuilder::Base do
     it 'should pull out the description parameter' do
       command = TaskwarriorWeb::Command.new(:add, nil, :description => 'Hello', :status => :pending)
       command.parse_params
-      command.params.should eq(" Hello status:pending")
+      command.params.should eq(' Hello status:\"pending\"')
     end
   end  
 end
