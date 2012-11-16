@@ -44,6 +44,14 @@ The current featureset includes:
 * Optional Basic HTTP Auth protection. To enable, set `task-web.user` and
   `task-web.passwd` in your `.taskrc` file.
 
+## Reporting Bugs
+
+To report a bug, use the [Github issue tracker][1]. Since `taskwarrior-web`
+works with several different versions of `task`, using many different
+configurations, please include the output from `task _version` and `task show`
+when filing a bug. This helps me reproduce bugs easier.
+
+[1]: http://github.com/theunraveler/taskwarrior-web/issues
 ## Marginalia
 
 This project is not developed by the Taskwarrior team. Obviously,
