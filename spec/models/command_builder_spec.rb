@@ -7,7 +7,7 @@ describe TaskwarriorWeb::CommandBuilder do
   describe '.included' do
     context 'when v2 is reported' do
       it 'should include CommandBuilder V2 module' do
-        TaskwarriorWeb::Config.should_receive(:task_version).and_return('2.0.1')
+        TaskwarriorWeb::Config.should_receive(:version).and_return(Versionomy.parse('2.0.0'))
         TestCommandClass.class_eval { include TaskwarriorWeb::CommandBuilder }
         TestCommandClass.should include(TaskwarriorWeb::CommandBuilder::V2)
       end
@@ -15,7 +15,7 @@ describe TaskwarriorWeb::CommandBuilder do
 
     context 'when v1 is reported' do
       it 'should include CommandBuilder V1 module' do
-        TaskwarriorWeb::Config.should_receive(:task_version).and_return('1.9.4')
+        TaskwarriorWeb::Config.should_receive(:version).and_return(Versionomy.parse('1.0.0'))
         TestCommandClass.class_eval { include TaskwarriorWeb::CommandBuilder }
         TestCommandClass.should include(TaskwarriorWeb::CommandBuilder::V1)
       end
@@ -23,7 +23,7 @@ describe TaskwarriorWeb::CommandBuilder do
 
     context 'when an invalid version number is reported' do
       it 'should throw an UnrecognizedTaskVersion exception' do
-        TaskwarriorWeb::Config.should_receive(:task_version).and_return('95.583.3')
+        TaskwarriorWeb::Config.should_receive(:version).and_return(Versionomy.parse('9.0.0'))
         expect { 
           TestCommandClass.class_eval { include TaskwarriorWeb::CommandBuilder }
         }.to raise_exception(TaskwarriorWeb::UnrecognizedTaskVersion)

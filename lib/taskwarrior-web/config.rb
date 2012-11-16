@@ -1,14 +1,11 @@
 require 'parseconfig'
+require 'versionomy'
 
 module TaskwarriorWeb
   class Config
 
-    def self.task_version
-      @task_version ||= `task _version`
-    end
-
-    def self.task_major_version
-      self.task_version[0,1].to_i
+    def self.version
+      @version ||= Versionomy.parse(`task _version`.strip)
     end
 
     def self.file

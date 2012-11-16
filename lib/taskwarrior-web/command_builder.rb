@@ -4,7 +4,7 @@ module TaskwarriorWeb
   module CommandBuilder
     def self.included(class_name)
       class_name.class_eval do
-        case TaskwarriorWeb::Config.task_major_version
+        case TaskwarriorWeb::Config.version.major
         when 2
           require 'taskwarrior-web/command_builders/v2'
           include TaskwarriorWeb::CommandBuilder::V2
