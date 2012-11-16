@@ -44,4 +44,16 @@ describe "My App" do
       last_response.body.should eq('15')
     end
   end
+
+  describe 'not_found' do
+    it 'should set the title to "Not Found"' do
+      get '/page-not-found'
+      last_response.body.should =~ /<title>Page Not Found/
+    end
+
+    it 'should have a status code of 404' do
+      get '/page-not-found'
+      last_response.status.should eq(404)
+    end
+  end
 end
