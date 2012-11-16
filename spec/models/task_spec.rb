@@ -53,14 +53,23 @@ describe TaskwarriorWeb::Task do
 
   describe '#tags=' do
     it 'should convert a string to an array when initializing' do
-      task = TaskwarriorWeb::Task.new(:tags => 'hi there, twice')
-      task.tags.should eq(['hi there', 'twice'])
+      task = TaskwarriorWeb::Task.new(:tags => 'hi, twice')
+      task.tags.should eq(['hi', 'twice'])
     end
 
     it 'should convert a string to an array when setting explicitly' do
       task = TaskwarriorWeb::Task.new
       task.tags = 'hello, twice,thrice'
       task.tags.should eq(['hello', 'twice', 'thrice'])
+    end
+
+    it 'should break on any combination of spaces and commas' do
+      try = ['hi twice and again', 'hi,twice,and,again', 'hi twice,and again', 'hi,  twice and  ,   again']
+
+      try.each do |tags|
+        task = TaskwarriorWeb::Task.new(:tags => tags)
+        task.tags.should eq(['hi', 'twice', 'and', 'again'])
+      end
     end
   end
 
