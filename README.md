@@ -9,6 +9,12 @@ forthcoming!**
 
 [![Build Status](https://secure.travis-ci.org/theunraveler/taskwarrior-web.png)](http://travis-ci.org/theunraveler/taskwarrior-web)
 
+## Requirements
+
+* `ruby` >= 1.9 (support for `ruby` < 1.9 is very unlikely, but pull requests
+  are gladly accepted).
+* `task` >= 1.9.4 (compatibility with `task` < 1.9.4 is in the works)
+
 ## Installation
 
 `gem install taskwarrior-web`
@@ -37,11 +43,6 @@ The current featureset includes:
   number of pending tasks.
 * Optional Basic HTTP Auth protection. To enable, set `task-web.user` and
   `task-web.passwd` in your `.taskrc` file.
-
-## Known Issues
-
-* taskwarrior-web requires Ruby >= 1.9. It will not work with 1.8 and lower.
-  Support for 1.8 will happen at some point.
 
 ## Marginalia
 
