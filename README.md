@@ -48,10 +48,14 @@ The current featureset includes:
 
 To report a bug, use the [Github issue tracker][1]. Since `taskwarrior-web`
 works with several different versions of `task`, using many different
-configurations, please include the output from `task _version` and `task show`
-when filing a bug. This helps me reproduce bugs easier.
+configurations, please include the output from `task _version` and either the
+output of `task show` or a copy of your `.taskrc` file when filing a bug. This helps me reproduce bugs easier.
+
+Here is an example of a [good bug report][2].
 
 [1]: http://github.com/theunraveler/taskwarrior-web/issues
+[2]: http://github.com/theunraveler/taskwarrior-web/issues/26
+
 ## Marginalia
 
 This project is not developed by the Taskwarrior team. Obviously,
