@@ -42,8 +42,7 @@ module TaskwarriorWeb::CommandBuilder
       string = ''
       string << %Q( #{@params.delete(:description).shellescape}) if @params.has_key?(:description)
 
-      if @params.has_key?(:tags)
-        tags = @params.delete(:tags)
+      if tags = @params.delete(:tags)
         tag_indicator = TaskwarriorWeb::Config.property('tag.indicator') || '+'
         tags.each { |tag| string << %Q( #{tag_indicator}#{tag.to_s.shellescape}) } 
       end

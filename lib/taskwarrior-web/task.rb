@@ -32,7 +32,7 @@ module TaskwarriorWeb
 
     # Make sure that the tags are an array.
     def tags=(value)
-      @tags = value.is_a?(String) ? value.gsub(', ', ',').split(',') : value
+      @tags = value.is_a?(String) ? value.split(/\W+/).reject(&:empty?) : value
     end
 
     def to_hash

@@ -10,7 +10,7 @@
   <div class="control-group">
     <label for="task-project" class="control-label">Project</label>
     <div class="controls">
-      <input type="textfield" id="task-project" name="task[project]" value="<%= @task[:project] unless @task.nil? %>" />
+      <input type="textfield" id="task-project" name="task[project]" value="<%= @task[:project] unless @task.nil? %>" autocomplete="off" />
     </div>
   </div>
 
@@ -24,8 +24,8 @@
   <div class="control-group">
     <label for="task-tags" class="control-label">Tags</label>
     <div class="controls">
-      <input type="textfield" id="task-tags" name="task[tags]" value="<%= @task[:tags] unless @task.nil? %>" />
-      <div class="description">Enter tags separated by commas</div>
+      <input type="textfield" id="task-tags" name="task[tags]" value="<%= @task[:tags] unless @task.nil? %>" autocomplete="off" />
+      <div class="description">Enter tags separated by commas or spaces (e.g. <em>each, word will,be a tag</em>)</div>
     </div>
   </div>
 
