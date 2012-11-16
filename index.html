@@ -26,7 +26,14 @@
         </ul>
       </header>
       <section>
-<p><strong>Now compatible with ALL versions of Taskwarrior, including the new 2.0.0</strong></p>
+<p><strong>Now compatible with Taskwarrior >= 1.9.3, including the new 2.0.0</strong></p>
+
+<h2>Requirements</h2>
+
+<ul>
+<li><code>ruby</code> >= 1.9 (support for <code>ruby</code> < 1.9 is very unlikely, but pull requests are gladly accepted).</li>
+<li><code>task</code> >= 1.9.3 (sorry Debian folks, compatibility with <code>task</code> < 1.9.3 is in the works)</li>
+</ul>
 
 <h2>Installation</h2>
 
@@ -57,12 +64,9 @@ determine date formatting and when an upcoming task should be marked as
 <li>If you are on a Mac and use Fluid.app, you get a dock badge showing the
 number of pending tasks.</li>
 <li>Optional Basic HTTP Auth protection. To enable, set <code>task-web.user</code> and <code>task-web.passwd</code> in your <code>.taskrc</code> file.
-</ul><h2>Known Issues</h2>
+</ul>
 
-<ul>
-<li>taskwarrior-web requires Ruby &gt;= 1.9. It will not work with 1.8 and lower.
-Support for 1.8 will happen at some point.</li>
-</ul><h2>Marginalia</h2>
+<h2>Marginalia</h2>
 
 <p>This project is not developed by the Taskwarrior team. Obviously,
 taskwarrior-web extends Taskwarrior, but the projects are separate.</p>
