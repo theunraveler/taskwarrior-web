@@ -1,3 +1,15 @@
+## v1.0.7 (11/17/12)
+
+* Moving `task` version parsing to Verionomy library. Should be much more
+  flexible and stable.
+* Removing tag input widget from new task form, and changed parsing to split
+  tags on spaces, commas, or any combination thereof. So something like
+  "these,will all,  be  , tags now" should result in tags of "these", "will",
+  "all", "be", "tags", and "now". Hopefully this is easier to use and less
+  confusing.
+* Adding basic support for `task` < 1.9.2
+* Moved to thin gem as a server for speed and stability.
+
 ## v1.0.6 (11/15/12)
 
 * Fixed escaping issue when viewing or adding projects with spaces.
