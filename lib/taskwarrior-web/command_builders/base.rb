@@ -6,7 +6,6 @@ module TaskwarriorWeb::CommandBuilder
     TASK_COMMANDS = {
       :add => 'add',
       :query => TaskwarriorWeb::Config.version > Versionomy.parse('1.9.2') ? '_query' : 'export',
-      :count => 'count',
       :complete => ':id done',
       :projects => '_projects',
       :tags => '_tags'

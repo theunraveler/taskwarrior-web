@@ -54,11 +54,7 @@ module TaskwarriorWeb
 
     # Get the number of tasks for some paramters
     def self.count(*args)
-      if TaskwarriorWeb::Config.version > Versionomy.parse('1.9.2')
-        Command.new(:count, nil, *args).run.to_s.strip!
-      else
-        self.query(*args).count
-      end
+      self.query(*args).count
     end
 
     # Define method_missing to implement dynamic finder methods
