@@ -1,5 +1,6 @@
-require 'json'
 require 'taskwarrior-web/command'
+require 'taskwarrior-web/parser'
+require 'versionomy'
 
 module TaskwarriorWeb
   
@@ -46,20 +47,18 @@ module TaskwarriorWeb
     # Run queries on tasks.
     def self.query(*args)
       tasks = []
-
-      # Process the JSON data.
-      json = Command.new(:query, nil, *args).run
-      json.strip!
-      json = '[' + json + ']'
-      results = json == '[No matches.]' ? [] : ::JSON.parse(json)
-
-      results.each { |result| tasks << Task.new(result) }
+      results = Command.new(:query, nil, *args).run
+      Parser.parse(results).each { |result| tasks << Task.new(result) }
       tasks
     end
 
     # Get the number of tasks for some paramters
     def self.count(*args)
-      Command.new(:count, nil, *args).run.to_s.strip!
+      if TaskwarriorWeb::Config.version > Versionomy.parse('1.9.2')
+        Command.new(:count, nil, *args).run.to_s.strip!
+      else
+        self.query(*args).count
+      end
     end
 
     # Define method_missing to implement dynamic finder methods
