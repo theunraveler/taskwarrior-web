@@ -3,7 +3,7 @@
 A lightweight, Sinatra-based web interface for the
 wonderful [Taskwarrior](http://taskwarrior.org/) todo application.
 
-**Now compatible with Taskwarrior 1.9.3 and up, including 2.x**
+**Now compatible with all versions of Taskwarrior, including 2.x**
 **Also, now including a NEW theme based on Twitter Bootstrap. Mobile version
 forthcoming!**
 
@@ -13,7 +13,6 @@ forthcoming!**
 
 * `ruby` >= 1.9 (support for `ruby` < 1.9 is very unlikely, but pull requests
   are gladly accepted).
-* `task` >= 1.9.3 (compatibility with `task` < 1.9.3 is in the works)
 
 ## Installation
 
