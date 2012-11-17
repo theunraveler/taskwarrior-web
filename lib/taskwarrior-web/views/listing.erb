@@ -32,7 +32,7 @@
               </ul>
             <% end %>
           </td>
-          <td><a href="/projects/<%= linkify(task.project, :project) %>"><%= task.project %></a></td>
+          <td><a href="/projects/<%= linkify(task.project) %>"><%= task.project %></a></td>
           <td><%= format_date(task.due) unless task.due.nil? %></td>
           <td><%= task.tags.join(', ') unless task.tags.nil? %></td>
           <td><%= task.priority unless task.priority.nil? %></td>

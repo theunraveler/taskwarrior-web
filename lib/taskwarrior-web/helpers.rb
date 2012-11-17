@@ -18,12 +18,14 @@ module TaskwarriorWeb::App::Helpers
     end
   end
 
-  def linkify(item, method)
+  def linkify(item)
     return if item.nil?
-    case method.to_s
-      when 'project'
-        item.gsub('.', '--')
-    end
+    item.gsub('.', '--')
+  end
+
+  def idify(item)
+    return if item.nil?
+    linkify(item).gsub(' ', '-').gsub("'", '').downcase
   end
 
   def auto_link(text)

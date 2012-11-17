@@ -1,13 +1,13 @@
-<nav id="subnav-bar">
-  <div class="page-header">
-    <h1 class="pull-left"><%= @title %></h1>
-    <% if @subnav %>
-      <ul class="nav nav-pills pull-right">
-        <% @subnav.each do |path, text| %>
-          <li<%= ' class="active"' if @current_page.index(path) == 0 %>><a href="<%= path %>"><%= text %></a></li>
-        <% end %>
-      </ul>
-    <% end %>
-    <div class="clear"></div>
-  </div>
-</nav>
+<div class="page-header" id="subnav-bar">
+  <h1 class="pull-left"><%= @title %></h1>
+  <% if @subnav %>
+  <nav class="subnav pull-right">
+    <ul class="nav nav-pills">
+      <% @subnav.each do |path, text| %>
+        <li<%= ' class="active"' if @current_page.index(path) == 0 %>><a href="<%= path %>"><%= text %></a></li>
+      <% end %>
+    </ul>
+  <% end %>
+  </nav>
+  <div class="clear"></div>
+</div>
