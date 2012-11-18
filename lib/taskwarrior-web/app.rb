@@ -53,22 +53,19 @@ class TaskwarriorWeb::App < Sinatra::Base
 
   get '/tasks/new/?' do
     @title = 'New Task'
-    @date_format = TaskwarriorWeb::Config.dateformat || 'm/d/yy'
-    @date_format.gsub!('Y', 'yy')
+    @date_format = (TaskwarriorWeb::Config.dateformat || 'm/d/yy').gsub('Y', 'yy')
     erb :task_form
   end
 
   post '/tasks/?' do
     results = passes_validation(params[:task], :task)
     if results.empty?
-      task = TaskwarriorWeb::Task.new(params[:task])
-      task.save!.to_s
+      TaskwarriorWeb::Task.new(params[:task]).save!
       redirect '/tasks'
     else
       @task = params[:task]
       @title = 'New Task'
-      @date_format = TaskwarriorWeb::Config.dateformat || 'm/d/yy'
-      @date_format.gsub!('Y', 'yy')
+      @date_format = (TaskwarriorWeb::Config.dateformat || 'm/d/yy').gsub('Y', 'yy')
       @messages = []
       results.each do |result|
         @messages << { :severity => 'alert-error', :message => result }
@@ -85,14 +82,18 @@ class TaskwarriorWeb::App < Sinatra::Base
   get '/projects/overview/?' do
     @title = 'Projects'
     @subnav = subnav('projects')
-    @tasks = TaskwarriorWeb::Task.query('status.not' => 'deleted', 'project.not' => '').sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s] }.group_by { |x| x.project.to_s }
+    @tasks = TaskwarriorWeb::Task.query('status.not' => :deleted, 'project.not' => '')
+      .sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s] }
+      .group_by { |x| x.project.to_s }
+      .reject { |project, tasks| tasks.select { |task| task.status == 'pending' }.empty? }
     erb :projects
   end
 
   get '/projects/:name/?' do
     @subnav = subnav('projects')
     subbed = params[:name].gsub('--', '.') 
-    @tasks = TaskwarriorWeb::Task.query('status.not' => 'deleted', :project => subbed).sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s] }
+    @tasks = TaskwarriorWeb::Task.query('status.not' => 'deleted', :project => subbed)
+      .sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s] }
     @title = @tasks.select { |t| t.project.match(/^#{subbed}$/i) }.first.project
     erb :project
   end

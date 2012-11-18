@@ -12,41 +12,39 @@
   <div class="span9">
     <div id="listing">
       <% @tasks.each do |proj, tasks| %>
-        <% doneness = (tasks.select { |t| t.status == 'completed' }.count.to_f / tasks.count.to_f) * 100 %>
-        <% unless doneness == 100.0 %>
-          <section class="project-container" id="project-<%= idify(proj) %>">
-            <h2 class="project <%= doneness == 100.0 ? 'done' : 'pending' %>">
-              <%= proj %>&nbsp;
-              <a href="/projects/<%= linkify(proj) %>"><i class="icon-circle-arrow-right"></i></a>
-            </h2>
-            <div class="progress progress-striped">
-              <div class="bar" style="width: <%= doneness.to_i %>%;"></div>&nbsp;<%= doneness.to_i %>%
-            </div>
-            <table class="table table-striped table-hover">
-              <thead>
-                <tr>
-                  <th>Description</th>
-                  <th>Due</th>
-                  <th>Tags</th>
-                  <th>Priority</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% tasks.each do |task| %>
-                  <% if task.status == 'pending' %>
-                    <tr class="<%= colorize_date(task.due) %>">
-                      <td><%= task.description %></td>
-                      <td><%= format_date(task.due) unless task.due.nil? %></td>
-                      <td><%= task.tags.join(', ') unless task.tags.nil? %></td>
-                      <td><%= task.priority unless task.priority.nil? %></td>
-                    </tr>
-                  <% end %>
+        <% doneness = (tasks.select { |t| t.status == 'completed' }.count.to_i / tasks.count.to_f) * 100 %>
+        <section class="project-container" id="project-<%= idify(proj) %>">
+          <h2 class="project <%= doneness == 100 ? 'done' : 'pending' %>">
+            <%= proj %>&nbsp;
+            <a href="/projects/<%= linkify(proj) %>"><i class="icon-circle-arrow-right"></i></a>
+          </h2>
+          <div class="progress progress-striped">
+            <div class="bar" style="width: <%= doneness %>%;"></div>&nbsp;<%= doneness %>%
+          </div>
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>Due</th>
+                <th>Tags</th>
+                <th>Priority</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% tasks.each do |task| %>
+                <% if task.status == 'pending' %>
+                  <tr class="<%= colorize_date(task.due) %>">
+                    <td><%= task.description %></td>
+                    <td><%= format_date(task.due) unless task.due.nil? %></td>
+                    <td><%= task.tags.join(', ') unless task.tags.nil? %></td>
+                    <td><%= task.priority unless task.priority.nil? %></td>
+                  </tr>
                 <% end %>
-              </tbody>
-            </table>
-          </section>
-          <hr class="section-separator" />
-        <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        </section>
+        <hr class="section-separator" />
       <% end %>
     </div>
   </div>
