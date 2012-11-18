@@ -1,3 +1,7 @@
+## v1.0.8 (11/18/12)
+
+* Better layout for projects listing page.
+
 ## v1.0.7 (11/17/12)
 
 * Moving `task` version parsing to Verionomy library. Should be much more
