@@ -18,6 +18,8 @@ body { padding-top: 40px; }
   box-shadow: 0 1px 4px rgba(0,0,0,.065);
 }
 
+#sidebar .nav.affix { top: 40px; }
+
 #sidebar .nav > li > a {
   display: block;
   width: 190px 9;
@@ -33,6 +35,16 @@ body { padding-top: 40px; }
   opacity: .25;
 }
 
-#sidebar .nav.affix { top: 40px; }
+#sidebar .nav > li:first-child > a {
+  -webkit-border-radius: 6px 6px 0 0;
+  -moz-border-radius: 6px 6px 0 0;
+  border-radius: 6px 6px 0 0;
+}
+
+#sidebar .nav > li:last-child > a {
+  -webkit-border-radius: 0 0 6px 6px;
+  -moz-border-radius: 0 0 6px 6px;
+  border-radius: 0 0 6px 6px;
+}
 
 h2.project i { vertical-align: 35%; }
