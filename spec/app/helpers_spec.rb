@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require 'taskwarrior-web/helpers'
+require 'taskwarrior-web'
 
 class TestHelpers
   include TaskwarriorWeb::App::Helpers

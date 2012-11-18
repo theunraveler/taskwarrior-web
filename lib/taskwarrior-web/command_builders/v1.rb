@@ -1,5 +1,3 @@
-require 'taskwarrior-web/command_builders/base'
-
 module TaskwarriorWeb::CommandBuilder::V1
 
   include TaskwarriorWeb::CommandBuilder::Base

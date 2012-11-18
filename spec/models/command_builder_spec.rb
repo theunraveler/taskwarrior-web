@@ -33,5 +33,3 @@ describe TaskwarriorWeb::CommandBuilder do
 end
 
 class TestCommandClass; end
-
-module TaskwarriorWeb::CommandBuilder::V2; end

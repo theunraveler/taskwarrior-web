@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require 'taskwarrior-web/app'
+require 'taskwarrior-web'
 
 set :environment, :test
 

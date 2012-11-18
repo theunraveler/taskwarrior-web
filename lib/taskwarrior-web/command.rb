@@ -1,19 +1,12 @@
-require 'taskwarrior-web/command_builder'
-require 'taskwarrior-web/runner'
+class TaskwarriorWeb::Command
+  include TaskwarriorWeb::CommandBuilder
+  include TaskwarriorWeb::Runner
 
-module TaskwarriorWeb
-  class Command
+  attr_accessor :command, :id, :params, :built, :command_string
 
-    include TaskwarriorWeb::CommandBuilder
-    include TaskwarriorWeb::Runner
-
-    attr_accessor :command, :id, :params, :built, :command_string
-
-    def initialize(command, id = nil, *args)
-      @command = command if command
-      @id = id if id
-      @params = args.last.is_a?(::Hash) ? args.pop : {}
-    end
-
+  def initialize(command, id = nil, *args)
+    @command = command if command
+    @id = id if id
+    @params = args.last.is_a?(::Hash) ? args.pop : {}
   end
 end

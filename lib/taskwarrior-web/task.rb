@@ -1,7 +1,3 @@
-require 'taskwarrior-web/command'
-require 'taskwarrior-web/parser'
-require 'versionomy'
-
 module TaskwarriorWeb
   
   #################

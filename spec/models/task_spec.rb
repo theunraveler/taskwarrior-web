@@ -28,18 +28,6 @@ describe TaskwarriorWeb::Task do
       @command.should_receive(:run).and_return('{}')
       TaskwarriorWeb::Task.query
     end
-
-    it 'should parse the JSON received from the `task` command' do
-      @command.should_receive(:run).and_return('{}')
-      ::JSON.should_receive(:parse).with('[{}]').and_return([])
-      TaskwarriorWeb::Task.query
-    end
-
-    it 'should not parse the results when there are no matching tasks' do
-      @command.should_receive(:run).and_return('No matches.')
-      ::JSON.should_not_receive(:parse)
-      TaskwarriorWeb::Task.query
-    end
   end
 
   describe '.count' do
