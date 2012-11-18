@@ -3,7 +3,7 @@
 A lightweight, Sinatra-based web interface for the
 wonderful [Taskwarrior](http://taskwarrior.org/) todo application.
 
-**Now compatible with all versions of Taskwarrior, including 2.x**
+**Now compatible with all versions of Taskwarrior, including 2.x**  
 **Also, now including a NEW theme based on Twitter Bootstrap. Mobile version
 forthcoming!**
 
