@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'rack/test'
 require 'rspec'
+require 'simple_navigation'
 
 # Simplecov
 require 'simplecov'
@@ -16,3 +17,5 @@ RSpec.configure do |config|
   config.mock_with :rspec
   config.include(RSpec::Mocks::Methods)
 end
+
+SimpleNavigation.config_file_paths << File.dirname(__FILE__) + '/../lib/taskwarrior-web/config'

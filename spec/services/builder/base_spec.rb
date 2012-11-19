@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
-require 'taskwarrior-web/command'
+require 'taskwarrior-web/model/command'
 
 describe TaskwarriorWeb::CommandBuilder::Base do
   describe '#task_command' do

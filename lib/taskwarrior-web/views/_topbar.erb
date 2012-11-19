@@ -1,12 +1,7 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner"><div class="container">
     <a href="/" class="brand">Taskwarrior Web</a>
-    <% tabs = { '/tasks' => 'Tasks', '/projects' => 'Projects' } %>
-    <ul class="nav">
-      <% tabs.each do |path, text| %>
-        <li<%= ' class="active"' if @current_page.index(path) == 0 %>><a href="<%= path %>"><%= text %></a></li>
-      <% end %>
-    </ul>
+    <%= render_navigation :level => 1 %>
     <ul class="nav pull-right">
       <li>
         <a href="/tasks/new">

@@ -3,7 +3,7 @@
     <ul class="nav nav-list" data-spy="affix" data-offset-top="125">
       <% @tasks.keys.each do |project| %>
         <li>
-          <a href="#project-<%= idify(project) %>"><i class="icon-chevron-right"></i> <%= project %></a>
+          <a href="#project-<%= project.parameterize %>"><i class="icon-chevron-right"></i> <%= project %></a>
         </li>
       <% end %>
     </ul>
@@ -13,7 +13,7 @@
     <div id="listing">
       <% @tasks.each do |proj, tasks| %>
         <% doneness = (tasks.select { |t| t.status == 'completed' }.count.to_f / tasks.count.to_f) * 100 %>
-        <section class="project-container" id="project-<%= idify(proj) %>">
+        <section class="project-container" id="project-<%= proj.parameterize %>">
           <h2 class="project <%= doneness == 100 ? 'done' : 'pending' %>">
             <%= proj %>&nbsp;
             <a href="/projects/<%= linkify(proj) %>"><i class="icon-circle-arrow-right"></i></a>

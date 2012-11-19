@@ -5,6 +5,7 @@ require 'erb'
 require 'time'
 require 'rinku'
 require 'digest'
+require 'sinatra/simple-navigation'
 
 class TaskwarriorWeb::App < Sinatra::Base
   autoload :Helpers, 'taskwarrior-web/helpers'
@@ -14,6 +15,10 @@ class TaskwarriorWeb::App < Sinatra::Base
   set :app_file, __FILE__
   set :public_folder, File.dirname(__FILE__) + '/public'
   set :views, File.dirname(__FILE__) + '/views'
+
+  # Helpers
+  helpers Helpers
+  register Sinatra::SimpleNavigation
   
   def protected!
     response['WWW-Authenticate'] = %(Basic realm="Taskworrior Web") and throw(:halt, [401, "Not authorized\n"]) and return unless authorized?
@@ -31,9 +36,6 @@ class TaskwarriorWeb::App < Sinatra::Base
     protected! if TaskwarriorWeb::Config.property('task-web.user')
   end
 
-  # Helpers
-  helpers Helpers
-
   # Redirects
   get '/' do
     redirect '/tasks/pending'
@@ -46,7 +48,6 @@ class TaskwarriorWeb::App < Sinatra::Base
   get '/tasks/:status/?' do
     pass unless ['pending', 'waiting', 'completed', 'deleted'].include?(params[:status])
     @title = "Tasks"
-    @subnav = subnav('tasks')
     @tasks = TaskwarriorWeb::Task.find_by_status(params[:status]).sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s, x.project.to_s] }
     erb :listing
   end
@@ -76,7 +77,6 @@ class TaskwarriorWeb::App < Sinatra::Base
 
   get '/projects/overview/?' do
     @title = 'Projects'
-    @subnav = subnav('projects')
     @tasks = TaskwarriorWeb::Task.query('status.not' => :deleted, 'project.not' => '')
       .sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s] }
       .group_by { |x| x.project.to_s }
@@ -85,7 +85,6 @@ class TaskwarriorWeb::App < Sinatra::Base
   end
 
   get '/projects/:name/?' do
-    @subnav = subnav('projects')
     subbed = params[:name].gsub('--', '.') 
     @tasks = TaskwarriorWeb::Task.query('status.not' => 'deleted', :project => subbed)
       .sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s] }

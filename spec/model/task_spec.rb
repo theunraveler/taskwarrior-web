@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require 'taskwarrior-web/task'
+require 'taskwarrior-web/model/task'
 
 describe TaskwarriorWeb::Task do
   RSpec::Mocks::setup(TaskwarriorWeb::Runner)

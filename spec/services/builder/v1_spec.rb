@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require 'taskwarrior-web/services/builder/v1'
-require 'taskwarrior-web/command'
+require 'taskwarrior-web/model/command'
 require 'ostruct'
 
 describe TaskwarriorWeb::CommandBuilder::V1 do

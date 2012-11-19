@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require 'taskwarrior-web/config'
+require 'taskwarrior-web/model/config'
 require 'ostruct'
 
 describe TaskwarriorWeb::Config do

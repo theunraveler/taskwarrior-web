@@ -23,30 +23,7 @@ module TaskwarriorWeb::App::Helpers
     item.gsub('.', '--')
   end
 
-  def idify(item)
-    return if item.nil?
-    linkify(item).gsub(' ', '-').gsub("'", '').downcase
-  end
-
   def auto_link(text)
     Rinku.auto_link(text, :all, 'target="_blank"')
   end
-
-  def subnav(type)
-    case type
-      when 'tasks'
-        { '/tasks/pending' => "Pending <span class=\"badge\">#{TaskwarriorWeb::Task.count(:status => :pending)}</span>",
-          '/tasks/waiting' => "Waiting",
-          '/tasks/completed' => "Completed",
-          '/tasks/deleted' => 'Deleted'
-        }
-      when 'projects'
-        {
-          '/projects/overview' => 'Overview'
-        }
-      else
-        { }
-    end
-  end
-
 end

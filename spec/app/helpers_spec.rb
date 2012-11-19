@@ -61,11 +61,5 @@ describe TaskwarriorWeb::App::Helpers do
       helpers.auto_link('hello')
     end
   end
-
-  describe '#subnav' do
-    it 'should be empty for an unrecognized type' do
-      helpers.subnav('something').should be_empty
-    end
-  end
 end
 

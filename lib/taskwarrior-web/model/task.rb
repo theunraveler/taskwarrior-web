@@ -7,7 +7,7 @@ module TaskwarriorWeb
 
     attr_accessor :entry, :project, :priority, :uuid, :description, :status,
                   :due, :start, :end, :tags, :depends, :wait, :annotations,
-                  :errors
+                  :_errors
     alias :annotate= :annotations=
 
     ####################################
@@ -17,7 +17,10 @@ module TaskwarriorWeb
     def initialize(attributes = {})
       attributes.each do |attr, value|
         send("#{attr}=", value) if respond_to?(attr.to_sym)
-      end  
+      end
+
+      @_errors = []
+      @tags = [] if @tags.nil?
     end
 
     def save!
@@ -29,21 +32,17 @@ module TaskwarriorWeb
     end
 
     # Make sure that the tags are an array.
-    def tags
-      @tags ? @tags : []
-    end
     def tags=(value)
       @tags = value.is_a?(String) ? value.split(/\W+/).reject(&:empty?) : value
     end
 
     def is_valid?
-      self.errors = []
-      self.errors << 'You must provide a description' if self.description.nil? || self.description.empty?
-      self.errors.empty?
+      @_errors << 'You must provide a description' if self.description.blank?
+      @_errors.empty?
     end
 
     def to_hash
-      Hash[instance_variables.map { |var| [var[1..-1].to_sym, instance_variable_get(var)] }]
+      Hash[instance_variables.select { |var| !var.to_s.start_with?('@_') }.map { |var| [var[1..-1].to_sym, instance_variable_get(var)] }]
     end
     
     ##################################
