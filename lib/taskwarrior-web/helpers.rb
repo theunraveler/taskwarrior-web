@@ -34,7 +34,7 @@ module TaskwarriorWeb::App::Helpers
 
   def subnav(type)
     case type
-      when 'tasks' then
+      when 'tasks'
         { '/tasks/pending' => "Pending <span class=\"badge\">#{TaskwarriorWeb::Task.count(:status => :pending)}</span>",
           '/tasks/waiting' => "Waiting",
           '/tasks/completed' => "Completed",

@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require 'taskwarrior-web/command_builder'
+require 'taskwarrior-web/services/builder'
 
 RSpec::Mocks::setup(TaskwarriorWeb::Config)
 

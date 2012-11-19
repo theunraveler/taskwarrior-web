@@ -3,28 +3,28 @@
   <div class="control-group">
     <label for="task-description" class="control-label">Description</label>
     <div class="controls">
-      <input type="textfield" id="task-description" name="task[description]" value="<%= @task[:description] unless @task.nil? %>" />
+      <input type="textfield" id="task-description" name="task[description]" value="<%= @task.description unless @task.nil? %>" />
     </div>
   </div>
 
   <div class="control-group">
     <label for="task-project" class="control-label">Project</label>
     <div class="controls">
-      <input type="textfield" id="task-project" name="task[project]" value="<%= @task[:project] unless @task.nil? %>" autocomplete="off" />
+      <input type="textfield" id="task-project" name="task[project]" value="<%= @task.project unless @task.nil? %>" autocomplete="off" />
     </div>
   </div>
 
   <div class="control-group">
     <label for="task-due" class="control-label">Due Date</label>
     <div class="controls">
-      <input class="date-picker" type="textfield" id="task-due" name="task[due]" value="<%= @task[:due] unless @task.nil? %>" data-date-format="<%= @date_format %>" />
+      <input class="date-picker" type="textfield" id="task-due" name="task[due]" value="<%= @task.due unless @task.nil? %>" data-date-format="<%= @date_format %>" />
     </div>
   </div>
 
   <div class="control-group">
     <label for="task-tags" class="control-label">Tags</label>
     <div class="controls">
-      <input type="textfield" id="task-tags" name="task[tags]" value="<%= @task[:tags] unless @task.nil? %>" autocomplete="off" />
+      <input type="textfield" id="task-tags" name="task[tags]" value="<%= @task.tags.join(', ') unless @task.nil? %>" autocomplete="off" />
       <div class="description">Enter tags separated by commas or spaces (e.g. <em>each, word will,be a tag</em>)</div>
     </div>
   </div>

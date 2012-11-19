@@ -6,7 +6,8 @@ module TaskwarriorWeb
   class Task
 
     attr_accessor :entry, :project, :priority, :uuid, :description, :status,
-                  :due, :start, :end, :tags, :depends, :wait, :annotations
+                  :due, :start, :end, :tags, :depends, :wait, :annotations,
+                  :errors
     alias :annotate= :annotations=
 
     ####################################
@@ -30,6 +31,12 @@ module TaskwarriorWeb
     # Make sure that the tags are an array.
     def tags=(value)
       @tags = value.is_a?(String) ? value.split(/\W+/).reject(&:empty?) : value
+    end
+
+    def is_valid?
+      self.errors = []
+      self.errors << 'You must provide a description' if self.description.empty?
+      self.errors.empty?
     end
 
     def to_hash

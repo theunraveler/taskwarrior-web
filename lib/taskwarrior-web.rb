@@ -8,10 +8,10 @@ module TaskwarriorWeb
   autoload :Helpers,        'taskwarrior-web/helpers'
   autoload :Task,           'taskwarrior-web/task'
   autoload :Config,         'taskwarrior-web/config'
-  autoload :CommandBuilder, 'taskwarrior-web/command_builder'
   autoload :Command,        'taskwarrior-web/command'
-  autoload :Runner,         'taskwarrior-web/runner'
-  autoload :Parser,         'taskwarrior-web/parser'
+  autoload :CommandBuilder, 'taskwarrior-web/services/builder'
+  autoload :Runner,         'taskwarrior-web/services/runner'
+  autoload :Parser,         'taskwarrior-web/services/parser'
 
   class UnrecognizedTaskVersion < Exception; end
 end

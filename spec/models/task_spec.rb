@@ -18,6 +18,26 @@ describe TaskwarriorWeb::Task do
     end
   end
 
+  describe '#save!' do
+    it 'should save the task' do
+      task = TaskwarriorWeb::Task.new
+      command = TaskwarriorWeb::Command.new(:add)
+      command.should_receive(:run).once
+      TaskwarriorWeb::Command.should_receive(:new).once.with(:add, nil, task.to_hash).and_return(command)
+      task.save!
+    end
+  end
+
+  describe '#complete!' do
+    it 'should complete the task' do
+      task = TaskwarriorWeb::Task.new({:uuid => 15})
+      command = TaskwarriorWeb::Command.new(:complete)
+      command.should_receive(:run).once
+      TaskwarriorWeb::Command.should_receive(:new).once.with(:complete, 15).and_return(command)
+      task.complete!
+    end
+  end
+
   describe '.query' do
     before do
       @command = TaskwarriorWeb::Command.new(:query)

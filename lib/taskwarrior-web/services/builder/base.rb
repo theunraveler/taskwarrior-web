@@ -22,8 +22,9 @@ module TaskwarriorWeb::CommandBuilder::Base
   def task_command
     if TASK_COMMANDS.has_key?(@command.to_sym)
       @command_string = TASK_COMMANDS[@command.to_sym].clone
+      return self
     else
-      raise InvalidCommandError
+      raise TaskwarriorWeb::CommandBuilder::InvalidCommandError
     end
   end
 
@@ -31,9 +32,8 @@ module TaskwarriorWeb::CommandBuilder::Base
     if @id
       @command_string.gsub!(':id', "uuid:#{@id.to_s}")
       return self
-    else
-      raise TaskwarriorWeb::CommandBuilder::MissingTaskIDError
     end
+    raise TaskwarriorWeb::CommandBuilder::MissingTaskIDError
   end
 
   def parse_params

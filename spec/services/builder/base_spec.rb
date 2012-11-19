@@ -2,9 +2,26 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require 'taskwarrior-web/command'
 
 describe TaskwarriorWeb::CommandBuilder::Base do
+  describe '#task_command' do
+    it 'should throw and exception for invalid commands' do
+      command = TaskwarriorWeb::Command.new(:does_not_exist)
+      expect { command.task_command }.to raise_error(TaskwarriorWeb::CommandBuilder::InvalidCommandError)
+    end
+  end
+
   describe '#substitute_parts' do
     before do
       @command = TaskwarriorWeb::Command.new(:complete, 34588)
+    end
+
+    it 'should insert the task id into the command' do
+      @command.task_command.substitute_parts
+      @command.command_string.should =~ /uuid:34588/
+    end
+
+    it 'should return itself' do
+      @command.task_command
+      @command.task_command.substitute_parts.should eq(@command)
     end
 
     it 'should throw an error if the command has no task ID' do
@@ -15,9 +32,9 @@ describe TaskwarriorWeb::CommandBuilder::Base do
 
   describe '#parse_params' do
     it 'should create a string from the passed paramters' do
-      command = TaskwarriorWeb::Command.new(:query, nil, :test => 14, :none => :none, :hello => :hi)
+      command = TaskwarriorWeb::Command.new(:query, nil, :test => 14, :none => :none, :hello => :hi, :array => [:first, :second])
       command.parse_params
-      command.params.should eq(' test:\"14\" none:\"none\" hello:\"hi\"')
+      command.params.should eq(' test:\"14\" none:\"none\" hello:\"hi\" array:\"first\" array:\"second\"')
     end
 
     it 'should prefix tags with the tag.indicator if specified' do

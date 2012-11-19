@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require 'taskwarrior-web/runner'
+require 'taskwarrior-web/services/runner'
 
 describe TaskwarriorWeb::Runner do
   before do

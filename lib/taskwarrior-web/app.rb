@@ -58,20 +58,15 @@ class TaskwarriorWeb::App < Sinatra::Base
   end
 
   post '/tasks/?' do
-    results = passes_validation(params[:task], :task)
-    if results.empty?
-      TaskwarriorWeb::Task.new(params[:task]).save!
+    @task = TaskwarriorWeb::Task.new(params[:task])
+
+    if @task.is_valid?
+      @task.save!
       redirect '/tasks'
-    else
-      @task = params[:task]
-      @title = 'New Task'
-      @date_format = (TaskwarriorWeb::Config.dateformat || 'm/d/yy').gsub('Y', 'yy')
-      @messages = []
-      results.each do |result|
-        @messages << { :severity => 'alert-error', :message => result }
-      end
-      erb :task_form
     end
+
+    @messages = @task.errors.map { |error| { :severity => 'alert-error', :message => error } }
+    call! env.merge('REQUEST_METHOD' => 'GET', 'PATH_INFO' => '/tasks/new')
   end
 
   # Projects
@@ -103,18 +98,6 @@ class TaskwarriorWeb::App < Sinatra::Base
     TaskwarriorWeb::Command.new(:projects).run.split("\n").to_json
   end
 
-  get '/ajax/tags/?' do
-    tags = TaskwarriorWeb::Command.new(:tags).run.split("\n")
-    tags.keep_if { |tag| tag.include?(params[:query]) }
-
-    json = []
-    tags.each do |tag|
-      json << { :name => tag, :id => tag }
-    end
-
-    json.to_json
-  end
-
   get '/ajax/count/?' do
     TaskwarriorWeb::Task.count(:status => :pending).to_s
   end
@@ -130,16 +113,5 @@ class TaskwarriorWeb::App < Sinatra::Base
     @title = 'Page Not Found'
     @referrer = request.referrer
     erb :'404'
-  end
-
-  def passes_validation(item, method)
-    results = [] 
-    case method
-      when :task
-        if item['description'].empty?
-          results << 'You must provide a description'
-        end
-    end
-    results
   end
 end

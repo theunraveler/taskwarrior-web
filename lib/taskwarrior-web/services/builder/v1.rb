@@ -19,9 +19,8 @@ module TaskwarriorWeb::CommandBuilder::V1
       assign_id_from_uuid
       @command_string.gsub!(':id', @id.to_s)
       return self
-    else
-      raise TaskwarriorWeb::CommandBuilder::MissingTaskIDError
     end
+    raise TaskwarriorWeb::CommandBuilder::MissingTaskIDError
   end
 
   def assign_id_from_uuid
