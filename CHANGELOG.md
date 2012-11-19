@@ -1,3 +1,9 @@
+## v1.0.9 (11/19/12)
+
+* Fixed bug on projects listing page where projects with no pending tasks were
+  being shown.
+* Updated datepicker library, much better
+
 ## v1.0.8 (11/18/12)
 
 * Better layout for projects listing page.
