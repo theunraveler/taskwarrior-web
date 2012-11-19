@@ -35,7 +35,7 @@ module TaskwarriorWeb
 
     def is_valid?
       self.errors = []
-      self.errors << 'You must provide a description' if self.description.empty?
+      self.errors << 'You must provide a description' if self.description.nil? || self.description.empty?
       self.errors.empty?
     end
 
