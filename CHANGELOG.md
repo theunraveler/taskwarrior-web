@@ -1,3 +1,12 @@
+## v1.0.10 (11/20/12)
+
+* Adding ability to specify a filter for the task listing. See [the wiki][1]
+  for more information.
+* Added the SimpleNavigation library for navigation, and moved a bunch of stuff
+  to ActiveSupport.
+
+[1]: http://github.com/theunraveler/taskwarrior-web/wiki/Filters-for-the-task-listing-page
+
 ## v1.0.9 (11/19/12)
 
 * Fixed bug on projects listing page where projects with no pending tasks were

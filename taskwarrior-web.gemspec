@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "taskwarrior-web"
-  s.version     = '1.0.9'
+  s.version     = '1.0.10'
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Jake Bell"]
   s.email       = ["jake@theunraveler.com"]
