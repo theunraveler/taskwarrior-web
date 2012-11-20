@@ -66,7 +66,7 @@ class TaskwarriorWeb::App < Sinatra::Base
       redirect '/tasks'
     end
 
-    @messages = @task.errors.map { |error| { :severity => 'alert-error', :message => error } }
+    @messages = @task._errors.map { |error| { :severity => 'alert-error', :message => error } }
     call! env.merge('REQUEST_METHOD' => 'GET', 'PATH_INFO' => '/tasks/new')
   end
 
