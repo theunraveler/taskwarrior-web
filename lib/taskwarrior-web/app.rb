@@ -48,7 +48,12 @@ class TaskwarriorWeb::App < Sinatra::Base
   get '/tasks/:status/?' do
     pass unless ['pending', 'waiting', 'completed', 'deleted'].include?(params[:status])
     @title = "Tasks"
-    @tasks = TaskwarriorWeb::Task.find_by_status(params[:status]).sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s, x.project.to_s] }
+    if params[:status] == 'pending' && filter = TaskwarriorWeb::Config.property('task-web.filter')
+      @tasks = TaskwarriorWeb::Task.query(:description => filter)
+    else
+      @tasks = TaskwarriorWeb::Task.find_by_status(params[:status])
+    end
+    @tasks.sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s, x.project.to_s] }
     erb :listing
   end
 
@@ -98,7 +103,12 @@ class TaskwarriorWeb::App < Sinatra::Base
   end
 
   get '/ajax/count/?' do
-    TaskwarriorWeb::Task.count(:status => :pending).to_s
+    if filter = TaskwarriorWeb::Config.property('task-web.filter')
+      total = TaskwarriorWeb::Task.query(:description => filter).count
+    else
+      total = TaskwarriorWeb::Task.count(:status => :pending)
+    end
+    total.to_s
   end
 
   post '/ajax/task-complete/:id/?' do

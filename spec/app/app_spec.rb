@@ -12,6 +12,7 @@ describe TaskwarriorWeb::App do
 
   before do
     TaskwarriorWeb::Config.should_receive(:property).with('task-web.user').any_number_of_times.and_return(nil)
+    TaskwarriorWeb::Config.should_receive(:property).with('task-web.filter').any_number_of_times.and_return(nil)
     TaskwarriorWeb::Runner.should_receive(:run).any_number_of_times.and_return('{}')
   end
 
