@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 require 'taskwarrior-web'
+require 'active_support/core_ext/date/calculations'
 
 class TestHelpers
   include TaskwarriorWeb::App::Helpers
@@ -52,6 +53,12 @@ describe TaskwarriorWeb::App::Helpers do
       it 'should return "overdue" when a date is before today' do
         helpers.colorize_date(Time.at(0).to_s).should eq('error')
       end
+
+      it 'should return "info" when a date is within the specified range' do
+        TaskwarriorWeb::Config.should_receive(:due).any_number_of_times.and_return(5)
+        helpers.colorize_date(Date.tomorrow.to_s).should eq('info')
+      end
+
     end
   end
 
