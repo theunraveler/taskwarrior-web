@@ -103,12 +103,7 @@ class TaskwarriorWeb::App < Sinatra::Base
   end
 
   get '/ajax/count/?' do
-    if filter = TaskwarriorWeb::Config.property('task-web.filter')
-      total = TaskwarriorWeb::Task.query(:description => filter).count
-    else
-      total = TaskwarriorWeb::Task.count(:status => :pending)
-    end
-    total.to_s
+    self.class.task_count
   end
 
   post '/ajax/task-complete/:id/?' do
@@ -122,5 +117,14 @@ class TaskwarriorWeb::App < Sinatra::Base
     @title = 'Page Not Found'
     @referrer = request.referrer
     erb :'404'
+  end
+
+  def self.task_count
+    if filter = TaskwarriorWeb::Config.property('task-web.filter')
+      total = TaskwarriorWeb::Task.query(:description => filter).count
+    else
+      total = TaskwarriorWeb::Task.count(:status => :pending)
+    end
+    total.to_s
   end
 end
