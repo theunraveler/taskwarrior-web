@@ -1,3 +1,8 @@
+## v1.0.11 (11/21/12)
+
+* Nicer badges in the "Pending" menu item
+* Fixed stripping of non-word characters from tags when adding a new task
+
 ## v1.0.10 (11/20/12)
 
 * Adding ability to specify a filter for the task listing. See [the wiki][1]
