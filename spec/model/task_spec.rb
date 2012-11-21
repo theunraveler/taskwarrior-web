@@ -77,6 +77,11 @@ describe TaskwarriorWeb::Task do
         task.tags.should eq(['hi', 'twice', 'and', 'again'])
       end
     end
+
+    it 'should support most characters' do
+      task = TaskwarriorWeb::Task.new(:tags => '@hi, -twice, !again, ~when')
+      task.tags.should eq(['@hi', '-twice', '!again', '~when'])
+    end
   end
 
   describe '#to_hash' do

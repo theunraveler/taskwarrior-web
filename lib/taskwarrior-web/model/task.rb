@@ -33,7 +33,7 @@ module TaskwarriorWeb
 
     # Make sure that the tags are an array.
     def tags=(value)
-      @tags = value.is_a?(String) ? value.split(/\W+/).reject(&:empty?) : value
+      @tags = value.is_a?(String) ? value.split(/[, ]+/).reject(&:empty?) : value
     end
 
     def is_valid?
