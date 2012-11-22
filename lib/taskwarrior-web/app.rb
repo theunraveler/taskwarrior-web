@@ -105,6 +105,15 @@ class TaskwarriorWeb::App < Sinatra::Base
     self.class.task_count
   end
 
+  get '/ajax/badge-count/?' do
+    if filter = TaskwarriorWeb::Config.property('task-web.filter.badge')
+      total = TaskwarriorWeb::Task.query(:description => filter).count
+    else
+      total = self.class.task_count
+    end
+    total == 0 ? '' : total.to_s
+  end
+
   post '/ajax/task-complete/:id/?' do
     # Bummer that we have to directly use Command here, but apparently tasks
     # cannot be filtered by UUID.
