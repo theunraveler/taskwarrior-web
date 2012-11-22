@@ -1,9 +1,8 @@
 module TaskwarriorWeb::App::Helpers
 
   def format_date(timestamp)
-    format = TaskwarriorWeb::Config.dateformat || 'm/d/Y'
-    subbed = format.gsub(/([a-zA-Z])/, '%\1')
-    Time.parse(timestamp).strftime(subbed)
+    format = TaskwarriorWeb::Config.dateformat || '%-m/%-d/%Y'
+    Time.parse(timestamp).strftime(format)
   end
 
   def colorize_date(timestamp)
