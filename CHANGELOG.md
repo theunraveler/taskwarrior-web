@@ -1,3 +1,9 @@
+## v1.0.14 (11/22/12)
+
+* Fixed a bug when colorizing tasks based on "due" setting.
+* Fixed bugs that may result from differences between Taskwarrior's date format
+  strings and those of Ruby.
+
 ## v1.0.13 (11/22/12)
 
 * Added support for `task-web.filter.badge` option to control the Fluid badge
