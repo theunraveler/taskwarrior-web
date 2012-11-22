@@ -1,3 +1,7 @@
+## v1.0.12 (11/22/12)
+
+* Miscellaneous styling fixes and improvements
+
 ## v1.0.11 (11/21/12)
 
 * Nicer badges in the "Pending" menu item
