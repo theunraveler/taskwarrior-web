@@ -49,19 +49,28 @@ describe TaskwarriorWeb::App::Helpers do
         TaskwarriorWeb::Config.should_receive(:due).any_number_of_times.and_return(3)
       end
 
-      it 'should return "today" when a given date is today' do
-        helpers.colorize_date(Time.now.to_s).should eq('success') 
+      it 'should return "warning" when a given date is today' do
+        helpers.colorize_date(Time.now.to_s).should eq('warning')
       end
 
-      it 'should return "overdue" when a date is before today' do
+      it 'should return "error" when a date is before today' do
         helpers.colorize_date(Time.at(0).to_s).should eq('error')
       end
 
-      it 'should return "info" when a date is within the specified range' do
+      it 'should return "success" when a date is within the specified range' do
         TaskwarriorWeb::Config.should_receive(:due).any_number_of_times.and_return(5)
-        helpers.colorize_date(Date.tomorrow.to_s).should eq('info')
+        helpers.colorize_date(Date.tomorrow.to_s).should eq('success')
+      end
+    end
+
+    context 'with no due setting specified' do
+      before do
+        TaskwarriorWeb::Config.should_receive(:due).any_number_of_times.and_return(nil)
       end
 
+      it 'should use the default setting of 7 days' do
+        helpers.colorize_date(Date.tomorrow.to_s).should eq('success')
+      end
     end
   end
 

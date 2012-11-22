@@ -38,6 +38,6 @@ module TaskwarriorWeb::Config
   end
 
   def self.method_missing(method)
-    self.file[method]
+    self.file[method.to_s]
   end
 end

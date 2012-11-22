@@ -7,12 +7,12 @@ module TaskwarriorWeb::App::Helpers
 
   def colorize_date(timestamp)
     return if timestamp.nil?
-    due_def = TaskwarriorWeb::Config.due.to_i || 5
+    due_def = (TaskwarriorWeb::Config.due || 7).to_i
     time = Time.parse(timestamp)
     case true
-      when Time.now.strftime('%D') == time.strftime('%D') then 'success'
+      when Time.now.strftime('%D') == time.strftime('%D') then 'warning'
       when Time.now.to_i > time.to_i then 'error'
-      when (time.to_i - Time.now.to_i) < (due_def * 86400) then 'info'
+      when (time.to_i - Time.now.to_i) < (due_def * 86400) then 'success'
       else 'regular'
     end
   end
