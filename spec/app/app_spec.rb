@@ -113,6 +113,16 @@ describe TaskwarriorWeb::App do
     end
   end
 
+  describe 'POST /ajax/task-complete/:id' do
+    it 'should mark the given task as complete' do
+      command = TaskwarriorWeb::Command.new(:complete, 15)
+      command.should_receive(:run).once
+      TaskwarriorWeb::Command.should_receive(:new).once.with(:complete, '15').and_return(command)
+      post '/ajax/task-complete/15'
+      last_response.should be_ok
+    end
+  end
+
   describe 'not_found' do
     it 'should set the title to "Not Found"' do
       get '/page-not-found'

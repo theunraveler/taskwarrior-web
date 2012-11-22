@@ -90,10 +90,9 @@ class TaskwarriorWeb::App < Sinatra::Base
   end
 
   get '/projects/:name/?' do
-    subbed = params[:name].gsub('--', '.') 
-    @tasks = TaskwarriorWeb::Task.query('status.not' => 'deleted', :project => subbed)
+    @title = params[:name].gsub('--', '.') 
+    @tasks = TaskwarriorWeb::Task.query('status.not' => 'deleted', :project => @title)
       .sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s] }
-    @title = @tasks.select { |t| t.project.match(/^#{subbed}$/i) }.first.project
     erb :project
   end
 
