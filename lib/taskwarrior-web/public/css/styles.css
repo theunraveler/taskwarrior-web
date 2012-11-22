@@ -1,10 +1,10 @@
-.clear { clear: both; }
 body { padding-top: 40px; }
 
 .section-separator { margin: 40px 0 39px; }
 
 #subnav-bar ul.nav { margin-top: 10px; }
 #subnav-bar .nav .badge { background-color: #08c; }
+#subnav-bar .nav li.active .badge { color: #08c; background-color: #fff; }
 #subnav-bar .nav li#pending a { padding-top: 6px; padding-bottom: 6px; }
 
 #sidebar .nav {
