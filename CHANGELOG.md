@@ -1,3 +1,10 @@
+## v1.0.13 (11/22/12)
+
+* Added support for `task-web.filter.badge` option to control the Fluid badge
+  count. See [the wiki][2] for more information.
+
+[2]: http://github.com/theunraveler/taskwarrior-web/wiki/Additional-.taskrc-options
+
 ## v1.0.12 (11/22/12)
 
 * Miscellaneous styling fixes and improvements
@@ -14,7 +21,7 @@
 * Added the SimpleNavigation library for navigation, and moved a bunch of stuff
   to ActiveSupport.
 
-[1]: http://github.com/theunraveler/taskwarrior-web/wiki/Filters-for-the-task-listing-page
+[1]: http://github.com/theunraveler/taskwarrior-web/wiki/Additional-.taskrc-options
 
 ## v1.0.9 (11/19/12)
 
