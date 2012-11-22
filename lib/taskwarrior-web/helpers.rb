@@ -1,3 +1,5 @@
+require 'active_support/core_ext/date/calculations'
+
 module TaskwarriorWeb::App::Helpers
 
   def format_date(timestamp)
@@ -8,12 +10,12 @@ module TaskwarriorWeb::App::Helpers
   def colorize_date(timestamp)
     return if timestamp.nil?
     due_def = (TaskwarriorWeb::Config.due || 7).to_i
-    time = Time.parse(timestamp)
+    date = Date.parse(timestamp)
     case true
-      when Time.now.strftime('%D') == time.strftime('%D') then 'warning'
-      when Time.now.to_i > time.to_i then 'error'
-      when (time.to_i - Time.now.to_i) < (due_def * 86400) then 'success'
-      else 'regular'
+      when Date.today == date then 'warning'                            # today
+      when Date.today > date then 'error'                               # overdue
+      when Date.today.advance(:days => due_def) >= date then 'success'  # within the "due" range
+      else 'regular'                                                    # just a regular task
     end
   end
 
