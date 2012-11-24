@@ -51,6 +51,12 @@ describe TaskwarriorWeb::CommandBuilder::Base do
       command.params.should eq(' +today +tomorrow') 
     end
 
+    it 'should remove tags using a -' do
+      command = TaskwarriorWeb::Command.new(:add, nil, :remove_tags => [:test, :tag])
+      command.parse_params
+      command.params.should eq(' -test -tag') 
+    end
+
     it 'should pull out the description parameter' do
       command = TaskwarriorWeb::Command.new(:add, nil, :description => 'Hello', :status => :pending)
       command.parse_params

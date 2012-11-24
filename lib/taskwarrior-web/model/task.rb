@@ -7,7 +7,7 @@ module TaskwarriorWeb
 
     attr_accessor :entry, :project, :priority, :uuid, :description, :status,
                   :due, :start, :end, :tags, :depends, :wait, :annotations,
-                  :_errors
+                  :_errors, :remove_tags
     alias :annotate= :annotations=
 
     ####################################
@@ -24,16 +24,24 @@ module TaskwarriorWeb
     end
 
     def save!
-      Command.new(:add, nil, self.to_hash).run
+      @uuid ? Command.new(:update, uuid, self.to_hash).run : Command.new(:add, nil, self.to_hash).run
     end
 
     def complete!
       Command.new(:complete, self.uuid).run
     end
 
+    def delete!
+      Command.new(:delete, self.uuid).run
+    end
+
     # Make sure that the tags are an array.
     def tags=(value)
       @tags = value.is_a?(String) ? value.split(/[, ]+/).reject(&:empty?) : value
+
+      if @uuid
+        @remove_tags = Task.find_by_uuid(uuid).first.tags - @tags
+      end
     end
 
     def is_valid?

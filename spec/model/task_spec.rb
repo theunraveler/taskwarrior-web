@@ -38,6 +38,16 @@ describe TaskwarriorWeb::Task do
     end
   end
 
+  describe '#delete!' do
+    it 'should delete the task' do
+      task = TaskwarriorWeb::Task.new({:uuid => 15})
+      command = TaskwarriorWeb::Command.new(:delete)
+      command.should_receive(:run).once
+      TaskwarriorWeb::Command.should_receive(:new).once.with(:delete, 15).and_return(command)
+      task.delete!
+    end
+  end
+
   describe '.query' do
     before do
       @command = TaskwarriorWeb::Command.new(:query)
@@ -81,6 +91,16 @@ describe TaskwarriorWeb::Task do
     it 'should support most characters' do
       task = TaskwarriorWeb::Task.new(:tags => '@hi, -twice, !again, ~when')
       task.tags.should eq(['@hi', '-twice', '!again', '~when'])
+    end
+
+    it 'should properly set tags for removal' do
+      task = TaskwarriorWeb::Task.new({:tags => ['hello', 'goodbye']})
+      TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return([task])
+      task2 = TaskwarriorWeb::Task.new
+      task2.uuid = 15
+      task2.tags = ['goodbye']
+      task2.tags.should eq(['goodbye'])
+      task2.remove_tags.should eq(['hello'])
     end
   end
 

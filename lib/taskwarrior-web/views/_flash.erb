@@ -1,0 +1,7 @@
+<div id="flash-messages">
+  <% flash_types.select{ |severity| flash.has?(severity) }.each do |severity| %>
+    <div class="alert alert-<%= severity %>">
+      <%= flash[severity] %>
+    </div>
+  <% end %>
+</div>

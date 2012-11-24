@@ -1,0 +1,13 @@
+<form id="new-task-form" class="form-horizontal" action="/tasks/<%= @task.uuid %>" method="post">
+  <input type="hidden" name="task[uuid]" value="<%= @task.uuid %>" />
+
+  <%= erb :_task_form %>
+
+  <div class="control-group">
+    <div class="controls">
+      <button type="submit" class="btn btn-primary">Update Task</button>
+      <input type="hidden" name="_method" value="patch" />
+    </div>
+  </div>
+
+</form>

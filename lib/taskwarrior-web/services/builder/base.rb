@@ -4,6 +4,8 @@ module TaskwarriorWeb::CommandBuilder::Base
 
   TASK_COMMANDS = {
     :add => 'add',
+    :update => TaskwarriorWeb::Config.version.major >= 2 ? ':id mod' : nil,
+    :delete => 'rc.confirmation=no :id delete',
     :query => TaskwarriorWeb::Config.version > Versionomy.parse('1.9.2') ? '_query' : 'export',
     :complete => ':id done',
     :projects => '_projects',
@@ -20,7 +22,7 @@ module TaskwarriorWeb::CommandBuilder::Base
   end
 
   def task_command
-    if TASK_COMMANDS.has_key?(@command.to_sym)
+    if TASK_COMMANDS[@command.to_sym]
       @command_string = TASK_COMMANDS[@command.to_sym].clone
       return self
     else
@@ -43,6 +45,10 @@ module TaskwarriorWeb::CommandBuilder::Base
     if tags = @params.delete(:tags)
       tag_indicator = TaskwarriorWeb::Config.property('tag.indicator') || '+'
       tags.each { |tag| string << %Q( #{tag_indicator}#{tag.to_s.shellescape}) } 
+    end
+
+    if tags = @params.delete(:remove_tags)
+      tags.each { |tag| string << %Q( -#{tag.to_s.shellescape}) } 
     end
 
     @params.each do |attr, value|

@@ -4,6 +4,7 @@ $:.unshift(File.dirname(__FILE__)) unless
 require 'rubygems'
 require 'active_support/core_ext/object/blank'
 require 'active_support/core_ext/string/inflections'
+require 'active_support/core_ext/string/filters'
 
 module TaskwarriorWeb
   autoload :App,            'taskwarrior-web/app'

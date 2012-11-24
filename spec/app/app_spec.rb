@@ -60,11 +60,11 @@ describe TaskwarriorWeb::App do
       end
 
       it 'should redirect to the task listing page' do
-        task = TaskwarriorWeb::Task.new
+        task = TaskwarriorWeb::Task.new({:description => 'Test task'})
         task.should_receive(:is_valid?).and_return(true)
         task.should_receive(:save!)
         TaskwarriorWeb::Task.should_receive(:new).once.and_return(task)
-        post '/tasks', :task => {}
+        post '/tasks', :task => {:description => 'Test task'}
         follow_redirect!
         last_request.url.should =~ /\/tasks$/
       end

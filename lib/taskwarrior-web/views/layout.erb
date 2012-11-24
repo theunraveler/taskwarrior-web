@@ -19,13 +19,7 @@
       <%= erb :_topbar %>
       <%= erb :_subnav %>
       <section class="content">
-        <div id="flash-messages">
-          <% if @messages %>
-            <% @messages.each do |message| %>
-              <div class="alert <%= message[:severity] %>"><%= message[:message] %></div>
-            <% end %>
-          <% end %>
-        </div>
+        <%= erb :_flash %>
         <%= yield %>
       </section>
     </div>
