@@ -28,16 +28,6 @@ describe TaskwarriorWeb::App do
     end
   end
 
-  describe 'GET /projects' do
-    it 'should redirect to /projects/overview' do
-      get '/projects'
-      follow_redirect!
-
-      last_request.url.should =~ /projects\/overview/
-      last_response.should be_ok
-    end
-  end
-
   describe 'GET /tasks/new' do
     it 'should display a new task form' do
       get '/tasks/new'
@@ -92,6 +82,24 @@ describe TaskwarriorWeb::App do
         post '/tasks', :task => {}
         last_response.body.should =~ /You must provide a description/
       end
+    end
+  end
+
+  describe 'GET /projects' do
+    it 'should redirect to /projects/overview' do
+      get '/projects'
+      follow_redirect!
+
+      last_request.url.should =~ /projects\/overview/
+      last_response.should be_ok
+    end
+  end
+
+  describe 'GET /projects/:name' do
+    it 'should replace characters in the title' do
+      TaskwarriorWeb::Task.should_receive(:query).any_number_of_times.and_return([])
+      get '/projects/Test--Project'
+      last_response.body.should =~ /<title>Test\.Project/
     end
   end
 

@@ -18,23 +18,12 @@ class TaskwarriorWeb::App < Sinatra::Base
   set :views, File.dirname(__FILE__) + '/views'
   set :method_override, true
   enable :sessions
-  use Rack::Flash
 
   # Helpers
   helpers Helpers
   register Sinatra::SimpleNavigation
+  use Rack::Flash
   
-  # Authentication
-  def protected!
-    response['WWW-Authenticate'] = %(Basic realm="Taskworrior Web") and throw(:halt, [401, "Not authorized\n"]) and return unless authorized?
-  end
-
-  def authorized?
-    @auth ||=  Rack::Auth::Basic::Request.new(request.env)
-    values = [TaskwarriorWeb::Config.property('task-web.user'), TaskwarriorWeb::Config.property('task-web.passwd')]
-    @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == values
-  end
-
   # Before filter
   before do
     @current_page = request.path_info
@@ -42,12 +31,9 @@ class TaskwarriorWeb::App < Sinatra::Base
   end
 
   # Redirects
-  get '/' do
-    redirect '/tasks/pending'
-  end
-  get '/tasks/?' do
-    redirect '/tasks/pending'
-  end
+  get('/') { redirect '/tasks/pending' }
+  get('/tasks/?') { redirect '/tasks/pending' }
+  get('/projects/?') { redirect '/projects/overview' }
 
   # Task routes
   get '/tasks/:status/?' do
@@ -126,10 +112,6 @@ class TaskwarriorWeb::App < Sinatra::Base
   end
 
   # Projects
-  get '/projects' do
-    redirect '/projects/overview'
-  end
-
   get '/projects/overview/?' do
     @title = 'Projects'
     @tasks = TaskwarriorWeb::Task.query('status.not' => :deleted, 'project.not' => '')
@@ -140,34 +122,24 @@ class TaskwarriorWeb::App < Sinatra::Base
   end
 
   get '/projects/:name/?' do
-    @title = params[:name].gsub('--', '.') 
+    @title = unlinkify(params[:name])
     @tasks = TaskwarriorWeb::Task.query('status.not' => 'deleted', :project => @title)
       .sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s] }
     erb :project
   end
 
   # AJAX callbacks
-  get '/ajax/projects/?' do
-    TaskwarriorWeb::Command.new(:projects).run.split("\n").to_json
-  end
+  get('/ajax/projects/?') { TaskwarriorWeb::Command.new(:projects).run.split("\n").to_json }
+  get('/ajax/count/?') { task_count }
+  post('/ajax/task-complete/:id/?') { TaskwarriorWeb::Command.new(:complete, params[:id]).run }
 
-  get '/ajax/count/?' do
-    self.class.task_count
-  end
-
-  get '/ajax/badge-count/?' do
+  get '/ajax/badge/?' do
     if filter = TaskwarriorWeb::Config.property('task-web.filter.badge')
       total = TaskwarriorWeb::Task.query(:description => filter).count
     else
-      total = self.class.task_count
+      total = task_count
     end
     total == 0 ? '' : total.to_s
-  end
-
-  post '/ajax/task-complete/:id/?' do
-    # Bummer that we have to directly use Command here, but apparently tasks
-    # cannot be filtered by UUID.
-    TaskwarriorWeb::Command.new(:complete, params[:id]).run
   end
 
   # Error handling
@@ -175,14 +147,5 @@ class TaskwarriorWeb::App < Sinatra::Base
     @title = 'Page Not Found'
     @referrer = request.referrer
     erb :'404'
-  end
-
-  def self.task_count
-    if filter = TaskwarriorWeb::Config.property('task-web.filter')
-      total = TaskwarriorWeb::Task.query(:description => filter).count
-    else
-      total = TaskwarriorWeb::Task.count(:status => :pending)
-    end
-    total.to_s
   end
 end

@@ -1,7 +1,6 @@
 require 'active_support/core_ext/date/calculations'
 
 module TaskwarriorWeb::App::Helpers
-
   def format_date(timestamp)
     format = TaskwarriorWeb::Config.dateformat || '%-m/%-d/%Y'
     Time.parse(timestamp).strftime(format)
@@ -20,8 +19,11 @@ module TaskwarriorWeb::App::Helpers
   end
 
   def linkify(item)
-    return if item.nil?
-    item.gsub('.', '--')
+    item.gsub('.', '--') unless item.nil? unless item.nil?
+  end
+
+  def unlinkify(item)
+    item.gsub('--', '.') unless item.nil?
   end
 
   def auto_link(text)
@@ -30,5 +32,25 @@ module TaskwarriorWeb::App::Helpers
 
   def flash_types
     [:success, :info, :warning, :error]
+  end
+
+  def task_count
+    if filter = TaskwarriorWeb::Config.property('task-web.filter')
+      total = TaskwarriorWeb::Task.query(:description => filter).count
+    else
+      total = TaskwarriorWeb::Task.count(:status => :pending)
+    end
+    total.to_s
+  end
+
+  # Authentication
+  def protected!
+    response['WWW-Authenticate'] = %(Basic realm="Taskworrior Web") and throw(:halt, [401, "Not authorized\n"]) and return unless authorized?
+  end
+
+  def authorized?
+    @auth ||=  Rack::Auth::Basic::Request.new(request.env)
+    values = [TaskwarriorWeb::Config.property('task-web.user'), TaskwarriorWeb::Config.property('task-web.passwd')]
+    @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == values
   end
 end
