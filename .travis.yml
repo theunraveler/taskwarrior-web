@@ -4,6 +4,6 @@ rvm:
   - 1.9.3
 script: "rake spec"
 before_install:
-  - sudo apt-get install task
+  - sudo apt-get install task --fix-missing
   - cp -v /home/vagrant/builds/theunraveler/taskwarrior-web/spec/files/taskrc /home/vagrant/.taskrc
   - mkdir /home/vagrant/.task
