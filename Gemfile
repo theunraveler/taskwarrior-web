@@ -3,10 +3,9 @@ source "http://rubygems.org"
 # Specify your gem's dependencies in taskwarrior-web.gemspec
 gemspec
 
-group :local do
-  gem 'rb-fsevent', :require => false
-  gem 'growl', :require => false
+group :development do
+  gem 'rake'
+  gem 'rack-test'
+  gem 'rspec'
   gem 'simplecov'
-  gem 'guard-rspec'
-  gem 'guard-bundler'
 end
