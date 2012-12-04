@@ -2,9 +2,12 @@ language: ruby
 rvm:
   - 1.9.2
   - 1.9.3
+env:
+  - TASKWARRIOR="2.1.2-0ubuntu1~precise1"
 script: "rake spec"
 before_install:
+  - sudo add-apt-repository ppa:ultrafredde/ppa
   - sudo apt-get update -qq
-  - sudo apt-get install task -qq
+  - sudo apt-get install task=$TASKWARRIOR -qq
   - cp -v /home/vagrant/builds/theunraveler/taskwarrior-web/spec/files/taskrc /home/vagrant/.taskrc
   - mkdir /home/vagrant/.task

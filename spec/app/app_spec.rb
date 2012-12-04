@@ -90,7 +90,7 @@ describe TaskwarriorWeb::App do
       it 'should return a 404' do
         TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return([])
         get '/tasks/429897527'
-        last_response.status.should eq(404)
+        last_response.should be_not_found
       end
     end
   end
@@ -100,7 +100,7 @@ describe TaskwarriorWeb::App do
       it 'should return a 404' do
         TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return([])
         patch '/tasks/429897527'
-        last_response.status.should eq(404)
+        last_response.should be_not_found
       end
     end
   end
@@ -110,7 +110,7 @@ describe TaskwarriorWeb::App do
       it 'should return a 404' do
         TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return([])
         get '/tasks/429897527/delete'
-        last_response.status.should eq(404)
+        last_response.should be_not_found
       end
     end
   end
@@ -120,7 +120,7 @@ describe TaskwarriorWeb::App do
       it 'should return a 404' do
         TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return([])
         delete '/tasks/429897527'
-        last_response.status.should eq(404)
+        last_response.should be_not_found
       end
     end
   end
@@ -179,7 +179,7 @@ describe TaskwarriorWeb::App do
 
     it 'should have a status code of 404' do
       get '/page-not-found'
-      last_response.status.should eq(404)
+      last_response.should be_not_found
     end
   end
 end
