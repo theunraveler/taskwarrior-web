@@ -85,6 +85,46 @@ describe TaskwarriorWeb::App do
     end
   end
 
+  describe 'GET /tasks/:uuid' do
+    context 'given a non-existant task' do
+      it 'should return a 404' do
+        TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return([])
+        get '/tasks/429897527'
+        last_response.status.should eq(404)
+      end
+    end
+  end
+
+  describe 'PATCH /tasks/:uuid' do
+    context 'given a non-existant task' do
+      it 'should return a 404' do
+        TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return([])
+        patch '/tasks/429897527'
+        last_response.status.should eq(404)
+      end
+    end
+  end
+
+  describe 'GET /tasks/:uuid/delete' do
+    context 'given a non-existant task' do
+      it 'should return a 404' do
+        TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return([])
+        get '/tasks/429897527/delete'
+        last_response.status.should eq(404)
+      end
+    end
+  end
+
+  describe 'DELETE /tasks/:uuid' do
+    context 'given a non-existant task' do
+      it 'should return a 404' do
+        TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return([])
+        delete '/tasks/429897527'
+        last_response.status.should eq(404)
+      end
+    end
+  end
+
   describe 'GET /projects' do
     it 'should redirect to /projects/overview' do
       get '/projects'
