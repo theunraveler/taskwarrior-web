@@ -31,9 +31,9 @@ class TaskwarriorWeb::App < Sinatra::Base
   end
 
   # Redirects
-  get('/') { redirect '/tasks/pending' }
-  get('/tasks/?') { redirect '/tasks/pending' }
-  get('/projects/?') { redirect '/projects/overview' }
+  get('/') { redirect to('/tasks/pending') }
+  get('/tasks/?') { redirect to('/tasks/pending') }
+  get('/projects/?') { redirect to('/projects/overview') }
 
   # Task routes
   get '/tasks/:status/?' do
@@ -59,56 +59,45 @@ class TaskwarriorWeb::App < Sinatra::Base
 
     if @task.is_valid?
       flash[:success] = @task.save! || %Q{New task "#{@task.description.truncate(20)}" created}
-      redirect '/tasks'
+      redirect to('/tasks')
     end
 
     flash.now[:error] = @task._errors.join(', ')
-    call! env.merge('REQUEST_METHOD' => 'GET', 'PATH_INFO' => '/tasks/new')
+    call! env.merge('REQUEST_METHOD' => 'GET', 'PATH_INFO' => url('/tasks/new'))
   end
 
   get '/tasks/:uuid/?' do
-    if tasks = TaskwarriorWeb::Task.find_by_uuid(params[:uuid])
-      @task = tasks.first
-      @title = %Q{Editing "#{@task.description.truncate(20)}"}
-      erb :edit_task
-    else
-      halt 404
-    end
+    pass unless tasks = TaskwarriorWeb::Task.find_by_uuid(params[:uuid])
+    @task = tasks.first
+    @title = %Q{Editing "#{@task.description.truncate(20)}"}
+    erb :edit_task
   end
 
   patch '/tasks/:uuid/?' do
-    if TaskwarriorWeb::Task.find_by_uuid(params[:uuid]).empty?
-      halt 404
-    end
+    pass if TaskwarriorWeb::Task.find_by_uuid(params[:uuid]).empty?
 
     @task = TaskwarriorWeb::Task.new(params[:task])
     if @task.is_valid?
       flash[:success] = @task.save! || %Q{Task "#{@task.description.truncate(20)}" was successfully updated}
-      redirect '/tasks'
+      redirect to('/tasks')
     end
 
     flash.now[:error] = @task._errors.join(', ')
-    call! env.merge('REQUEST_METHOD' => 'GET', 'PATH_INFO' => "/tasks/#{@task.uuid}")
+    call! env.merge('REQUEST_METHOD' => 'GET', 'PATH_INFO' => url("/tasks/#{@task.uuid}"))
   end
 
   get '/tasks/:uuid/delete/?' do
-    if tasks = TaskwarriorWeb::Task.find_by_uuid(params[:uuid])
-      @task = tasks.first
-      @title = %Q{Are you sure you want to delete the task "#{@task.description.truncate(20)}"?}
-      erb :delete_confirm
-    else
-      halt 404
-    end
+    pass unless tasks = TaskwarriorWeb::Task.find_by_uuid(params[:uuid])
+    @task = tasks.first
+    @title = %Q{Are you sure you want to delete the task "#{@task.description.truncate(20)}"?}
+    erb :delete_confirm
   end
 
   delete '/tasks/:uuid' do
-    if tasks = TaskwarriorWeb::Task.find_by_uuid(params[:uuid])
-      @task = tasks.first
-      flash[:success] = @task.delete! || %Q{The task "#{@task.description.truncate(20)}" was successfully deleted}
-      redirect '/tasks'
-    else
-      halt 404
-    end
+    pass unless tasks = TaskwarriorWeb::Task.find_by_uuid(params[:uuid])
+    @task = tasks.first
+    flash[:success] = @task.delete! || %Q{The task "#{@task.description.truncate(20)}" was successfully deleted}
+    redirect to('/tasks')
   end
 
   # Projects
