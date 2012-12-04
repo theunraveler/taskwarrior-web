@@ -22,7 +22,7 @@ describe TaskwarriorWeb::App do
         get path
         follow_redirect!
 
-        last_request.url.should =~ /tasks\/pending/
+        last_request.url.should match(/tasks\/pending$/)
         last_response.should be_ok
       end
     end
@@ -31,7 +31,7 @@ describe TaskwarriorWeb::App do
   describe 'GET /tasks/new' do
     it 'should display a new task form' do
       get '/tasks/new'
-      last_response.body.should =~ /form/
+      last_response.body.should include('<form')
     end
 
     it 'should display a 200 status code' do
@@ -56,7 +56,7 @@ describe TaskwarriorWeb::App do
         TaskwarriorWeb::Task.should_receive(:new).once.and_return(task)
         post '/tasks', :task => {:description => 'Test task'}
         follow_redirect!
-        last_request.url.should =~ /\/tasks$/
+        last_request.url.should match(/tasks$/)
       end
     end
 
@@ -72,15 +72,15 @@ describe TaskwarriorWeb::App do
         task = TaskwarriorWeb::Task.new({:tags => 'tag1, tag2'})
         TaskwarriorWeb::Task.should_receive(:new).once.and_return(task)
         post '/tasks', :task => {}
-        last_response.body.should =~ /form/
-        last_response.body.should =~ /tag1, tag2/
+        last_response.body.should include('form')
+        last_response.body.should include('tag1, tag2')
       end
 
       it 'should display errors messages' do
         task = TaskwarriorWeb::Task.new
         TaskwarriorWeb::Task.should_receive(:new).once.and_return(task)
         post '/tasks', :task => {}
-        last_response.body.should =~ /You must provide a description/
+        last_response.body.should include('You must provide a description')
       end
     end
   end
@@ -89,9 +89,21 @@ describe TaskwarriorWeb::App do
     context 'given a non-existant task' do
       it 'should return a 404' do
         TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return([])
-        get '/tasks/429897527'
+        get '/tasks/1'
         last_response.should be_not_found
       end
+    end
+
+    context 'given an existing task' do
+      before do
+        TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return([
+          TaskwarriorWeb::Task.new({:description => 'Test task with a longer description', :tags => ['test', 'tag']})
+        ])
+      end
+
+      it 'should render an edit form'
+      it 'should truncate the task description'
+      it 'should fill the form fields with existing data'
     end
   end
 
@@ -130,7 +142,7 @@ describe TaskwarriorWeb::App do
       get '/projects'
       follow_redirect!
 
-      last_request.url.should =~ /projects\/overview/
+      last_request.url.should match(/projects\/overview$/)
       last_response.should be_ok
     end
   end
@@ -139,7 +151,7 @@ describe TaskwarriorWeb::App do
     it 'should replace characters in the title' do
       TaskwarriorWeb::Task.should_receive(:query).any_number_of_times.and_return([])
       get '/projects/Test--Project'
-      last_response.body.should =~ /<title>Test\.Project/
+      last_response.body.should include('<title>Test.Project')
     end
   end
 
@@ -174,7 +186,7 @@ describe TaskwarriorWeb::App do
   describe 'not_found' do
     it 'should set the title to "Not Found"' do
       get '/page-not-found'
-      last_response.body.should =~ /<title>Page Not Found/
+      last_response.body.should include('<title>Page Not Found')
     end
 
     it 'should have a status code of 404' do
