@@ -63,7 +63,7 @@ class TaskwarriorWeb::App < Sinatra::Base
     end
 
     flash.now[:error] = @task._errors.join(', ')
-    call! env.merge('REQUEST_METHOD' => 'GET', 'PATH_INFO' => '/tasks/new')
+    forward '/tasks/new'
   end
 
   get '/tasks/:uuid/?' do
@@ -84,7 +84,7 @@ class TaskwarriorWeb::App < Sinatra::Base
     end
 
     flash.now[:error] = @task._errors.join(', ')
-    call! env.merge('REQUEST_METHOD' => 'GET', 'PATH_INFO' => "/tasks/#{@task.uuid}")
+    forward "/tasks/#{@task.uuid}"
   end
 
   get '/tasks/:uuid/delete/?' do
