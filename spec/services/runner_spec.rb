@@ -15,7 +15,7 @@ describe TaskwarriorWeb::Runner do
     end
 
     it 'should add a TASK_VERSION constant' do
-      @object.class.const_get(:TASK_BIN).should eq('task')
+      @object.class.const_defined?(:TASK_BIN).should be_true
     end
   end
 
