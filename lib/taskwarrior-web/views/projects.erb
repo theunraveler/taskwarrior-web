@@ -28,6 +28,7 @@
                 <th>Due</th>
                 <th>Tags</th>
                 <th>Priority</th>
+                <% if @can_edit %><th></th><% end %>
               </tr>
             </thead>
             <tbody>
@@ -38,6 +39,7 @@
                     <td><%= format_date(task.due) unless task.due.nil? %></td>
                     <td><%= task.tags.join(', ') unless task.tags.nil? %></td>
                     <td><%= task.priority unless task.priority.nil? %></td>
+                    <% if @can_edit %><td><%= crud_links(task) %></td><% end %>
                   </tr>
                 <% end %>
               <% end %>

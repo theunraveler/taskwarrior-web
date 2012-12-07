@@ -1,3 +1,5 @@
+<% can_edit = @can_edit && params[:status] == 'pending' %>
+
 <div id="listing">
   <table class="table table-striped table-hover">
     <thead>
@@ -10,7 +12,7 @@
         <th>Due</th>
         <th>Tags</th>
         <th>Priority</th>
-        <th></th>
+        <% if @can_edit %><th></th><% end %>
       </tr>
     </thead>
     <tbody>
@@ -37,11 +39,7 @@
           <td><%= format_date(task.due) unless task.due.nil? %></td>
           <td><%= task.tags.join(', ') unless task.tags.nil? %></td>
           <td><%= task.priority unless task.priority.nil? %></td>
-          <td>
-            <a href="/tasks/<%= task.uuid %>">Edit</a>
-            &nbsp;|&nbsp;
-            <a href="/tasks/<%= task.uuid %>/delete">Delete</a>
-          </td>
+          <% if can_edit %><td><%= crud_links(task) %></td><% end %>
         </tr>
       <% end %>
     </tbody>

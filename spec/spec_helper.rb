@@ -2,6 +2,7 @@ require 'sinatra'
 require 'rack/test'
 require 'rspec'
 require 'simple_navigation'
+require 'rspec-html-matchers'
 
 # Simplecov
 require 'simplecov'

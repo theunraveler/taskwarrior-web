@@ -43,6 +43,13 @@ module TaskwarriorWeb::App::Helpers
     total.to_s
   end
 
+  def crud_links(task)
+    string = %Q{<a href="/tasks/#{task.uuid}">Edit</a>}
+    string << %Q{&nbsp;|&nbsp;}
+    string << %Q{<a href="/tasks/#{task.uuid}/delete">Delete</a>}
+    string
+  end
+
   # Authentication
   def protected!
     response['WWW-Authenticate'] = %(Basic realm="Taskworrior Web") and throw(:halt, [401, "Not authorized\n"]) and return unless authorized?

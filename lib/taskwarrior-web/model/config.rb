@@ -22,7 +22,7 @@ module TaskwarriorWeb::Config
   }
 
   def self.version
-    @version ||= Versionomy.parse(`task _version`.strip)
+    @version ||= Versionomy.parse(`#{TaskwarriorWeb::Runner::TASK_BIN} _version`.strip)
   end
 
   def self.file
@@ -35,6 +35,15 @@ module TaskwarriorWeb::Config
 
   def self.dateformat
     self.file['dateformat'].gsub(/(\w)/, DATEFORMATS) unless self.file['dateformat'].nil?
+  end
+
+  def self.supports?(feature)
+    case feature.to_sym
+    when :editing
+      self.version.major > 1
+    else
+      false
+    end
   end
 
   def self.method_missing(method)

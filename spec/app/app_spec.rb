@@ -97,13 +97,27 @@ describe TaskwarriorWeb::App do
     context 'given an existing task' do
       before do
         TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return([
-          TaskwarriorWeb::Task.new({:description => 'Test task with a longer description', :tags => ['test', 'tag']})
+          TaskwarriorWeb::Task.new({:uuid => 246, :description => 'Test task with a longer description'})
         ])
+        get '/tasks/246'
       end
 
-      it 'should render an edit form'
-      it 'should truncate the task description'
-      it 'should fill the form fields with existing data'
+      it 'should render an edit form' do
+        last_response.body.should have_tag('form', :with => { :action => '/tasks/246', :method => 'post' }) do
+          with_tag('input', :with => { :name => '_method', :value => 'patch' })
+        end
+      end
+
+      it 'should set the HTTP method in the form' do
+      end
+
+      it 'should truncate the task description' do
+        last_response.body.should have_tag('title', :text => /Test task with a .../)
+      end
+
+      it 'should fill the form fields with existing data' do
+        last_response.body.should have_tag('input', :with => { :name => 'task[description]', :value => 'Test task with a longer description' })
+      end
     end
   end
 
@@ -125,6 +139,25 @@ describe TaskwarriorWeb::App do
         last_response.should be_not_found
       end
     end
+
+    context 'given an existing task' do
+      before do
+        TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return([
+          TaskwarriorWeb::Task.new({:uuid => 246, :description => 'Test task with a longer description'})
+        ])
+        get '/tasks/246/delete'
+      end
+
+      it 'should show a delete form' do
+        last_response.body.should have_tag('form', :with => { :action => '/tasks/246', :method => 'post' }) do
+          with_tag('input', :with => { :name => '_method', :value => 'delete' })
+        end
+      end
+
+      it 'should display a delete button' do
+        last_response.body.should have_tag('input', :with => { :type => 'submit', :value => 'Delete' })
+      end
+    end
   end
 
   describe 'DELETE /tasks/:uuid' do
@@ -133,6 +166,20 @@ describe TaskwarriorWeb::App do
         TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return([])
         delete '/tasks/429897527'
         last_response.should be_not_found
+      end
+    end
+
+    context 'given an existing task' do
+      before do
+        @task = TaskwarriorWeb::Task.new
+        @task.should_receive(:delete!).once.and_return('Success')
+        TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return([@task])
+        delete '/tasks/246'
+      end
+
+      it 'should redirect to the task overview page' do
+        follow_redirect!
+        last_request.url.should match(/tasks$/)
       end
     end
   end
