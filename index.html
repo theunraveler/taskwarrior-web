@@ -44,10 +44,6 @@ forthcoming!</strong></p>
 <li>
 <code>ruby</code> &gt;= 1.9 (support for <code>ruby</code> &lt; 1.9 is very unlikely, but pull requests
 are gladly accepted).</li>
-<li>In your <code>.taskrc</code> file, <code>xterm.title</code> cannot be enabled. Either remove that
-line from <code>.taskrc</code> or set it to <code>off</code>. If you have a very compelling reason
-for needing this to be enabled, submit a bug report and I'll reconsider
-adding support for it.</li>
 </ul><h2>Installation</h2>
 
 <p><code>gem install taskwarrior-web</code></p>
@@ -68,8 +64,9 @@ an executable, so all options for Vegas are valid for <code>task-web</code>. Typ
 <p>The current featureset includes:</p>
 
 <ul>
-<li>Viewing tasks (duh) sorted and grouped in various ways.</li>
+<li>Viewing tasks sorted and grouped in various ways.</li>
 <li>Creating a new task with a due date, project, and tags.</li>
+<li>Editing and deleting tasks (only <code>task</code> &gt;= 2.0).</li>
 <li>
 <code>task-web</code> will pull your <code>task</code> config (from <code>.taskrc</code>) and use it to
 determine date formatting and when an upcoming task should be marked as
