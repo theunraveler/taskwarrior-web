@@ -20,6 +20,21 @@
 </div>
 
 <div class="control-group">
+  <label class="control-label">Priority</label>
+  <div class="controls">
+    <label for="task-priority-none" class="radio inline">
+      <input type="radio" id="task-priority-none" name="task[priority]" value=""<% if @task.nil? || @task.priority.blank? %> checked="checked"<% end %> /> None
+    </label>
+    <% {'L' => 'Low', 'M' => 'Medium', 'H' => 'High'}.each_pair do |value, label| %>
+      <label for="task-priority-<%= label.downcase %>" class="radio inline">
+        <input type="radio" id="task-priority-<%= label.downcase %>" name="task[priority]" value="<%= value %>"<% if @task && @task.priority == value %> checked="checked"<% end %> />
+        &nbsp;<%= label %>
+      </label>
+    <% end %>
+  </div>
+</div>
+
+<div class="control-group">
   <label for="task-tags" class="control-label">Tags</label>
   <div class="controls">
     <input type="textfield" id="task-tags" name="task[tags]" value="<%= @task.tags.join(', ') unless @task.nil? %>" autocomplete="off" />
