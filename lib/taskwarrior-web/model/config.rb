@@ -39,10 +39,8 @@ module TaskwarriorWeb::Config
 
   def self.supports?(feature)
     case feature.to_sym
-    when :editing
-      self.version.major > 1
-    else
-      false
+      when :editing then self.version.major > 1
+      else false
     end
   end
 
