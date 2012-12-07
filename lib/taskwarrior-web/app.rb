@@ -69,7 +69,7 @@ class TaskwarriorWeb::App < Sinatra::Base
   end
 
   get '/tasks/:uuid/?' do
-    not_found if !TaskwarriorWeb::Config.supports?(:editing)
+    not_found unless TaskwarriorWeb::Config.supports?(:editing)
     tasks = TaskwarriorWeb::Task.find_by_uuid(params[:uuid])
     not_found if tasks.empty?
     @task = tasks.first
@@ -78,7 +78,7 @@ class TaskwarriorWeb::App < Sinatra::Base
   end
 
   patch '/tasks/:uuid/?' do
-    not_found if !TaskwarriorWeb::Config.supports?(:editing)
+    not_found unless TaskwarriorWeb::Config.supports?(:editing)
     not_found if TaskwarriorWeb::Task.find_by_uuid(params[:uuid]).empty?
 
     @task = TaskwarriorWeb::Task.new(params[:task])
@@ -93,7 +93,7 @@ class TaskwarriorWeb::App < Sinatra::Base
   end
 
   get '/tasks/:uuid/delete/?' do
-    not_found if !TaskwarriorWeb::Config.supports?(:editing)
+    not_found unless TaskwarriorWeb::Config.supports?(:editing)
     tasks = TaskwarriorWeb::Task.find_by_uuid(params[:uuid])
     not_found if tasks.empty?
     @task = tasks.first
@@ -102,7 +102,7 @@ class TaskwarriorWeb::App < Sinatra::Base
   end
 
   delete '/tasks/:uuid' do
-    not_found if !TaskwarriorWeb::Config.supports?(:editing)
+    not_found unless TaskwarriorWeb::Config.supports?(:editing)
     tasks = TaskwarriorWeb::Task.find_by_uuid(params[:uuid])
     not_found if tasks.empty?
     @task = tasks.first
