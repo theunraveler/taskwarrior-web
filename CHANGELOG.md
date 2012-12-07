@@ -1,3 +1,7 @@
+## v1.1.1 (12/7/12)
+
+* Fixing small issue with blank status messages.
+
 ## v1.1.0 (12/7/12)
 
 * Editing and deleting tasks! (If you are using task >= 2.0).

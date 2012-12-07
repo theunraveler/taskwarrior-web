@@ -59,7 +59,8 @@ class TaskwarriorWeb::App < Sinatra::Base
     @task = TaskwarriorWeb::Task.new(params[:task])
 
     if @task.is_valid?
-      flash[:success] = @task.save! || %Q{New task "#{@task.description.truncate(20)}" created}
+      message = @task.save!
+      flash[:success] = message.blank? ? %Q{New task "#{@task.description.truncate(20)}" created} : message
       redirect to('/tasks')
     end
 
@@ -82,7 +83,8 @@ class TaskwarriorWeb::App < Sinatra::Base
 
     @task = TaskwarriorWeb::Task.new(params[:task])
     if @task.is_valid?
-      flash[:success] = @task.save! || %Q{Task "#{@task.description.truncate(20)}" was successfully updated}
+      message = @task.save!
+      flash[:success] = message.blank? ? %Q{Task "#{@task.description.truncate(20)}" was successfully updated} : message
       redirect to('/tasks')
     end
 
@@ -104,7 +106,8 @@ class TaskwarriorWeb::App < Sinatra::Base
     tasks = TaskwarriorWeb::Task.find_by_uuid(params[:uuid])
     not_found if tasks.empty?
     @task = tasks.first
-    flash[:success] = @task.delete! || %Q{The task "#{@task.description.truncate(20)}" was successfully deleted}
+    message = @task.delete!
+    flash[:success] = message.blank? ? %Q{Task "#{@task.description.truncate(20)}" was successfully deleted} : message
     redirect to('/tasks')
   end
 
