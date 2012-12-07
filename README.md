@@ -13,10 +13,6 @@ forthcoming!**
 
 * `ruby` >= 1.9 (support for `ruby` < 1.9 is very unlikely, but pull requests
   are gladly accepted).
-* In your `.taskrc` file, `xterm.title` cannot be enabled. Either remove that
-  line from `.taskrc` or set it to `off`. If you have a very compelling reason
-  for needing this to be enabled, submit a bug report and I'll reconsider
-    adding support for it.
 
 ## Installation
 
@@ -37,8 +33,9 @@ an executable, so all options for Vegas are valid for `task-web`. Type
 
 The current featureset includes:
 
-* Viewing tasks (duh) sorted and grouped in various ways.
+* Viewing tasks sorted and grouped in various ways.
 * Creating a new task with a due date, project, and tags.
+* Editing and deleting tasks (only task >= 2.0).
 * `task-web` will pull your `task` config (from `.taskrc`) and use it to
   determine date formatting and when an upcoming task should be marked as
   "due".

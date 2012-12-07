@@ -1,3 +1,10 @@
+## v1.1.0 (12/7/12)
+
+* Editing and deleting tasks! (If you are using task >= 2.0).
+* Fixing status messages. They should now be consistent.
+* Added safeguards for xterm.title and color .taskrc settings. You should now
+  be able to safely set both of those options.
+
 ## v1.0.14 (11/22/12)
 
 * Fixed a bug when colorizing tasks based on "due" setting.
