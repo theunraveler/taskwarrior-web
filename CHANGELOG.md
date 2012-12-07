@@ -1,3 +1,9 @@
+## v1.1.2 (12/7/12)
+
+* Fixed dumb but annoying timezone issue
+* Added progress bars to project pages
+* Added priority field to task form
+
 ## v1.1.1 (12/7/12)
 
 * Fixing small issue with blank status messages.
