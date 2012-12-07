@@ -65,7 +65,7 @@ class TaskwarriorWeb::App < Sinatra::Base
     end
 
     flash.now[:error] = @task._errors.join(', ')
-    forward '/tasks/new'
+    erb :new_task
   end
 
   get '/tasks/:uuid/?' do
@@ -89,7 +89,7 @@ class TaskwarriorWeb::App < Sinatra::Base
     end
 
     flash.now[:error] = @task._errors.join(', ')
-    forward "/tasks/#{@task.uuid}"
+    erb :edit_task
   end
 
   get '/tasks/:uuid/delete/?' do

@@ -71,8 +71,4 @@ module TaskwarriorWeb::App::Helpers
     values = [TaskwarriorWeb::Config.property('task-web.user'), TaskwarriorWeb::Config.property('task-web.passwd')]
     @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == values
   end
-
-  def forward(url, method = 'GET')
-    call env.merge('REQUEST_METHOD' => method, 'PATH_INFO' => url)
-  end
 end

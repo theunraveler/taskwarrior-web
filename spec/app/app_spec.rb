@@ -129,6 +129,31 @@ describe TaskwarriorWeb::App do
         last_response.should be_not_found
       end
     end
+
+    context 'given an existing task' do
+      before do
+        TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return(['hello'])
+      end
+
+      it 'should render an error message if the task is invalid' do
+        patch '/tasks/23455', :task => { :tags => 'test, tags' }
+        last_response.body.should have_tag('form')
+        last_response.body.should have_tag('#flash-messages') do
+          with_tag('.alert-error', :text => /description/)
+        end
+      end
+
+      it 'should save the task and redirect if the task is valid' do
+        task = TaskwarriorWeb::Task.new({ :description => 'Test task' })
+        task.should_receive(:is_valid?).and_return(true)
+        task.should_receive(:save!).once.and_return('A message!')
+        TaskwarriorWeb::Task.should_receive(:new).and_return(task)
+        patch '/tasks/2356', :task => { :description => 'Test task' }
+        last_response.should be_redirect
+        follow_redirect!
+        last_request.url.should =~ /\/tasks\/?$/
+      end
+    end
   end
 
   describe 'GET /tasks/:uuid/delete' do
