@@ -43,6 +43,15 @@ module TaskwarriorWeb::App::Helpers
     total.to_s
   end
 
+  def progress_bar(tasks)
+    return 0 if tasks.empty?
+    doneness = (tasks.select { |t| t.status == 'completed' }.count.to_f / tasks.count.to_f) * 100
+    string = %Q{<div class="progress progress-striped">}
+    string << %Q{<div class="bar" style="width: #{doneness.to_i}%;"></div>&nbsp;#{doneness.to_i}%}
+    string << %Q{</div>}
+    string
+  end
+
   def crud_links(task)
     string = %Q{<span class="crud-links">}
     string << %Q{<a href="/tasks/#{task.uuid}"><i class="icon-pencil"></i></a>}
