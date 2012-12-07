@@ -44,9 +44,11 @@ module TaskwarriorWeb::App::Helpers
   end
 
   def crud_links(task)
-    string = %Q{<a href="/tasks/#{task.uuid}">Edit</a>}
+    string = %Q{<span class="crud-links">}
+    string << %Q{<a href="/tasks/#{task.uuid}"><i class="icon-pencil"></i></a>}
     string << %Q{&nbsp;|&nbsp;}
-    string << %Q{<a href="/tasks/#{task.uuid}/delete">Delete</a>}
+    string << %Q{<a href="/tasks/#{task.uuid}/delete"><i class="icon-trash"></i></a>}
+    string << %Q{</span>}
     string
   end
 
