@@ -16,22 +16,30 @@ describe TaskwarriorWeb::App::Helpers do
       end
 
       it 'should format various dates and times to the default format' do
-        helpers.format_date('2012-01-11 12:23:00').should == '1/11/2012'
-        helpers.format_date('2012-01-11').should == '1/11/2012'
+        helpers.format_date('2012-01-11 12:23:00').should eq('1/11/2012')
+        helpers.format_date('2012-01-11').should eq('1/11/2012')
+        helpers.format_date('20121231T230000Z').should eq(Time.parse('20121231T230000Z').localtime.strftime('%-m/%-d/%Y'))
+
+        # This test will fail if run in UTC :-)
+        if Time.current.zone == 'UTC'
+          helpers.format_date('20121231T230000Z').should eq(Time.parse('20121231T230000Z').strftime('%-m/%-d/%Y'))
+        else
+          helpers.format_date('20121231T230000Z').should_not eq(Time.parse('20121231T230000Z').strftime('%-m/%-d/%Y'))
+        end
       end
     end
 
     context 'with a specified date format' do
       it 'should format dates using the specified format' do
         TaskwarriorWeb::Config.should_receive(:dateformat).any_number_of_times.and_return('%d/%-m/%Y')
-        helpers.format_date('2012-12-11 12:23:00').should == '11/12/2012'
-        helpers.format_date('2012-12-11').should == '11/12/2012'
+        helpers.format_date('2012-12-11 12:23:00').should eq('11/12/2012')
+        helpers.format_date('2012-12-11').should eq('11/12/2012')
       end
 
       it 'should convert Taskwarrior formats to Ruby formats correctly' do
         TaskwarriorWeb::Config.should_receive(:file).any_number_of_times.and_return({'dateformat' => 'd/m/Y'})
-        helpers.format_date('2012-01-11 12:23:00').should == '11/1/2012'
-        helpers.format_date('2012-12-02 12:23:00').should == '2/12/2012'
+        helpers.format_date('2012-01-11 12:23:00').should eq('11/1/2012')
+        helpers.format_date('2012-12-02 12:23:00').should eq('2/12/2012')
       end
     end
   end
