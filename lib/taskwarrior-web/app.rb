@@ -145,7 +145,6 @@ class TaskwarriorWeb::App < Sinatra::Base
   # Error handling
   not_found do
     @title = 'Page Not Found'
-    @referrer = request.referrer
     erb :'404'
   end
 end
