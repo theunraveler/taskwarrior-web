@@ -9,7 +9,7 @@ describe TaskwarriorWeb::Runner do
     @object = TestCommandClass.new
   end
 
-  describe 'include' do
+  describe '.included' do
     it 'should make the class respond to the run command' do
       @object.should respond_to(:run)
     end

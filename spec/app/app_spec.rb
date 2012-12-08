@@ -294,4 +294,53 @@ describe TaskwarriorWeb::App do
       last_response.should be_not_found
     end
   end
+
+end
+
+describe 'HTTP authentication' do
+  include Rack::Test::Methods
+
+  def app
+    TaskwarriorWeb::App
+  end
+
+  before do
+    TaskwarriorWeb::Config.should_receive(:property).with('task-web.filter').any_number_of_times.and_return(nil)
+    TaskwarriorWeb::Runner.should_receive(:run).any_number_of_times.and_return('{}')
+  end
+
+  context 'when credentials are specified in .taskrc' do
+    before do
+      TaskwarriorWeb::Config.should_receive(:property).with('task-web.user').any_number_of_times.and_return('test_user')
+      TaskwarriorWeb::Config.should_receive(:property).with('task-web.passwd').and_return('test_pass')
+    end
+
+    it 'should ask for authentication' do
+      get '/tasks/new'
+      last_response.should be_client_error
+    end
+
+    it 'should only accept the configured credentials' do
+      authorize 'bad', 'user'
+      get '/tasks/new'
+      last_response.should be_client_error
+    end
+
+    it 'should pass when the correct credentials are given' do
+      authorize 'test_user', 'test_pass'
+      get '/tasks/new'
+      last_response.should be_ok
+    end
+  end
+
+  context 'when no credentials are specified in .taskrc' do
+    before do
+      TaskwarriorWeb::Config.should_receive(:property).with('task-web.user').any_number_of_times.and_return(nil)
+    end
+
+    it 'should bypass authentication' do
+      get '/tasks/new'
+      last_response.should be_ok
+    end
+  end
 end
