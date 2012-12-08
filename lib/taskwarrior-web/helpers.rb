@@ -43,6 +43,15 @@ module TaskwarriorWeb::App::Helpers
     total.to_s
   end
 
+  def badge_count
+    if filter = TaskwarriorWeb::Config.property('task-web.filter.badge')
+      total = TaskwarriorWeb::Task.query(:description => filter).count
+    else
+      total = task_count
+    end
+    total == 0 ? '' : total.to_s
+  end
+
   def progress_bar(tasks)
     return 0 if tasks.empty?
     doneness = (tasks.select { |t| t.status == 'completed' }.count.to_f / tasks.count.to_f) * 100

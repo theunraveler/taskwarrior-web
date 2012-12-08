@@ -31,11 +31,6 @@ class TaskwarriorWeb::App < Sinatra::Base
     protected! if TaskwarriorWeb::Config.property('task-web.user')
   end
 
-  # Redirects
-  get('/') { redirect to('/tasks/pending') }
-  get('/tasks/?') { redirect to('/tasks/pending') }
-  get('/projects/?') { redirect to('/projects/overview') }
-
   # Task routes
   get '/tasks/:status/?' do
     pass unless ['pending', 'waiting', 'completed', 'deleted'].include?(params[:status])
@@ -128,19 +123,16 @@ class TaskwarriorWeb::App < Sinatra::Base
     erb :project
   end
 
+  # Redirects
+  get('/') { redirect to('/tasks/pending') }
+  get('/tasks/?') { redirect to('/tasks/pending') }
+  get('/projects/?') { redirect to('/projects/overview') }
+
   # AJAX callbacks
   get('/ajax/projects/?') { TaskwarriorWeb::Command.new(:projects).run.split("\n").to_json }
   get('/ajax/count/?') { task_count }
   post('/ajax/task-complete/:id/?') { TaskwarriorWeb::Command.new(:complete, params[:id]).run }
-
-  get '/ajax/badge/?' do
-    if filter = TaskwarriorWeb::Config.property('task-web.filter.badge')
-      total = TaskwarriorWeb::Task.query(:description => filter).count
-    else
-      total = task_count
-    end
-    total == 0 ? '' : total.to_s
-  end
+  get('/ajax/badge/?') { badge_count }
 
   # Error handling
   not_found do

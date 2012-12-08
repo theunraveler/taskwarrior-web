@@ -255,6 +255,34 @@ describe TaskwarriorWeb::App do
     end
   end
 
+  describe 'GET /ajax/badge' do
+    context 'given a filter specified in .taskrc' do
+      before do
+        TaskwarriorWeb::Config.should_receive(:property).with('task-web.filter.badge').and_return('a filter')
+      end
+
+      it 'should get the count by runnng the filter' do
+        TaskwarriorWeb::Task.should_receive(:query).once.with(:description => 'a filter').and_return([])
+        get '/ajax/badge'
+      end
+    end
+
+    it 'should return the count as a string' do
+      TaskwarriorWeb::Config.should_receive(:property).with('task-web.filter.badge').and_return('a filter')
+      TaskwarriorWeb::Task.should_receive(:query).with(:description => 'a filter').and_return(['test'])
+      get '/ajax/badge'
+      last_response.body.should eq('1')
+      last_response.body.should be_a(String)
+    end
+
+    it 'should return an empty string if the count is zero' do
+      TaskwarriorWeb::Config.should_receive(:property).with('task-web.filter.badge').and_return('a filter')
+      TaskwarriorWeb::Task.should_receive(:query).with(:description => 'a filter').and_return([])
+      get '/ajax/badge'
+      last_response.body.should eq('')
+    end
+  end
+
   describe 'not_found' do
     it 'should set the title to "Not Found"' do
       get '/page-not-found'
