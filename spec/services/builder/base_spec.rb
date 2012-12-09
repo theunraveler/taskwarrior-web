@@ -16,7 +16,7 @@ describe TaskwarriorWeb::CommandBuilder::Base do
 
     it 'should insert the task id into the command' do
       @command.task_command.substitute_parts
-      @command.command_string.should =~ /uuid:34588/
+      @command.command_string.should match(/uuid:34588/)
     end
 
     it 'should return itself' do

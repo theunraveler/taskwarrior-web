@@ -31,7 +31,7 @@ describe TaskwarriorWeb::App do
   describe 'GET /tasks/new' do
     it 'should display a new task form' do
       get '/tasks/new'
-      last_response.body.should include('<form')
+      last_response.body.should have_tag('form', :with => { :action => '/tasks' })
     end
 
     it 'should display a 200 status code' do
@@ -70,17 +70,18 @@ describe TaskwarriorWeb::App do
 
       it 'should render the task form' do
         task = TaskwarriorWeb::Task.new({:tags => 'tag1, tag2'})
-        TaskwarriorWeb::Task.should_receive(:new).once.and_return(task)
+        TaskwarriorWeb::Task.should_receive(:new).any_number_of_times.and_return(task)
         post '/tasks', :task => {}
-        last_response.body.should include('form')
-        last_response.body.should include('tag1, tag2')
+        last_response.body.should have_tag('form') do
+          with_tag('input', :with => { :name => 'task[tags]' , :value => 'tag1, tag2' })
+        end
       end
 
       it 'should display errors messages' do
         task = TaskwarriorWeb::Task.new
-        TaskwarriorWeb::Task.should_receive(:new).once.and_return(task)
+        TaskwarriorWeb::Task.should_receive(:new).any_number_of_times.and_return(task)
         post '/tasks', :task => {}
-        last_response.body.should include('You must provide a description')
+        last_response.body.should have_tag('.alert-error')
       end
     end
   end
