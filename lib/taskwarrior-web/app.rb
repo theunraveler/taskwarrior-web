@@ -36,7 +36,7 @@ class TaskwarriorWeb::App < Sinatra::Base
     pass unless ['pending', 'waiting', 'completed', 'deleted'].include?(params[:status])
     @title = "Tasks"
     if params[:status] == 'pending' && filter = TaskwarriorWeb::Config.property('task-web.filter')
-      @tasks = TaskwarriorWeb::Task.query(:description => filter)
+      @tasks = TaskwarriorWeb::Task.query(filter)
     else
       @tasks = TaskwarriorWeb::Task.find_by_status(params[:status])
     end

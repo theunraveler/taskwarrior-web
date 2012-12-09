@@ -263,14 +263,14 @@ describe TaskwarriorWeb::App do
       end
 
       it 'should get the count by runnng the filter' do
-        TaskwarriorWeb::Task.should_receive(:query).once.with(:description => 'a filter').and_return([])
+        TaskwarriorWeb::Task.should_receive(:query).once.with('a filter').and_return([])
         get '/ajax/badge'
       end
     end
 
     it 'should return the count as a string' do
       TaskwarriorWeb::Config.should_receive(:property).with('task-web.filter.badge').and_return('a filter')
-      TaskwarriorWeb::Task.should_receive(:query).with(:description => 'a filter').and_return(['test'])
+      TaskwarriorWeb::Task.should_receive(:query).with('a filter').and_return(['test'])
       get '/ajax/badge'
       last_response.body.should eq('1')
       last_response.body.should be_a(String)
@@ -278,7 +278,7 @@ describe TaskwarriorWeb::App do
 
     it 'should return an empty string if the count is zero' do
       TaskwarriorWeb::Config.should_receive(:property).with('task-web.filter.badge').and_return('a filter')
-      TaskwarriorWeb::Task.should_receive(:query).with(:description => 'a filter').and_return([])
+      TaskwarriorWeb::Task.should_receive(:query).with('a filter').and_return([])
       get '/ajax/badge'
       last_response.body.should eq('')
     end

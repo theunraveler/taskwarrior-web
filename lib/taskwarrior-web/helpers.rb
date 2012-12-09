@@ -36,7 +36,7 @@ module TaskwarriorWeb::App::Helpers
 
   def task_count
     if filter = TaskwarriorWeb::Config.property('task-web.filter')
-      total = TaskwarriorWeb::Task.query(:description => filter).count
+      total = TaskwarriorWeb::Task.query(filter).count
     else
       total = TaskwarriorWeb::Task.count(:status => :pending)
     end
@@ -45,7 +45,7 @@ module TaskwarriorWeb::App::Helpers
 
   def badge_count
     if filter = TaskwarriorWeb::Config.property('task-web.filter.badge')
-      total = TaskwarriorWeb::Task.query(:description => filter).count
+      total = TaskwarriorWeb::Task.query(filter).count
     else
       total = task_count
     end

@@ -57,15 +57,29 @@ module TaskwarriorWeb
     # CLASS METHODS FOR QUERYING TASKS
     ##################################
 
-    # Run queries on tasks.
+    ##
+    # Run queries, returns an array of tasks that meet the criteria.
+    #
+    # Filters can either be a hash of conditions, or an already-constructed
+    # taskwarrior filter string.
+    #
+    # For example:
+    # { :description => 'test', 'project.not' => '' }
+    # 'description:test project.not:'
+
     def self.query(*args)
       tasks = []
-      results = Command.new(:query, nil, *args).run
-      Parser.parse(results).each { |result| tasks << Task.new(result) }
+      if !args.empty? && args.first.is_a?(String)
+        command = Command.new(:query, nil, :description => args.first)
+      else
+        command = Command.new(:query, nil, *args)
+      end
+      Parser.parse(command.run).each { |result| tasks << Task.new(result) }
       tasks
     end
 
-    # Get the number of tasks for some paramters
+    ##
+    # Get the number of tasks for some paramters.
     def self.count(*args)
       self.query(*args).count
     end
