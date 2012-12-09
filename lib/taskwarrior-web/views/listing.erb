@@ -1,4 +1,4 @@
-<% can_edit = @can_edit && params[:status] == 'pending' %>
+<% can_edit = @can_edit && params[:status].in?(['pending', 'waiting']) %>
 
 <div id="listing">
   <table class="table table-striped table-hover">
