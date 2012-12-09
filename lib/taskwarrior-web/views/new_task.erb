@@ -1,3 +1,9 @@
+<script>
+  $(document).ready(function() {
+    $('input[name="task[description]"]').focus();
+  });
+</script>
+
 <form id="new-task-form" class="form-horizontal" action="/tasks" method="post">
 
   <%= erb :_task_form %>
