@@ -8,7 +8,7 @@
     <% end %>
 
     <!-- Scripts -->
-    <% ['jquery.min', 'bootstrap', 'bootstrap-datepicker', 'application'].each do |file| %>
+    <% ['jquery.min', 'bootstrap', 'bootstrap-datepicker', 'jquery.hotkeys', 'application'].each do |file| %>
       <script text="text/javascript" src="<%= url("/js/#{file}.js") %>"></script>
     <% end %>
   </head>
@@ -35,5 +35,6 @@
         </div>
       </div>
     </div>
+    <%= erb :_hotkeys %>
   </body>
 </html>
