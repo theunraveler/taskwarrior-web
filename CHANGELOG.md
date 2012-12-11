@@ -1,3 +1,7 @@
+## v1.1.4 (12/11/12)
+
+* Fixing JS issue.
+
 ## v1.1.3 (12/11/12)
 
 * Added CRUD links to waiting tab
