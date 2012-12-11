@@ -1,3 +1,8 @@
+## v1.1.3 (12/11/12)
+
+* Added CRUD links to waiting tab
+* Set rack-protection dependency version (to fix weird static assets 404 issue)
+
 ## v1.1.2 (12/7/12)
 
 * Fixed dumb but annoying timezone issue
