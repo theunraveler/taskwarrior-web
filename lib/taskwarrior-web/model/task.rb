@@ -52,6 +52,10 @@ module TaskwarriorWeb
     def to_hash
       Hash[instance_variables.select { |var| !var.to_s.start_with?('@_') }.map { |var| [var[1..-1].to_sym, instance_variable_get(var)] }]
     end
+
+    def to_s
+      description.truncate(20)
+    end
     
     ##################################
     # CLASS METHODS FOR QUERYING TASKS

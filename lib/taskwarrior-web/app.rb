@@ -55,7 +55,7 @@ class TaskwarriorWeb::App < Sinatra::Base
 
     if @task.is_valid?
       message = @task.save!
-      flash[:success] = message.blank? ? %Q{New task "#{@task.description.truncate(20)}" created} : message
+      flash[:success] = message.blank? ? %Q{New task "#{@task}" created} : message
       redirect to('/tasks')
     end
 
@@ -66,7 +66,7 @@ class TaskwarriorWeb::App < Sinatra::Base
   get '/tasks/:uuid/?' do
     not_found unless TaskwarriorWeb::Config.supports?(:editing)
     @task = TaskwarriorWeb::Task.find(params[:uuid]) || not_found
-    @title = %Q{Editing "#{@task.description.truncate(20)}"}
+    @title = %Q{Editing "#{@task}"}
     erb :edit_task
   end
 
@@ -77,7 +77,7 @@ class TaskwarriorWeb::App < Sinatra::Base
     @task = TaskwarriorWeb::Task.new(params[:task])
     if @task.is_valid?
       message = @task.save!
-      flash[:success] = message.blank? ? %Q{Task "#{@task.description.truncate(20)}" was successfully updated} : message
+      flash[:success] = message.blank? ? %Q{Task "#{@task}" was successfully updated} : message
       redirect to('/tasks')
     end
 
@@ -88,7 +88,7 @@ class TaskwarriorWeb::App < Sinatra::Base
   get '/tasks/:uuid/delete/?' do
     not_found unless TaskwarriorWeb::Config.supports?(:editing)
     @task = TaskwarriorWeb::Task.find(params[:uuid]) || not_found
-    @title = %Q{Are you sure you want to delete the task "#{@task.description.truncate(20)}"?}
+    @title = %Q{Are you sure you want to delete the task "#{@task}"?}
     erb :delete_confirm
   end
 
@@ -96,7 +96,7 @@ class TaskwarriorWeb::App < Sinatra::Base
     not_found unless TaskwarriorWeb::Config.supports?(:editing)
     @task = TaskwarriorWeb::Task.find(params[:uuid]) || not_found
     message = @task.delete!
-    flash[:success] = message.blank? ? %Q{Task "#{@task.description.truncate(20)}" was successfully deleted} : message
+    flash[:success] = message.blank? ? %Q{Task "#{@task}" was successfully deleted} : message
     redirect to('/tasks')
   end
 
