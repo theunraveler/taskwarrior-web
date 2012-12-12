@@ -71,8 +71,7 @@ class TaskwarriorWeb::App < Sinatra::Base
   end
 
   patch '/tasks/:uuid/?' do
-    not_found unless TaskwarriorWeb::Config.supports?(:editing)
-    not_found unless TaskwarriorWeb::Task.find(params[:uuid])
+    not_found unless TaskwarriorWeb::Config.supports?(:editing) && TaskwarriorWeb::Task.exists?(params[:uuid])
 
     @task = TaskwarriorWeb::Task.new(params[:task])
     if @task.is_valid?

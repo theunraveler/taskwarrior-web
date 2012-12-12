@@ -70,6 +70,14 @@ module TaskwarriorWeb
     end
 
     ##
+    # Whether or not a given task exists. Basically sugar for Task.find, but
+    # returns a boolean instead of the actual task.
+
+    def self.exists?(uuid)
+      !!self.find(uuid)
+    end
+
+    ##
     # Run queries, returns an array of tasks that meet the criteria.
     #
     # Filters can either be a hash of conditions, or an already-constructed
