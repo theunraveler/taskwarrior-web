@@ -5,6 +5,7 @@ require 'rubygems'
 require 'active_support/core_ext/object/blank'
 require 'active_support/core_ext/string/inflections'
 require 'active_support/core_ext/string/filters'
+require 'taskwarrior-web/version'
 
 module TaskwarriorWeb
   autoload :App,            'taskwarrior-web/app'
@@ -15,8 +16,6 @@ module TaskwarriorWeb
   autoload :CommandBuilder, 'taskwarrior-web/services/builder'
   autoload :Runner,         'taskwarrior-web/services/runner'
   autoload :Parser,         'taskwarrior-web/services/parser'
-
-  VERSION = '1.1.4'
 
   class UnrecognizedTaskVersion < Exception; end
 end
