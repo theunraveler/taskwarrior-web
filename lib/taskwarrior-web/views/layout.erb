@@ -27,12 +27,7 @@
     </div>
     <div id="footer">
       <div class="container muted">
-        <div class="pull-left">
-          <p>TaskwarriorWeb <%= TaskwarriorWeb::VERSION %></p>
-        </div>
-        <div class="pull-right">
-          <p><a href="http://github.com/theunraveler/taskwarrior-web/issues">Report a bug</a></p>
-        </div>
+        <%= erb :_footer %>
       </div>
     </div>
     <%= erb :_hotkeys %>
