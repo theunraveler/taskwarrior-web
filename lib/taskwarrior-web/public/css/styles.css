@@ -49,5 +49,14 @@ body { padding-top: 40px; }
   border-radius: 0 0 6px 6px;
 }
 
+#wrap {
+  height: auto !important;
+  margin: 0 auto -60px;
+  min-height: 100%;
+}
+#footer { background-color: #F5F5F5; }
+#push, #footer { height: 60px; }
+#footer .container > * { margin: 20px 0; }
+
 h2.project i { vertical-align: 35%; }
 span.crud-links i { margin-top: 4px; }

@@ -16,5 +16,7 @@ module TaskwarriorWeb
   autoload :Runner,         'taskwarrior-web/services/runner'
   autoload :Parser,         'taskwarrior-web/services/parser'
 
+  VERSION = '1.1.4'
+
   class UnrecognizedTaskVersion < Exception; end
 end
