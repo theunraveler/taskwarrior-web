@@ -3,12 +3,12 @@
     <title><%= @title %> | TaskwarriorWeb</title>
 
     <!-- Styles -->
-    <% ['bootstrap.min', 'datepicker', 'styles'].each do |file| %>
+    <% %w(bootstrap.min datepicker styles).each do |file| %>
       <link rel="stylesheet" href="<%= url("/css/#{file}.css") %>">
     <% end %>
 
     <!-- Scripts -->
-    <% ['jquery.min', 'bootstrap', 'bootstrap-datepicker', 'jquery.hotkeys', 'application'].each do |file| %>
+    <% %w(jquery.min bootstrap bootstrap-datepicker jquery.hotkeys application).each do |file| %>
       <script text="text/javascript" src="<%= url("/js/#{file}.js") %>"></script>
     <% end %>
   </head>

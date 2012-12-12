@@ -3,7 +3,7 @@
     <a href="/" class="brand">TaskwarriorWeb</a>
     <%= render_navigation :level => 1 %>
     <ul class="nav pull-right">
-      <li<% if @current_page =~ %r{^/tasks/new/?} %> class="active"<% end %>>
+      <li<% if @current_page =~ %r(^/tasks/new/?) %> class="active"<% end %>>
         <a href="/tasks/new">
           <i class="icon-plus"></i>
           Add a Task

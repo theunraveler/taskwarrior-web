@@ -10,7 +10,7 @@ module TaskwarriorWeb::App::Helpers
     return if timestamp.nil?
     due_def = (TaskwarriorWeb::Config.due || 7).to_i
     date = Date.parse(timestamp)
-    case true
+    case
       when Date.today == date then 'warning'                            # today
       when Date.today > date then 'error'                               # overdue
       when Date.today.advance(:days => due_def) >= date then 'success'  # within the "due" range
@@ -55,18 +55,18 @@ module TaskwarriorWeb::App::Helpers
   def progress_bar(tasks)
     return 0 if tasks.empty?
     doneness = (tasks.select { |t| t.status == 'completed' }.count.to_f / tasks.count.to_f) * 100
-    string = %Q{<div class="progress progress-striped">}
-    string << %Q{<div class="bar" style="width: #{doneness.to_i}%;"></div>&nbsp;#{doneness.to_i}%}
-    string << %Q{</div>}
+    string = %(<div class="progress progress-striped">)
+    string << %(<div class="bar" style="width: #{doneness.to_i}%;"></div>&nbsp;#{doneness.to_i}%)
+    string << %(</div>)
     string
   end
 
   def crud_links(task)
-    string = %Q{<span class="crud-links">}
-    string << %Q{<a href="/tasks/#{task.uuid}"><i class="icon-pencil"></i></a>}
-    string << %Q{&nbsp;|&nbsp;}
-    string << %Q{<a href="/tasks/#{task.uuid}/delete"><i class="icon-trash"></i></a>}
-    string << %Q{</span>}
+    string = %(<span class="crud-links">)
+    string << %(<a href="/tasks/#{task.uuid}"><i class="icon-pencil"></i></a>)
+    string << %(&nbsp;|&nbsp;)
+    string << %(<a href="/tasks/#{task.uuid}/delete"><i class="icon-trash"></i></a>)
+    string << %(</span>)
     string
   end
 
