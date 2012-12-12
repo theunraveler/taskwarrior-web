@@ -58,6 +58,14 @@ module TaskwarriorWeb
     ##################################
 
     ##
+    # Get a single task by UUID or ID. Returns nil if no such task was found.
+
+    def self.find(uuid)
+      tasks = Parser.parse(Command.new(:query, nil, :uuid => uuid).run)
+      tasks.empty? ? nil : Task.new(tasks.first)
+    end
+
+    ##
     # Run queries, returns an array of tasks that meet the criteria.
     #
     # Filters can either be a hash of conditions, or an already-constructed

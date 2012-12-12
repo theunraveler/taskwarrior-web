@@ -89,7 +89,7 @@ describe TaskwarriorWeb::App do
   describe 'GET /tasks/:uuid' do
     context 'given a non-existant task' do
       it 'should return a 404' do
-        TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return([])
+        TaskwarriorWeb::Task.should_receive(:find).and_return(nil)
         get '/tasks/1'
         last_response.should be_not_found
       end
@@ -97,9 +97,9 @@ describe TaskwarriorWeb::App do
 
     context 'given an existing task' do
       before do
-        TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return([
+        TaskwarriorWeb::Task.should_receive(:find).and_return(
           TaskwarriorWeb::Task.new({:uuid => 246, :description => 'Test task with a longer description'})
-        ])
+        )
         get '/tasks/246'
       end
 
@@ -125,7 +125,7 @@ describe TaskwarriorWeb::App do
   describe 'PATCH /tasks/:uuid' do
     context 'given a non-existant task' do
       it 'should return a 404' do
-        TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return([])
+        TaskwarriorWeb::Task.should_receive(:find).and_return(nil)
         patch '/tasks/429897527'
         last_response.should be_not_found
       end
@@ -133,7 +133,7 @@ describe TaskwarriorWeb::App do
 
     context 'given an existing task' do
       before do
-        TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return(['hello'])
+        TaskwarriorWeb::Task.should_receive(:find).and_return('hello')
       end
 
       it 'should render an error message if the task is invalid' do
@@ -160,7 +160,7 @@ describe TaskwarriorWeb::App do
   describe 'GET /tasks/:uuid/delete' do
     context 'given a non-existant task' do
       it 'should return a 404' do
-        TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return([])
+        TaskwarriorWeb::Task.should_receive(:find).and_return(nil)
         get '/tasks/429897527/delete'
         last_response.should be_not_found
       end
@@ -168,9 +168,9 @@ describe TaskwarriorWeb::App do
 
     context 'given an existing task' do
       before do
-        TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return([
+        TaskwarriorWeb::Task.should_receive(:find).and_return(
           TaskwarriorWeb::Task.new({:uuid => 246, :description => 'Test task with a longer description'})
-        ])
+        )
         get '/tasks/246/delete'
       end
 
@@ -189,7 +189,7 @@ describe TaskwarriorWeb::App do
   describe 'DELETE /tasks/:uuid' do
     context 'given a non-existant task' do
       it 'should return a 404' do
-        TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return([])
+        TaskwarriorWeb::Task.should_receive(:find).any_number_of_times.and_return(nil)
         delete '/tasks/429897527'
         last_response.should be_not_found
       end
@@ -199,7 +199,7 @@ describe TaskwarriorWeb::App do
       before do
         @task = TaskwarriorWeb::Task.new
         @task.should_receive(:delete!).once.and_return('Success')
-        TaskwarriorWeb::Task.should_receive(:find_by_uuid).and_return([@task])
+        TaskwarriorWeb::Task.should_receive(:find).and_return(@task)
         delete '/tasks/246'
       end
 
