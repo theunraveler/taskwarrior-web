@@ -4,7 +4,7 @@ require 'versionomy'
 module TaskwarriorWeb::Config
   # A list of date formats, with Taskwarrior's on the left and the Ruby
   # equivalent on the right.
-  DATEFORMATS = {
+  RUBY_DATEFORMATS = {
     'm' => '%-m',  # minimal-digit month, for example 1 or 12
     'd' => '%-d',   # minimal-digit day, for example 1 or 30
     'y' => '%y',   # two-digit year, for example 09
@@ -21,6 +21,25 @@ module TaskwarriorWeb::Config
     'S' => '%S',   # two-digit seconds, for example 07 or 47
   }
 
+  # A list of date formats, with Taskwarrior's on the left and the JS
+  # equivalent on the right.
+  JS_DATEFORMATS = {
+    'm' => 'm',     # minimal-digit month, for example 1 or 12
+    'd' => 'd',     # minimal-digit day, for example 1 or 30
+    'y' => 'yy',    # two-digit year, for example 09
+    'D' => 'dd',    # two-digit day, for example 01 or 30
+    'M' => 'mm',    # two-digit month, for example 01 or 12
+    'Y' => 'yyyy',  # four-digit year, for example 2009
+    'a' => '',      # short name of weekday, for example Mon or Wed
+    'A' => '',      # long name of weekday, for example Monday or Wednesday
+    'b' => '',      # short name of month, for example Jan or Aug
+    'B' => '',      # long name of month, for example January or August
+    'V' => '',      # weeknumber, for example 03 or 37
+    'H' => '',      # two-digit hour, for example 03 or 11
+    'N' => '',      # two-digit minutes, for example 05 or 42
+    'S' => '',      # two-digit seconds, for example 07 or 47
+  }
+
   def self.version
     @version ||= Versionomy.parse(`#{TaskwarriorWeb::Runner::TASK_BIN} _version`.strip)
   end
@@ -33,8 +52,15 @@ module TaskwarriorWeb::Config
     self.file[prop]
   end
 
-  def self.dateformat
-    self.file['dateformat'].gsub(/(\w)/, DATEFORMATS) unless self.file['dateformat'].nil?
+  def self.dateformat(format = :ruby)
+    return nil unless self.file['dateformat'] && format.in?([:ruby, :js])
+
+    formats = case format
+    when :ruby then RUBY_DATEFORMATS
+    when :js then JS_DATEFORMATS
+    end
+
+    self.file['dateformat'].gsub(/(\w)/, formats)
   end
 
   def self.supports?(feature)

@@ -46,7 +46,7 @@ class TaskwarriorWeb::App < Sinatra::Base
 
   get '/tasks/new/?' do
     @title = 'New Task'
-    @date_format = (TaskwarriorWeb::Config.dateformat || 'm/d/yy').gsub('Y', 'yy')
+    @date_format = TaskwarriorWeb::Config.dateformat(:js) || 'm/d/yyyy'
     erb :new_task
   end
 
@@ -67,6 +67,7 @@ class TaskwarriorWeb::App < Sinatra::Base
     not_found unless TaskwarriorWeb::Config.supports?(:editing)
     @task = TaskwarriorWeb::Task.find(params[:uuid]) || not_found
     @title = %(Editing "#{@task}")
+    @date_format = TaskwarriorWeb::Config.dateformat(:js) || 'm/d/yyyy'
     erb :edit_task
   end
 
