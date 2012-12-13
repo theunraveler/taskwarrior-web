@@ -1,3 +1,16 @@
+## v1.1.5 (12/13/12)
+
+* Adding [hotkeys][3]. Within taskwarrior-web, press the `h` key or click the
+  "Hotkeys" link in the footer to see available hotkeys.
+* Fixed date formatting issue in date picker that prevented tasks from being
+  saved.
+* Fixed issue where multiple tasks could not be marked as completed without
+  refreshing the page.
+* Updated to Twitter Bootstrap 2.2.2.
+* Added a special surprise when you have no pending tasks.
+
+[3]: http://github.com/theunraveler/taskwarrior-web/issues/32
+
 ## v1.1.4 (12/11/12)
 
 * Fixing JS issue.
