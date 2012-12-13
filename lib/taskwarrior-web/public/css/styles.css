@@ -1,4 +1,4 @@
-body { padding-top: 40px; }
+#page { padding-top: 40px; }
 
 .section-separator { margin: 40px 0 39px; }
 
@@ -6,6 +6,8 @@ body { padding-top: 40px; }
 #subnav-bar .nav .badge { background-color: #08c; }
 #subnav-bar .nav li.active .badge { color: #08c; background-color: #fff; }
 #subnav-bar .nav li#pending a { padding-top: 6px; padding-bottom: 6px; }
+
+section.content { margin-bottom: 30px; }
 
 #sidebar .nav {
   width: 228px;
@@ -49,13 +51,14 @@ body { padding-top: 40px; }
   border-radius: 0 0 6px 6px;
 }
 
+html, body { height: 100%; }
 #wrap {
   height: auto !important;
-  margin: 0 auto -60px;
+  margin: 0 auto -70px;
   min-height: 100%;
 }
 #footer { background-color: #F5F5F5; }
-#push, #footer { height: 60px; }
+#push, #footer { height: 70px; }
 #footer .container > * { margin: 20px 0; }
 
 h2.project i { vertical-align: 35%; }
