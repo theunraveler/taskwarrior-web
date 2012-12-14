@@ -1,3 +1,4 @@
+/** Accounts for fixed navbar **/
 #page { padding-top: 40px; }
 
 .section-separator { margin: 40px 0 39px; }
@@ -9,6 +10,7 @@
 
 section.content { margin-bottom: 30px; }
 
+/** Sidebar **/
 #sidebar .nav {
   width: 228px;
   margin: 20px 0 0;
@@ -51,6 +53,7 @@ section.content { margin-bottom: 30px; }
   border-radius: 0 0 6px 6px;
 }
 
+/** Sticky footer **/
 html, body { height: 100%; }
 #wrap {
   height: auto !important;
@@ -61,5 +64,22 @@ html, body { height: 100%; }
 #push, #footer { height: 70px; }
 #footer .container > * { margin: 20px 0; }
 
+/** Icon spacing **/
 h2.project i { vertical-align: 35%; }
 span.crud-links i { margin-top: 4px; }
+
+/** Table sorting **/
+table.table thead .sorting,
+table.table thead .sorting_asc,
+table.table thead .sorting_desc,
+table.table thead .sorting_asc_disabled,
+table.table thead .sorting_desc_disabled {
+  cursor: pointer;
+  *cursor: hand;
+}
+table.table thead .sorting { background: url('../img/sort_both.png') no-repeat center right; }
+table.table thead .sorting_asc { background: url('../img/sort_asc.png') no-repeat center right; }
+table.table thead .sorting_desc { background: url('../img/sort_desc.png') no-repeat center right; }
+
+table.table thead .sorting_asc_disabled { background: url('../img/sort_asc_disabled.png') no-repeat center right; }
+table.table thead .sorting_desc_disabled { background: url('../img/sort_desc_disabled.png') no-repeat center right; }V
