@@ -1,3 +1,7 @@
+## v1.1.6 (12/16/12)
+
+* Added sort options to all task listings.
+
 ## v1.1.5 (12/13/12)
 
 * Adding [hotkeys][3]. Within taskwarrior-web, press the `h` key or click the
