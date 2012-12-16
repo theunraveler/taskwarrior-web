@@ -26,7 +26,7 @@
       </div>
     </div>
     <!-- Scripts -->
-    <% %w(jquery.min bootstrap bootstrap-datepicker jquery.hotkeys jquery.dataTables.min application).each do |file| %>
+    <% %w(jquery.min bootstrap bootstrap-datepicker jquery.hotkeys jquery.dataTables.min tinycon.min application).each do |file| %>
       <script text="text/javascript" src="<%= url("/js/#{file}.js") %>"></script>
     <% end %>
     <%= erb :_hotkeys %>
