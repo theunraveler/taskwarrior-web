@@ -6,6 +6,11 @@
     <% %w(bootstrap.min datepicker styles).each do |file| %>
       <link rel="stylesheet" href="<%= url("/css/#{file}.css") %>">
     <% end %>
+
+    <!-- Scripts -->
+    <% %w(jquery.min bootstrap bootstrap-datepicker jquery.hotkeys jquery.dataTables.min tinycon.min application).each do |file| %>
+      <script text="text/javascript" src="<%= url("/js/#{file}.js") %>"></script>
+    <% end %>
   </head>
 
   <body data-spy="scroll" data-offset="60" data-target="#sidebar">
@@ -25,10 +30,6 @@
         <%= erb :_footer %>
       </div>
     </div>
-    <!-- Scripts -->
-    <% %w(jquery.min bootstrap bootstrap-datepicker jquery.hotkeys jquery.dataTables.min tinycon.min application).each do |file| %>
-      <script text="text/javascript" src="<%= url("/js/#{file}.js") %>"></script>
-    <% end %>
     <%= erb :_hotkeys %>
   </body>
 </html>
