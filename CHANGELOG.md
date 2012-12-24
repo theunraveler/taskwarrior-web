@@ -1,3 +1,7 @@
+## v1.1.7 (12/24/12)
+
+* Small hotfix for JS load order.
+
 ## v1.1.6 (12/16/12)
 
 * Added sort options to all task listings.
