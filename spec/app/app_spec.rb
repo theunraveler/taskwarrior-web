@@ -157,35 +157,6 @@ describe TaskwarriorWeb::App do
     end
   end
 
-  describe 'GET /tasks/:uuid/delete' do
-    context 'given a non-existant task' do
-      it 'should return a 404' do
-        TaskwarriorWeb::Task.should_receive(:find).and_return(nil)
-        get '/tasks/429897527/delete'
-        last_response.should be_not_found
-      end
-    end
-
-    context 'given an existing task' do
-      before do
-        TaskwarriorWeb::Task.should_receive(:find).and_return(
-          TaskwarriorWeb::Task.new({:uuid => 246, :description => 'Test task with a longer description'})
-        )
-        get '/tasks/246/delete'
-      end
-
-      it 'should show a delete form' do
-        last_response.body.should have_tag('form', :with => { :action => '/tasks/246', :method => 'post' }) do
-          with_tag('input', :with => { :name => '_method', :value => 'delete' })
-        end
-      end
-
-      it 'should display a delete button' do
-        last_response.body.should have_tag('input', :with => { :type => 'submit', :value => 'Delete' })
-      end
-    end
-  end
-
   describe 'DELETE /tasks/:uuid' do
     context 'given a non-existant task' do
       it 'should return a 404' do

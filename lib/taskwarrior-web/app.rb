@@ -85,13 +85,6 @@ class TaskwarriorWeb::App < Sinatra::Base
     erb :edit_task
   end
 
-  get '/tasks/:uuid/delete/?' do
-    not_found unless TaskwarriorWeb::Config.supports?(:editing)
-    @task = TaskwarriorWeb::Task.find(params[:uuid]) || not_found
-    @title = %(Are you sure you want to delete the task "#{@task}"?)
-    erb :delete_confirm
-  end
-
   delete '/tasks/:uuid' do
     not_found unless TaskwarriorWeb::Config.supports?(:editing)
     @task = TaskwarriorWeb::Task.find(params[:uuid]) || not_found
