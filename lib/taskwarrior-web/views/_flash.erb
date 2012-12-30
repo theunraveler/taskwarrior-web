@@ -1,6 +1,7 @@
 <div id="flash-messages">
   <% flash_types.select{ |severity| flash.has?(severity) }.each do |severity| %>
     <div class="alert alert-<%= severity %>">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
       <%= flash[severity] %>
     </div>
   <% end %>
