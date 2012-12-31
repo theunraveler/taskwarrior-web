@@ -37,20 +37,21 @@ The current featureset includes:
   "due".
 * If you are on a Mac and use Fluid.app, you get a dock badge showing the
   number of pending tasks.
-* Optional Basic HTTP Auth protection. To enable, set `task-web.user` and
-  `task-web.passwd` in your `.taskrc` file.
+* [Optional Basic HTTP Auth protection][1].
+
+[1]: https://github.com/theunraveler/taskwarrior-web/wiki/Additional-.taskrc-options
 
 ## Reporting Bugs
 
-To report a bug, use the [Github issue tracker][1]. Since `taskwarrior-web`
+To report a bug, use the [Github issue tracker][2]. Since `taskwarrior-web`
 works with several different versions of `task`, using many different
 configurations, please include the output from `task _version` and either the
 output of `task show` or a copy of your `.taskrc` file when filing a bug. This helps me reproduce bugs easier.
 
-Here is an example of a [good bug report][2].
+Here is an example of a [good bug report][3].
 
-[1]: http://github.com/theunraveler/taskwarrior-web/issues
-[2]: http://github.com/theunraveler/taskwarrior-web/issues/26
+[2]: http://github.com/theunraveler/taskwarrior-web/issues
+[3]: http://github.com/theunraveler/taskwarrior-web/issues/26
 
 ## Marginalia
 
