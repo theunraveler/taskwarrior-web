@@ -37,7 +37,7 @@ The current featureset includes:
   "due".
 * If you are on a Mac and use Fluid.app, you get a dock badge showing the
   number of pending tasks.
-* [Optional Basic HTTP Auth protection][1].
+* [Optional HTTP Basic authentication][1].
 
 [1]: https://github.com/theunraveler/taskwarrior-web/wiki/Additional-.taskrc-options
 
