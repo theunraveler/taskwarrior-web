@@ -55,7 +55,7 @@ Here is an example of a [good bug report][3].
 
 ## Marginalia
 
-This project is not developed by the Taskwarrior team. Obviously,
-taskwarrior-web extends Taskwarrior, but the projects are separate.
+* This project is not developed by the Taskwarrior team. Obviously, taskwarrior-web extends Taskwarrior, but the projects are separate.
+* `task-web` is mostly designed to run locally. As such, security is not of the highest priority. You may find that things such as CSRF protection are lacking. If things like this are important to you, please file an issue or issue a pull request.
 
 [![Build Status](https://secure.travis-ci.org/theunraveler/taskwarrior-web.png)](http://travis-ci.org/theunraveler/taskwarrior-web)
