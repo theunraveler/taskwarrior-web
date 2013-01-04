@@ -11,6 +11,7 @@ module TaskwarriorWeb
   autoload :App,            'taskwarrior-web/app'
   autoload :Helpers,        'taskwarrior-web/helpers'
   autoload :Task,           'taskwarrior-web/model/task'
+  autoload :Annotation,     'taskwarrior-web/model/annotation'
   autoload :Config,         'taskwarrior-web/model/config'
   autoload :Command,        'taskwarrior-web/model/command'
   autoload :CommandBuilder, 'taskwarrior-web/services/builder'

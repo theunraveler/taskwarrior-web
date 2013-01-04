@@ -8,7 +8,6 @@ module TaskwarriorWeb
     attr_accessor :entry, :project, :priority, :uuid, :description, :status,
                   :due, :start, :end, :tags, :depends, :wait, :annotations,
                   :urgency, :_errors, :remove_tags
-    alias :annotate= :annotations=
 
     ####################################
     # MODEL METHODS FOR INDIVIDUAL TASKS
@@ -21,6 +20,7 @@ module TaskwarriorWeb
 
       @_errors = []
       @tags = [] if @tags.nil?
+      @annotations = [] if @annotations.nil?
     end
 
     def save!
@@ -41,6 +41,15 @@ module TaskwarriorWeb
 
       if @uuid
         @remove_tags = Task.find_by_uuid(uuid).first.tags - @tags
+      end
+    end
+
+    # Create annotation instances.
+    def annotations=(annotations)
+      @annotations = []
+      annotations.each do |annotation|
+        annotation.merge({ :task_id => self.uuid })
+        @annotations << Annotation.new(annotation)
       end
     end
 

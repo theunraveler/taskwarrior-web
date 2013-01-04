@@ -1,0 +1,18 @@
+<form action="/tasks/<%= @task.uuid %>/annotations" method="POST" class="modal-form">
+  <div class="modal-header">
+    <% if @json %>
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <% end %>
+    <h3 id="annotations-modal-label">Add annotation to "<%= @task %>"</h3>
+  </div>
+  <div class="modal-body">
+    <textarea name="annotation[description]" placeholder="New annotation..." required="required"></textarea>
+    <input type="hidden" name="annotation[task_id]" value="<%= @task.uuid %>" />
+  </div>
+  <div class="modal-footer">
+    <% if @json %>
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <% end %>
+    <input type="submit" id="annotations-modal-save" class="btn btn-primary" value="Save annotation" />
+  </div>
+</form>

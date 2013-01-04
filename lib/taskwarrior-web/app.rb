@@ -100,6 +100,34 @@ class TaskwarriorWeb::App < Sinatra::Base
     redirect to('/tasks')
   end
 
+  # Annotations
+  get '/tasks/:uuid/annotations/new.?:format?' do
+    @task = TaskwarriorWeb::Task.find(params[:uuid]) || not_found
+    @json = params[:format] == 'json'
+    erb :'tasks/_annotation_form', :layout => !@json
+  end
+
+  post '/tasks/:uuid/annotations' do
+    @task = TaskwarriorWeb::Task.find(params[:uuid]) || not_found
+
+    annotation = TaskwarriorWeb::Annotation.new(params[:annotation])
+    if annotation.is_valid?
+      message = annotation.save!
+      flash[:success] = message.blank? ? %(Annotation was added to "#{@task}") : message
+    else
+      flash[:error] = annotation._errors.join(', ')
+    end
+
+    redirect back
+  end
+
+  delete '/tasks/:uuid/annotations/:description' do
+    @task = TaskwarriorWeb::Task.find(params[:uuid]) || not_found
+    TaskwarriorWeb::Annotation.new({ :task_id => @task.uuid, :description => params[:description] }).delete!
+    flash[:success] = %(Annotation was deleted from "#{@task}")
+    redirect back
+  end
+
   # Projects
   get '/projects/overview/?' do
     @title = 'Projects'

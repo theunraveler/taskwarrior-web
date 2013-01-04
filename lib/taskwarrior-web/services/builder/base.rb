@@ -8,6 +8,8 @@ module TaskwarriorWeb::CommandBuilder::Base
     :delete => 'rc.confirmation=no :id delete',
     :query => TaskwarriorWeb::Config.version > Versionomy.parse('1.9.2') ? '_query' : 'export',
     :complete => ':id done',
+    :annotate => ':id annotate',
+    :denotate => ':id denotate',
     :projects => '_projects',
     :tags => '_tags'
   }    

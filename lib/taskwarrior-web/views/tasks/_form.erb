@@ -1,7 +1,7 @@
 <div class="control-group">
   <label for="task-description" class="control-label">Description</label>
   <div class="controls">
-    <input type="textfield" id="task-description" name="task[description]" value="<%= @task.description unless @task.nil? %>" />
+    <input type="textfield" required="required" id="task-description" name="task[description]" value="<%= @task.description unless @task.nil? %>" />
   </div>
 </div>
 
