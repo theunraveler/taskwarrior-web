@@ -16,10 +16,10 @@
   <body data-spy="scroll" data-offset="60" data-target="#sidebar">
     <div id="wrap">
       <div id="page" class="container">
-        <%= erb :_topbar %>
-        <%= erb :_subnav %>
+        <%= erb :'partials/_topbar' %>
+        <%= erb :'partials/_subnav' %>
         <section class="content">
-          <%= erb :_flash %>
+          <%= erb :'partials/_flash' %>
           <%= yield %>
         </section>
       </div>
@@ -27,9 +27,9 @@
     </div>
     <div id="footer">
       <div class="container muted">
-        <%= erb :_footer %>
+        <%= erb :'partials/_footer' %>
       </div>
     </div>
-    <%= erb :_hotkeys %>
+    <%= erb :'partials/_hotkeys' %>
   </body>
 </html>

@@ -40,14 +40,14 @@ class TaskwarriorWeb::App < Sinatra::Base
     else
       @tasks = TaskwarriorWeb::Task.find_by_status(params[:status])
     end
-    @tasks.sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s, x.project.to_s] }
-    erb :listing
+    @tasks.sort_by! { |t| [t.priority.nil?.to_s, t.priority.to_s, t.due.nil?.to_s, t.due.to_s, t.project.to_s] }
+    erb :'tasks/index'
   end
 
   get '/tasks/new/?' do
     @title = 'New Task'
     @date_format = TaskwarriorWeb::Config.dateformat(:js) || 'm/d/yyyy'
-    erb :new_task
+    erb :'tasks/new'
   end
 
   post '/tasks/?' do
@@ -60,7 +60,7 @@ class TaskwarriorWeb::App < Sinatra::Base
     end
 
     flash.now[:error] = @task._errors.join(', ')
-    erb :new_task
+    erb :'tasks/new'
   end
 
   get '/tasks/:uuid/?' do
@@ -68,7 +68,7 @@ class TaskwarriorWeb::App < Sinatra::Base
     @task = TaskwarriorWeb::Task.find(params[:uuid]) || not_found
     @title = %(Editing "#{@task}")
     @date_format = TaskwarriorWeb::Config.dateformat(:js) || 'm/d/yyyy'
-    erb :edit_task
+    erb :'tasks/edit'
   end
 
   patch '/tasks/:uuid/?' do
@@ -82,7 +82,7 @@ class TaskwarriorWeb::App < Sinatra::Base
     end
 
     flash.now[:error] = @task._errors.join(', ')
-    erb :edit_task
+    erb :'tasks/edit'
   end
 
   delete '/tasks/:uuid' do
@@ -97,17 +97,17 @@ class TaskwarriorWeb::App < Sinatra::Base
   get '/projects/overview/?' do
     @title = 'Projects'
     @tasks = TaskwarriorWeb::Task.query('status.not' => :deleted, 'project.not' => '')
-      .sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s] }
-      .group_by { |x| x.project.to_s }
+      .sort_by! { |t| [t.priority.nil?.to_s, t.priority.to_s, t.due.nil?.to_s, t.due.to_s] }
+      .group_by { |t| t.project.to_s }
       .reject { |project, tasks| tasks.select { |task| task.status == 'pending' }.empty? }
-    erb :projects
+    erb :'projects/index'
   end
 
   get '/projects/:name/?' do
     @title = unlinkify(params[:name])
-    @tasks = TaskwarriorWeb::Task.query('status.not' => 'deleted', :project => @title)
-      .sort_by! { |x| [x.priority.nil?.to_s, x.priority.to_s, x.due.nil?.to_s, x.due.to_s] }
-    erb :project
+    @tasks = TaskwarriorWeb::Task.query('status.not' => :deleted, :project => @title)
+      .sort_by! { |t| [t.priority.nil?.to_s, t.priority.to_s, t.due.nil?.to_s, t.due.to_s] }
+    erb :'projects/show'
   end
 
   # Redirects

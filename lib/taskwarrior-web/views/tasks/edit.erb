@@ -1,7 +1,7 @@
 <form id="new-task-form" class="form-horizontal" action="/tasks/<%= @task.uuid %>" method="post">
   <input type="hidden" name="task[uuid]" value="<%= @task.uuid %>" />
 
-  <%= erb :_task_form %>
+  <%= erb :'tasks/_form' %>
 
   <div class="control-group">
     <div class="controls">
