@@ -40,7 +40,14 @@ class TaskwarriorWeb::App < Sinatra::Base
     else
       @tasks = TaskwarriorWeb::Task.find_by_status(params[:status])
     end
-    @tasks.sort_by! { |t| [t.priority.nil?.to_s, t.priority.to_s, t.due.nil?.to_s, t.due.to_s, t.project.to_s] }
+
+    case params[:status]
+    when ('pending' or 'waiting')
+      @tasks.sort_by! { |t| [-t.urgency.to_f, t.priority.nil?.to_s, t.priority.to_s, t.due.nil?.to_s, t.due.to_s, t.project.to_s] }
+    when ('completed' or 'deleted')
+      @tasks.sort_by! { |t| [Time.parse(t.end)] }.reverse!
+    end
+
     erb :'tasks/index'
   end
 
@@ -97,7 +104,7 @@ class TaskwarriorWeb::App < Sinatra::Base
   get '/projects/overview/?' do
     @title = 'Projects'
     @tasks = TaskwarriorWeb::Task.query('status.not' => :deleted, 'project.not' => '')
-      .sort_by! { |t| [t.priority.nil?.to_s, t.priority.to_s, t.due.nil?.to_s, t.due.to_s] }
+      .sort_by! { |t| [-t.urgency.to_f, t.priority.nil?.to_s, t.priority.to_s, t.due.nil?.to_s, t.due.to_s] }
       .group_by { |t| t.project.to_s }
       .reject { |project, tasks| tasks.select { |task| task.status == 'pending' }.empty? }
     erb :'projects/index'
@@ -106,7 +113,7 @@ class TaskwarriorWeb::App < Sinatra::Base
   get '/projects/:name/?' do
     @title = unlinkify(params[:name])
     @tasks = TaskwarriorWeb::Task.query('status.not' => :deleted, :project => @title)
-      .sort_by! { |t| [t.priority.nil?.to_s, t.priority.to_s, t.due.nil?.to_s, t.due.to_s] }
+      .sort_by! { |t| [-t.urgency.to_f, t.priority.nil?.to_s, t.priority.to_s, t.due.nil?.to_s, t.due.to_s] }
     erb :'projects/show'
   end
 

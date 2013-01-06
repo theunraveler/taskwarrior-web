@@ -7,7 +7,7 @@ module TaskwarriorWeb
 
     attr_accessor :entry, :project, :priority, :uuid, :description, :status,
                   :due, :start, :end, :tags, :depends, :wait, :annotations,
-                  :_errors, :remove_tags
+                  :urgency, :_errors, :remove_tags
     alias :annotate= :annotations=
 
     ####################################
