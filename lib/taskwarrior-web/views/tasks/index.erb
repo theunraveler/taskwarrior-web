@@ -22,7 +22,7 @@
       </thead>
       <tbody>
         <% @tasks.each do |task| %>
-          <tr class="<%= task.status == 'pending' ? colorize_date(task.due) : task.status %>">
+          <tr<%= %{ class="#{colorize_date(task.due)}"} if params[:status] == 'pending' %>>
             <% if params[:status] == 'pending' %>
               <td><input type="checkbox" class="complete" data-task-id="<%= task.uuid %>" /></td>
             <% end %>
