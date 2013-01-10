@@ -5,6 +5,9 @@ wonderful [Taskwarrior](http://taskwarrior.org/) todo application.
 
 ![TaskwarriorWeb screenshot](https://dl.dropbox.com/u/107599300/screenshot.png)
 
+[![Gem Version](https://badge.fury.io/rb/taskwarrior-web.png)](http://badge.fury.io/rb/taskwarrior-web)
+[![Build Status](https://secure.travis-ci.org/theunraveler/taskwarrior-web.png)](http://travis-ci.org/theunraveler/taskwarrior-web)
+
 ## Requirements
 
 * `ruby` >= 1.9 (support for `ruby` < 1.9 is very unlikely, but pull requests
@@ -57,6 +60,3 @@ Here is an example of a [good bug report][3].
 
 * This project is not developed by the Taskwarrior team. Obviously, taskwarrior-web extends Taskwarrior, but the projects are separate.
 * `task-web` is mostly designed to run locally. As such, security is not of the highest priority. You may find that things such as CSRF protection are lacking. If things like this are important to you, please file an issue or a pull request.
-
-[![Gem Version](https://badge.fury.io/rb/taskwarrior-web.png)](http://badge.fury.io/rb/taskwarrior-web)
-[![Build Status](https://secure.travis-ci.org/theunraveler/taskwarrior-web.png)](http://travis-ci.org/theunraveler/taskwarrior-web)
