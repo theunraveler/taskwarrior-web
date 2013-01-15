@@ -1,3 +1,9 @@
+## v1.1.8 (1/15/13)
+
+* Support for adding and removing annotations on tasks.
+* Tasks are now sorted by the `urgency` property by default.
+* Miscellanous fixes and improvements.
+
 ## v1.1.7 (12/24/12)
 
 * Small hotfix for JS load order.
