@@ -114,7 +114,7 @@ describe TaskwarriorWeb::Task do
     end
 
     it 'should have keys for each of the object\'s instance variables' do
-      @task.to_hash.should eq({:description => 'Testing', :due => '12/2/12', :tags => ['hello', 'twice']})
+      @task.to_hash.should eq({:description => 'Testing', :due => '12/2/12', :tags => ['hello', 'twice'], :annotations => []})
     end
   end
 
