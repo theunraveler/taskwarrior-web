@@ -2,9 +2,7 @@ $:.unshift(File.dirname(__FILE__)) unless
   $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
 
 require 'rubygems'
-require 'active_support/core_ext/object/blank'
-require 'active_support/core_ext/string/inflections'
-require 'active_support/core_ext/string/filters'
+require 'active_support/core_ext'
 require 'taskwarrior-web/version'
 
 module TaskwarriorWeb
