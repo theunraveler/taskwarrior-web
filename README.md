@@ -3,7 +3,7 @@
 A lightweight, Sinatra-based web interface for the
 wonderful [Taskwarrior](http://taskwarrior.org/) todo application.
 
-![TaskwarriorWeb screenshot](https://dl.dropbox.com/u/107599300/screenshot.png)
+![TaskwarriorWeb screenshot](https://raw.github.com/theunraveler/taskwarrior-web/master/CHANGELOG.md)
 
 [![Gem Version](https://badge.fury.io/rb/taskwarrior-web.png)](http://badge.fury.io/rb/taskwarrior-web)
 [![Build Status](https://secure.travis-ci.org/theunraveler/taskwarrior-web.png)](http://travis-ci.org/theunraveler/taskwarrior-web)
