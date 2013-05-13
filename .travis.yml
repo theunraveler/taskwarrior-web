@@ -7,5 +7,5 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install task -qq
 before_script:
-  - cp -v spec/files/taskrc /home/vagrant/.taskrc
-  - mkdir /home/vagrant/.task
+  - cp -v spec/files/taskrc $HOME/.taskrc
+  - mkdir $HOME/.task
