@@ -1,4 +1,5 @@
 <% can_edit = @can_edit && params[:status].in?(['pending', 'waiting']) %>
+<% priority_map = { nil => 0, 'L' => 1, 'M' => -1, 'H' => -2 } %>
 
 <div id="listing">
   <% if @tasks.empty? and params[:status] == 'pending' %>
@@ -16,7 +17,7 @@
           <th>Project</th>
           <th>Due</th>
           <th>Tags</th>
-          <th>Priority</th>
+          <th data-sort-map='{"H": 0, "M": 1, "": 2, "L": 3}'>Priority</th>
           <% if can_edit %><th class="no-sort"></th><% end %>
         </tr>
       </thead>
