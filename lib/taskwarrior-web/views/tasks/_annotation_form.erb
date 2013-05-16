@@ -6,7 +6,7 @@
     <h3 id="annotations-modal-label">Add annotation to "<%= @task %>"</h3>
   </div>
   <div class="modal-body">
-    <textarea name="annotation[description]" placeholder="New annotation..." required="required"></textarea>
+    <textarea name="annotation[description]" class="input-block-level" placeholder="New annotation..." required="required"></textarea>
     <input type="hidden" name="annotation[task_id]" value="<%= @task.uuid %>" />
   </div>
   <div class="modal-footer">
