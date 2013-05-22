@@ -1,3 +1,8 @@
+## v1.1.9 (5/21/13)
+
+* Sorting by priority sorts intelligently (http://github.com/theunraveler/taskwarrior-web/issues/39)
+* Fixes updating tasks in taskwarrior 2.2.0+ (http://github.com/theunraveler/taskwarrior-web/issues/36)
+
 ## v1.1.8 (1/15/13)
 
 * Support for adding and removing annotations on tasks.
