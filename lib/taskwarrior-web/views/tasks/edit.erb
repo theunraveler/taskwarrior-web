@@ -1,4 +1,4 @@
-<form id="new-task-form" class="form-horizontal" action="/tasks/<%= @task.uuid %>" method="post">
+<form id="new-task-form" class="form-horizontal" action="<%= request.fullpath %>" method="post">
   <input type="hidden" name="task[uuid]" value="<%= @task.uuid %>" />
 
   <%= erb :'tasks/_form' %>

@@ -4,9 +4,8 @@
     <%= render_navigation :level => 1 %>
     <ul class="nav pull-right">
       <li<% if @current_page =~ %r(^/tasks/new/?) %> class="active"<% end %>>
-        <a href="/tasks/new">
-          <i class="icon-plus"></i>
-          Add a Task
+        <a href="/tasks/new?destination=<%= ERB::Util.u(request.path_info) %>">
+          <i class="icon-plus"></i>&nbsp;Add a Task
         </a>
       </li>
     </ul>

@@ -63,7 +63,7 @@ class TaskwarriorWeb::App < Sinatra::Base
     if @task.is_valid?
       message = @task.save!
       flash[:success] = message.blank? ? %(New task "#{@task}" created) : message
-      redirect to('/tasks')
+      redirect to(params[:destination] || '/tasks')
     end
 
     flash.now[:error] = @task._errors.join(', ')
@@ -85,7 +85,7 @@ class TaskwarriorWeb::App < Sinatra::Base
     if @task.is_valid?
       message = @task.save!
       flash[:success] = message.blank? ? %(Task "#{@task}" was successfully updated) : message
-      redirect to('/tasks')
+      redirect to(params[:destination] || '/tasks')
     end
 
     flash.now[:error] = @task._errors.join(', ')
@@ -97,7 +97,7 @@ class TaskwarriorWeb::App < Sinatra::Base
     @task = TaskwarriorWeb::Task.find(params[:uuid]) || not_found
     message = @task.delete!
     flash[:success] = message.blank? ? %(Task "#{@task}" was successfully deleted) : message
-    redirect to('/tasks')
+    redirect to(params[:destination] || '/tasks')
   end
 
   # Annotations
