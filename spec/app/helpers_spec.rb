@@ -46,7 +46,7 @@ describe TaskwarriorWeb::App::Helpers do
       end
     end
 
-    context 'with a due setting specified' do    
+    context 'with a due setting specified' do
       before do
         TaskwarriorWeb::Config.should_receive(:due).any_number_of_times.and_return(3)
       end

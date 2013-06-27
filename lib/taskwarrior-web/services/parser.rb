@@ -3,10 +3,6 @@ module TaskwarriorWeb::Parser
   autoload :Csv,  'taskwarrior-web/services/parser/csv'
 
   def self.parse(results)
-    if TaskwarriorWeb::Config.version > '1.9.2'
-      Json.parse(results)
-    else
-      Csv.parse(results)
-    end
+    TaskwarriorWeb::Config.version > '1.9.2' ? Json.parse(results) : Csv.parse(results)
   end
 end

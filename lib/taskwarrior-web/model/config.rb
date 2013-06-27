@@ -6,7 +6,7 @@ module TaskwarriorWeb::Config
   # equivalent on the right.
   RUBY_DATEFORMATS = {
     'm' => '%-m',  # minimal-digit month, for example 1 or 12
-    'd' => '%-d',   # minimal-digit day, for example 1 or 30
+    'd' => '%-d',  # minimal-digit day, for example 1 or 30
     'y' => '%y',   # two-digit year, for example 09
     'D' => '%d',   # two-digit day, for example 01 or 30
     'M' => '%m',   # two-digit month, for example 01 or 12
