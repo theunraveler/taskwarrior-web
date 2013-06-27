@@ -21,16 +21,10 @@ Gem::Specification.new do |s|
   s.add_dependency('vegas')
   s.add_dependency('rinku')
   s.add_dependency('versionomy')
+  s.add_dependency('activesupport', '~> 3')
   s.add_dependency('sinatra-simple-navigation')
   s.add_dependency('rack-flash3')
   s.add_dependency('json', '~> 1.7.7')
-
-  # activesupport 4+ only supports ruby 1.9.3+
-  if RUBY_VERSION >= '1.9.3'
-    s.add_dependency('activesupport')
-  else
-    s.add_dependency('activesupport', '~> 3')
-  end
 
   s.add_development_dependency('rake')
   s.add_development_dependency('rack-test')
