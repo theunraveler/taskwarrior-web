@@ -35,16 +35,17 @@ class TaskwarriorWeb::App < Sinatra::Base
   get '/tasks/:status/?' do
     pass unless params[:status].in?(%w(pending waiting completed deleted))
     @title = "Tasks"
-    if params[:status] == 'pending' && filter = TaskwarriorWeb::Config.property('task-web.filter')
-      @tasks = TaskwarriorWeb::Task.query(filter)
+    @tasks = if params[:status] == 'pending' && filter = TaskwarriorWeb::Config.property('task-web.filter')
+      TaskwarriorWeb::Task.query(filter)
     else
-      @tasks = TaskwarriorWeb::Task.find_by_status(params[:status])
+      TaskwarriorWeb::Task.find_by_status(params[:status])
     end
 
-    case params[:status]
-    when ('pending' or 'waiting')
+    case
+    when params[:status].in?(['pending', 'waiting'])
       @tasks.sort_by! { |t| [-t.urgency.to_f, t.priority.nil?.to_s, t.priority.to_s, t.due.nil?.to_s, t.due.to_s, t.project.to_s] }
-    when ('completed' or 'deleted')
+      p @tasks.inspect
+    when params[:status].in?(['completed', 'deleted'])
       @tasks.sort_by! { |t| [Time.parse(t.end)] }.reverse!
     end
 
