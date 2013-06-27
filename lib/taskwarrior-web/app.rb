@@ -44,7 +44,6 @@ class TaskwarriorWeb::App < Sinatra::Base
     case
     when params[:status].in?(['pending', 'waiting'])
       @tasks.sort_by! { |t| [-t.urgency.to_f, t.priority.nil?.to_s, t.priority.to_s, t.due.nil?.to_s, t.due.to_s, t.project.to_s] }
-      p @tasks.inspect
     when params[:status].in?(['completed', 'deleted'])
       @tasks.sort_by! { |t| [Time.parse(t.end)] }.reverse!
     end
