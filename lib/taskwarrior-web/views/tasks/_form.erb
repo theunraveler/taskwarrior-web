@@ -13,9 +13,17 @@
 </div>
 
 <div class="control-group">
-  <label for="task-due" class="control-label">Due Date</label>
+  <label for="task-due" class="control-label">Due date</label>
   <div class="controls">
     <input class="date-picker" type="text" id="task-due" name="task[due]" value="<%= format_date(@task.due) unless @task.nil? || @task.due.blank? %>" data-date-format="<%= @date_format %>" />
+  </div>
+</div>
+
+<div class="control-group">
+  <label for="task-wait" class="control-label">Hide until</label>
+  <div class="controls">
+    <input class="date-picker" type="text" id="task-wait" name="task[wait]" value="<%= format_date(@task.wait) unless @task.nil? || @task.wait.blank? %>" data-date-format="<%= @date_format %>" />
+    <span class="help-block">If specified, the task will appear in the "Waiting" list until the given date.</span>
   </div>
 </div>
 

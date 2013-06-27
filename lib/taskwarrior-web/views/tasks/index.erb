@@ -16,6 +16,7 @@
           <th>Description</th>
           <th>Project</th>
           <th>Due</th>
+          <% if params[:status] == 'waiting' %><th>Hidden until</th><% end %>
           <th>Tags</th>
           <th data-sort-map='{"H": 0, "M": 1, "": 2, "L": 3}'>Priority</th>
           <% if can_edit %><th class="no-sort"></th><% end %>
@@ -43,6 +44,7 @@
             </td>
             <td><a href="/projects/<%= linkify(task.project) %>"><%= task.project %></a></td>
             <td><%= format_date(task.due) unless task.due.nil? %></td>
+            <% if params[:status] == 'waiting' %><td><%= format_date(task.wait) unless task.wait.nil? %></td><% end %>
             <td><%= task.tags.join(', ') unless task.tags.nil? %></td>
             <td><%= task.priority unless task.priority.nil? %></td>
             <% if can_edit %><td><%= crud_links(task) %></td><% end %>
