@@ -31,7 +31,7 @@ describe TaskwarriorWeb::App::Helpers do
       end
 
       it 'should convert Taskwarrior formats to Ruby formats correctly' do
-        TaskwarriorWeb::Config.should_receive(:file).any_number_of_times.and_return({'dateformat' => 'd/m/Y'})
+        TaskwarriorWeb::Config.should_receive(:store).any_number_of_times.and_return({'dateformat' => 'd/m/Y'})
         helpers.format_date('2012-01-11 12:23:00').should eq('11/1/2012')
         helpers.format_date('2012-12-02 12:23:00').should eq('2/12/2012')
       end

@@ -44,33 +44,48 @@ module TaskwarriorWeb::Config
     @version ||= Versionomy.parse(`#{TaskwarriorWeb::Runner::TASK_BIN} _version`.strip)
   end
 
-  def self.file
-    @file ||= ParseConfig.new("#{Dir.home}/.taskrc")
+  def self.store
+    @store ||= self.parse_config
   end
 
   def self.property(prop)
-    self.file[prop]
+    self.store[prop]
   end
 
   def self.dateformat(format = :ruby)
-    return nil unless self.file['dateformat'] && format.in?([:ruby, :js])
+    return nil unless self.store['dateformat'] && format.in?([:ruby, :js])
 
     formats = case format
     when :ruby then RUBY_DATEFORMATS
     when :js then JS_DATEFORMATS
     end
 
-    self.file['dateformat'].gsub(/(\w)/, formats)
+    self.store['dateformat'].gsub(/(\w)/, formats)
   end
 
   def self.supports?(feature)
     case feature.to_sym
       when :editing then self.version.major > 1
+      when :_show then self.version >= '2.2.0'
       else false
     end
   end
 
   def self.method_missing(method)
-    self.file[method.to_s]
+    self.store[method.to_s]
+  end
+
+  private
+
+  def self.parse_config
+    if self.supports? :_show
+      config = `#{TaskwarriorWeb::Runner::TASK_BIN} _show`
+      config.split("\n").inject({}) do |h, line|
+        key,value = line.split('=')
+        h.merge!({ key => value })
+      end
+    else
+      ParseConfig.new("#{Dir.home}/.taskrc")
+    end
   end
 end
