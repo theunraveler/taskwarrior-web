@@ -49,7 +49,7 @@ module TaskwarriorWeb::App::Helpers
     else
       total = task_count
     end
-    total == 0 ? '' : total.to_s
+    total.to_i == 0 ? '' : total.to_s
   end
 
   def progress_bar(tasks)
