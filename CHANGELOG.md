@@ -1,3 +1,9 @@
+## v1.1.10 (6/28/13)
+
+* Added ability to specify "wait" property for tasks
+* Added more comprehensive help popup
+* Fixing a couple particularly annoying issues
+
 ## v1.1.9 (5/21/13)
 
 * Sorting by priority sorts intelligently (http://github.com/theunraveler/taskwarrior-web/issues/39)
