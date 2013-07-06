@@ -6,6 +6,10 @@ module TaskwarriorWeb::App::Helpers
     Time.parse(timestamp).localtime.strftime(format)
   end
 
+  def format_tags(tags)
+    tags.join(', ')
+  end
+
   def colorize_date(timestamp)
     return if timestamp.nil?
     due_def = (TaskwarriorWeb::Config.due || 7).to_i

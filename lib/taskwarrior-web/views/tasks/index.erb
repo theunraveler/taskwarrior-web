@@ -45,7 +45,7 @@
             <td><a href="/projects/<%= linkify(task.project) %>"><%= task.project %></a></td>
             <td><%= format_date(task.due) unless task.due.nil? %></td>
             <% if params[:status] == 'waiting' %><td><%= format_date(task.wait) unless task.wait.nil? %></td><% end %>
-            <td><%= task.tags.join(', ') unless task.tags.nil? %></td>
+            <td><%= format_tags(task.tags) unless task.tags.nil? %></td>
             <td><%= task.priority unless task.priority.nil? %></td>
             <% if can_edit %><td><%= crud_links(task) %></td><% end %>
           </tr>
