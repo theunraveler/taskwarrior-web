@@ -10,7 +10,7 @@ SimpleNavigation::Configuration.run do |navigation|
       tasks.item :completed, 'Completed', '/tasks/completed'
       tasks.item :deleted, 'Deleted', '/tasks/deleted'
     end
-    primary.item :projects, 'Projects', '/projects' do |projects|
+    primary.item :projects, 'Projects', '/projects', { :highlights_on => %r{/projects/?.+?} } do |projects|
       projects.dom_class = 'nav nav-pills'
       projects.item :overview, 'Overview', '/projects/overview'
     end
