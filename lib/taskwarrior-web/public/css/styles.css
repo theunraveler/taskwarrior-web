@@ -64,6 +64,9 @@ html, body { height: 100%; }
 #push, #footer { height: 70px; }
 #footer .container > * { margin: 20px 0; }
 
+/** Prevents crud links from being broken onto lines **/
+span.crud-links { white-space: nowrap; }
+
 /** Icon spacing **/
 h2.project i { vertical-align: 35%; }
 span.crud-links i { margin-top: 4px; }
