@@ -132,7 +132,7 @@ class TaskwarriorWeb::App < Sinatra::Base
   get '/projects/overview/?' do
     @title = 'Projects'
     @tasks = TaskwarriorWeb::Task.query('status.not' => :deleted, 'project.not' => '')
-      .sort_by! { |t| [-t.urgency.to_f, t.priority.nil?.to_s, t.priority.to_s, t.due.nil?.to_s, t.due.to_s] }
+      .sort_by! { |t| [t.active? ? 0 : 1, -t.urgency.to_f, t.priority.nil?.to_s, t.priority.to_s, t.due.nil?.to_s, t.due.to_s] }
       .group_by { |t| t.project.to_s }
       .reject { |project, tasks| tasks.select { |task| task.status == 'pending' }.empty? }
     erb :'projects/index'
@@ -141,7 +141,7 @@ class TaskwarriorWeb::App < Sinatra::Base
   get '/projects/:name/?' do
     @title = unlinkify(params[:name])
     @tasks = TaskwarriorWeb::Task.query('status.not' => :deleted, :project => @title)
-      .sort_by! { |t| [-t.urgency.to_f, t.priority.nil?.to_s, t.priority.to_s, t.due.nil?.to_s, t.due.to_s] }
+      .sort_by! { |t| [t.active? ? 0 : 1, -t.urgency.to_f, t.priority.nil?.to_s, t.priority.to_s, t.due.nil?.to_s, t.due.to_s] }
     erb :'projects/show'
   end
 

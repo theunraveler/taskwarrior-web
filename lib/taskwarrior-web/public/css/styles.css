@@ -64,6 +64,8 @@ html, body { height: 100%; }
 #push, #footer { height: 70px; }
 #footer .container > * { margin: 20px 0; }
 
+tr.completed td { text-decoration: line-through; }
+
 /** Prevents crud links from being broken onto lines **/
 span.crud-links { white-space: nowrap; }
 

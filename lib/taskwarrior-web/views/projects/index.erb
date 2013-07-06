@@ -30,15 +30,13 @@
             </thead>
             <tbody>
               <% tasks.each do |task| %>
-                <% if task.status == 'pending' %>
-                  <tr class="<%= colorize_date(task.due) %>">
-                    <td><%= task.description %></td>
-                    <td><%= format_date(task.due) unless task.due.nil? %></td>
-                    <td><%= format_tags(task.tags) unless task.tags.nil? %></td>
-                    <td><%= task.priority unless task.priority.nil? %></td>
-                    <% if @can_edit %><td><%= crud_links(task) %></td><% end %>
-                  </tr>
-                <% end %>
+                <tr class="<%= colorize_date(task.due) if task.active? %> <%= task.status %>">
+                  <td><%= task.description %></td>
+                  <td><%= format_date(task.due) unless task.due.nil? %></td>
+                  <td><%= format_tags(task.tags) unless task.tags.nil? %></td>
+                  <td><%= task.priority unless task.priority.nil? %></td>
+                  <% if @can_edit %><td><%= crud_links(task) if task.active? %></td><% end %>
+                </tr>
               <% end %>
             </tbody>
           </table>
