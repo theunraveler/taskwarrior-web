@@ -11,11 +11,8 @@ describe TaskwarriorWeb::App::Helpers do
 
   describe '#format_date' do
     context 'with no format specified' do
-      before do
-        TaskwarriorWeb::Config.should_receive(:dateformat).any_number_of_times.and_return(nil)
-      end
-
       it 'should format various dates and times to the default format' do
+        allow(TaskwarriorWeb::Config).to receive(:dateformat).and_return(nil)
         helpers.format_date('2012-01-11 12:23:00').should eq('1/11/2012')
         helpers.format_date('2012-01-11').should eq('1/11/2012')
         helpers.format_date('20121231T230000Z').should eq(Time.parse('20121231T230000Z').localtime.strftime('%-m/%-d/%Y'))
@@ -25,13 +22,13 @@ describe TaskwarriorWeb::App::Helpers do
 
     context 'with a specified date format' do
       it 'should format dates using the specified format' do
-        TaskwarriorWeb::Config.should_receive(:dateformat).any_number_of_times.and_return('%d/%-m/%Y')
+        allow(TaskwarriorWeb::Config).to receive(:dateformat).and_return('%d/%-m/%Y')
         helpers.format_date('2012-12-11 12:23:00').should eq('11/12/2012')
         helpers.format_date('2012-12-11').should eq('11/12/2012')
       end
 
       it 'should convert Taskwarrior formats to Ruby formats correctly' do
-        TaskwarriorWeb::Config.should_receive(:store).any_number_of_times.and_return({'dateformat' => 'd/m/Y'})
+        allow(TaskwarriorWeb::Config).to receive(:store).and_return({ 'dateformat' => 'd/m/Y' })
         helpers.format_date('2012-01-11 12:23:00').should eq('11/1/2012')
         helpers.format_date('2012-12-02 12:23:00').should eq('2/12/2012')
       end
@@ -48,7 +45,7 @@ describe TaskwarriorWeb::App::Helpers do
 
     context 'with a due setting specified' do
       before do
-        TaskwarriorWeb::Config.should_receive(:due).any_number_of_times.and_return(3)
+        allow(TaskwarriorWeb::Config).to receive(:due).and_return(3)
       end
 
       it 'should return "warning" when a given date is today' do
@@ -60,14 +57,14 @@ describe TaskwarriorWeb::App::Helpers do
       end
 
       it 'should return "success" when a date is within the specified range' do
-        TaskwarriorWeb::Config.should_receive(:due).any_number_of_times.and_return(5)
+        allow(TaskwarriorWeb::Config).to receive(:due).and_return(5)
         helpers.colorize_date(Date.tomorrow.to_s).should eq('success')
       end
     end
 
     context 'with no due setting specified' do
       before do
-        TaskwarriorWeb::Config.should_receive(:due).any_number_of_times.and_return(nil)
+        allow(TaskwarriorWeb::Config).to receive(:due).and_return(nil)
       end
 
       it 'should use the default setting of 7 days' do

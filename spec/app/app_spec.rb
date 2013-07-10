@@ -11,9 +11,9 @@ describe TaskwarriorWeb::App do
   end
 
   before do
-    TaskwarriorWeb::Config.should_receive(:property).with('task-web.user').any_number_of_times.and_return(nil)
-    TaskwarriorWeb::Config.should_receive(:property).with('task-web.filter').any_number_of_times.and_return(nil)
-    TaskwarriorWeb::Runner.should_receive(:run).any_number_of_times.and_return('{}')
+    allow(TaskwarriorWeb::Config).to receive(:property).with('task-web.user').and_return(nil)
+    allow(TaskwarriorWeb::Config).to receive(:property).with('task-web.filter').and_return(nil)
+    allow(TaskwarriorWeb::Runner).to receive(:run).and_return('{}')
   end
 
   ['/', '/tasks'].each do |path|
@@ -70,7 +70,7 @@ describe TaskwarriorWeb::App do
 
       it 'should render the task form' do
         task = TaskwarriorWeb::Task.new({:tags => 'tag1, tag2'})
-        TaskwarriorWeb::Task.should_receive(:new).any_number_of_times.and_return(task)
+        allow(TaskwarriorWeb::Task).to receive(:new).and_return(task)
         post '/tasks', :task => {}
         last_response.body.should have_tag('form') do
           with_tag('input', :with => { :name => 'task[tags]' , :value => 'tag1, tag2' })
@@ -79,7 +79,7 @@ describe TaskwarriorWeb::App do
 
       it 'should display errors messages' do
         task = TaskwarriorWeb::Task.new
-        TaskwarriorWeb::Task.should_receive(:new).any_number_of_times.and_return(task)
+        allow(TaskwarriorWeb::Task).to receive(:new).and_return(task)
         post '/tasks', :task => {}
         last_response.body.should have_tag('.alert-error')
       end
@@ -160,7 +160,7 @@ describe TaskwarriorWeb::App do
   describe 'DELETE /tasks/:uuid' do
     context 'given a non-existant task' do
       it 'should return a 404' do
-        TaskwarriorWeb::Task.should_receive(:find).any_number_of_times.and_return(nil)
+        allow(TaskwarriorWeb::Task).to receive(:find).and_return(nil)
         delete '/tasks/429897527'
         last_response.should be_not_found
       end
@@ -193,7 +193,7 @@ describe TaskwarriorWeb::App do
 
   describe 'GET /projects/:name' do
     it 'should replace characters in the title' do
-      TaskwarriorWeb::Task.should_receive(:query).any_number_of_times.and_return([])
+      allow(TaskwarriorWeb::Task).to receive(:query).and_return([])
       get '/projects/Test--Project'
       last_response.body.should include('<title>Test.Project')
     end
@@ -277,14 +277,14 @@ describe 'HTTP authentication' do
   end
 
   before do
-    TaskwarriorWeb::Config.should_receive(:property).with('task-web.filter').any_number_of_times.and_return(nil)
-    TaskwarriorWeb::Runner.should_receive(:run).any_number_of_times.and_return('{}')
+    allow(TaskwarriorWeb::Config).to receive(:property).with('task-web.filter').and_return(nil)
+    allow(TaskwarriorWeb::Runner).to receive(:run).and_return('{}')
   end
 
   context 'when credentials are specified in .taskrc' do
     before do
-      TaskwarriorWeb::Config.should_receive(:property).with('task-web.user').any_number_of_times.and_return('test_user')
-      TaskwarriorWeb::Config.should_receive(:property).with('task-web.passwd').and_return('test_pass')
+      allow(TaskwarriorWeb::Config).to receive(:property).with('task-web.user').and_return('test_user')
+      allow(TaskwarriorWeb::Config).to receive(:property).with('task-web.passwd').and_return('test_pass')
     end
 
     it 'should ask for authentication' do
@@ -307,7 +307,7 @@ describe 'HTTP authentication' do
 
   context 'when no credentials are specified in .taskrc' do
     before do
-      TaskwarriorWeb::Config.should_receive(:property).with('task-web.user').any_number_of_times.and_return(nil)
+      allow(TaskwarriorWeb::Config).to receive(:property).with('task-web.user').and_return(nil)
     end
 
     it 'should bypass authentication' do

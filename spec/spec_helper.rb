@@ -16,7 +16,6 @@ Dir[File.expand_path(File.join(File.dirname(__FILE__),'support','**','*.rb'))].e
 
 RSpec.configure do |config|
   config.mock_with :rspec
-  config.include(RSpec::Mocks::Methods)
 end
 
 SimpleNavigation.config_file_paths << File.dirname(__FILE__) + '/../lib/taskwarrior-web/config'

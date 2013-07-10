@@ -3,7 +3,7 @@ require 'taskwarrior-web/model/task'
 
 describe TaskwarriorWeb::Task do
   RSpec::Mocks::setup(TaskwarriorWeb::Runner)
-  TaskwarriorWeb::Runner.stub(:run) { '{}' }
+  TaskwarriorWeb::Runner.double(:run) { '{}' }
 
   describe '#initialize' do
     it 'should assign the passed attributes' do
