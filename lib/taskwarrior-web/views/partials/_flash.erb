@@ -1,6 +1,6 @@
 <div id="flash-messages">
   <% flash_types.select{ |severity| flash.has?(severity) }.each do |severity| %>
-    <div class="alert alert-<%= severity %>">
+    <div class="alert alert-<%= severity %>"<% if severity == :success %> data-autoclose="5000"<% end %>>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       <%= flash[severity] %>
     </div>
