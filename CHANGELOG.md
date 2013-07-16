@@ -1,3 +1,9 @@
+## v1.1.11 (7/15/13)
+
+* Rethinking the tasks that are included in project lists. Now, they include
+  completed and waiting tasks as well, with visual distinctions.
+* Misc small fixes
+
 ## v1.1.10 (6/28/13)
 
 * Added ability to specify "wait" property for tasks
