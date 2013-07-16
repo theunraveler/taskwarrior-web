@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.homepage    = "http://github.com/theunraveler/taskwarrior-web"
   s.summary     = %q{Web frontend for taskwarrior command line task manager.}
   s.description = %q{This gem provides a graphical frontend for the Taskwarrior task manager. It is based on Sinatra.}
-  spec.licenses = ['MIT', 'GPL-2']
+  s.licenses = ['MIT', 'GPL-2']
 
   s.rubyforge_project = "taskwarrior-web"
 
