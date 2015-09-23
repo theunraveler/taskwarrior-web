@@ -4,6 +4,6 @@ module TaskwarriorWeb::Parser::Json
   def self.parse(json)
     json.strip!
     json = '[' + json + ']'
-    json == '[No matches.]' ? [] : ::JSON.parse(json)
+    json == '[No matches.]' ? [] : ::JSON.parse(json.gsub(/\n/,','))
   end
 end
