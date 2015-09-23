@@ -136,6 +136,17 @@ module TaskwarriorWeb
       end
     end
 
+    ################################################
+    # CLASS METHOD FOR SYNCRONISING WITH TASK SERVER
+    ################################################
+
+    ##
+    # Syncronise the local task database with the server
+    # TODO: These args are going to be ignored!
+    def self.sync(*args)
+      Command.new(:sync, nil, *args).run
+    end
+
   end
 
   ###########################################

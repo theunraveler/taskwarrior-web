@@ -23,12 +23,18 @@ class TaskwarriorWeb::App < Sinatra::Base
   helpers Helpers
   register Sinatra::SimpleNavigation
   use Rack::Flash
-  
+
   # Before filter
   before do
     @current_page = request.path_info
     @can_edit = TaskwarriorWeb::Config.supports? :editing
     protected! if TaskwarriorWeb::Config.property('task-web.user')
+
+    # If we should be synchronising with the taskwarrior server
+    # make sure we do that before each request.
+    if TaskwarriorWeb::Config.property('taskd.server')
+      TaskwarriorWeb::Task.sync()
+    end
   end
 
   # Task routes

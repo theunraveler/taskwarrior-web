@@ -11,8 +11,9 @@ module TaskwarriorWeb::CommandBuilder::Base
     :annotate => ':id annotate',
     :denotate => ':id denotate',
     :projects => '_projects',
-    :tags => '_tags'
-  }    
+    :tags => '_tags',
+    :sync => 'sync'
+  }
 
   def build
     unless @command_string
