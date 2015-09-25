@@ -6,13 +6,14 @@ module TaskwarriorWeb::CommandBuilder::Base
     :add => 'add',
     :update => TaskwarriorWeb::Config.version.major >= 2 ? ':id mod' : nil,
     :delete => 'rc.confirmation=no :id delete',
-    :query => TaskwarriorWeb::Config.version > '1.9.2' ? '_query' : 'export',
+    :query => TaskwarriorWeb::Config.version == '1.9.4' ? '_query' : 'export',
     :complete => ':id done',
     :annotate => ':id annotate',
     :denotate => ':id denotate',
     :projects => '_projects',
-    :tags => '_tags'
-  }    
+    :tags => '_tags',
+    :sync => 'sync'
+  }
 
   def build
     unless @command_string
