@@ -6,7 +6,7 @@ module TaskwarriorWeb::CommandBuilder::Base
     :add => 'add',
     :update => TaskwarriorWeb::Config.version.major >= 2 ? ':id mod' : nil,
     :delete => 'rc.confirmation=no :id delete',
-    :query => 'export',
+    :query => TaskwarriorWeb::Config.version == '1.9.4' ? '_query' : 'export',
     :complete => ':id done',
     :annotate => ':id annotate',
     :denotate => ':id denotate',

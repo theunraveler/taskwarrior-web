@@ -29,12 +29,7 @@ class TaskwarriorWeb::App < Sinatra::Base
     @current_page = request.path_info
     @can_edit = TaskwarriorWeb::Config.supports? :editing
     protected! if TaskwarriorWeb::Config.property('task-web.user')
-
-    # If we should be synchronising with the taskwarrior server
-    # make sure we do that before each request.
-    if TaskwarriorWeb::Config.property('taskd.server')
-      TaskwarriorWeb::Task.sync()
-    end
+    sync if TaskwarriorWeb::Config.property('taskd.server')
   end
 
   # Task routes
