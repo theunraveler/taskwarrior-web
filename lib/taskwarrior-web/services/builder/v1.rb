@@ -15,12 +15,11 @@ module TaskwarriorWeb::CommandBuilder::V1
   #
   # Substitute the task's ID for its UUID.
   def substitute_parts
-    if @id
-      assign_id_from_uuid
-      @command_string.gsub!(':id', @id.to_s)
-      return self
-    end
-    raise TaskwarriorWeb::CommandBuilder::MissingTaskIDError
+    raise TaskwarriorWeb::CommandBuilder::MissingTaskIDError unless @id
+
+    assign_id_from_uuid
+    @command_string.gsub!(':id', @id.to_s)
+    self
   end
 
   def assign_id_from_uuid
