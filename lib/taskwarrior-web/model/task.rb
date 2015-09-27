@@ -15,7 +15,7 @@ module TaskwarriorWeb
 
     def initialize(attributes = {})
       attributes.each do |attr, value|
-        send("#{attr}=", value) if respond_to?(attr.to_sym)
+        send("#{attr}=", value) if respond_to? attr.to_sym
       end
 
       @_errors = []
@@ -37,7 +37,7 @@ module TaskwarriorWeb
 
     # Make sure that the tags are an array.
     def tags=(value)
-      @tags = value.is_a?(String) ? value.split(/[, ]+/).reject(&:empty?) : value
+      @tags = value.is_a? String ? value.split(/[, ]+/).reject(&:empty?) : value
 
       if @uuid
         @remove_tags = Task.find_by_uuid(uuid).first.tags - @tags
@@ -45,7 +45,7 @@ module TaskwarriorWeb
     end
 
     # Create annotation instances.
-    def annotations=(annotations)
+    def annotations= annotations
       @annotations = []
       annotations.each do |annotation|
         annotation.merge({ :task_id => self.uuid })
@@ -63,11 +63,17 @@ module TaskwarriorWeb
     end
 
     def to_hash
-      Hash[instance_variables.select { |var| !var.to_s.start_with?('@_') }.map { |var| [var[1..-1].to_sym, instance_variable_get(var)] }]
+      selector = instance_variables.select do |var|
+        !var.to_s.start_with? '@_'
+      end.map do |var|
+        [var[1..-1].to_sym, instance_variable_get(var)]
+      end
+
+      Hash[selector]
     end
 
     def to_s
-      description.truncate(20)
+      description.truncate 20
     end
 
     ##################################
@@ -77,8 +83,8 @@ module TaskwarriorWeb
     ##
     # Get a single task by UUID or ID. Returns nil if no such task was found.
 
-    def self.find(uuid)
-      tasks = Parser.parse(Command.new(:query, nil, :uuid => uuid).run)
+    def self.find uuid
+      tasks = Parser.parse Command.new(:query, nil, :uuid => uuid).run
       tasks.empty? ? nil : Task.new(tasks.first)
     end
 
@@ -86,7 +92,7 @@ module TaskwarriorWeb
     # Whether or not a given task exists. Basically sugar for Task.find, but
     # returns a boolean instead of the actual task.
 
-    def self.exists?(uuid)
+    def self.exists? uuid
       !!self.find(uuid)
     end
 
@@ -100,12 +106,12 @@ module TaskwarriorWeb
     # { :description => 'test', 'project.not' => '' }
     # 'description:test project.not:'
 
-    def self.query(*args)
+    def self.query *args
       tasks = []
       if !args.empty? && args.first.is_a?(String)
         command = Command.new(:query, nil, :description => args.first)
       else
-        command = Command.new(:query, nil, *args)
+        command = Command.new :query, nil, *args
       end
       Parser.parse(command.run).each { |result| tasks << Task.new(result) }
       tasks
@@ -113,13 +119,13 @@ module TaskwarriorWeb
 
     ##
     # Get the number of tasks for some paramters.
-    def self.count(*args)
+    def self.count *args
       self.query(*args).count
     end
 
     # Define method_missing to implement dynamic finder methods
-    def self.method_missing(method_sym, *arguments, &block)
-      match = TaskDynamicFinderMatch.new(method_sym)
+    def self.method_missing method_sym, *arguments, &block
+      match = TaskDynamicFinderMatch.new method_sym
       if match.match?
         self.query(match.attribute.to_s => arguments.first.to_s)
       else
@@ -128,7 +134,7 @@ module TaskwarriorWeb
     end
 
     # Implement respond_to? so that our dynamic finders are declared
-    def self.respond_to?(method_sym, include_private = false)
+    def self.respond_to? method_sym, include_private = false
       if TaskDynamicFinderMatch.new(method_sym).match?
         true
       else
@@ -145,10 +151,8 @@ module TaskwarriorWeb
 
     attr_accessor :attribute
 
-    def initialize(method_sym)
-      if method_sym.to_s =~ /^find_by_(.*)$/
-        @attribute = $1
-      end
+    def initialize method_sym
+      @attribute = $1 if method_sym.to_s =~ /^find_by_(.*)$/
     end
 
     def match?
@@ -156,4 +160,5 @@ module TaskwarriorWeb
     end
 
   end
+
 end
