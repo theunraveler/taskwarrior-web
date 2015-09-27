@@ -24,20 +24,19 @@ module TaskwarriorWeb::CommandBuilder::Base
   end
 
   def task_command
-    if TASK_COMMANDS[@command.to_sym]
-      @command_string = TASK_COMMANDS[@command.to_sym].clone
-      return self
-    else
+    unless TASK_COMMANDS[@command.to_sym]
       raise TaskwarriorWeb::CommandBuilder::InvalidCommandError
     end
+
+    @command_string = TASK_COMMANDS[@command.to_sym].clone
+    self
   end
 
   def substitute_parts
-    if @id
-      @command_string.gsub!(':id', "uuid:#{@id.to_s}")
-      return self
-    end
-    raise TaskwarriorWeb::CommandBuilder::MissingTaskIDError
+    raise TaskwarriorWeb::CommandBuilder::MissingTaskIDError unless @id
+
+    @command_string.gsub!(':id', "uuid:#{@id.to_s}")
+    self
   end
 
   def parse_params
