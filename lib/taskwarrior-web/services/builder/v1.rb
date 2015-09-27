@@ -1,7 +1,7 @@
 module TaskwarriorWeb::CommandBuilder::V1
 
   include TaskwarriorWeb::CommandBuilder::Base
-    
+
   def build
     unless @command_string
       task_command

@@ -12,7 +12,7 @@ module TaskwarriorWeb::CommandBuilder::Base
     :denotate => ':id denotate',
     :projects => '_projects',
     :tags => '_tags'
-  }    
+  }
 
   def build
     unless @command_string
@@ -50,7 +50,7 @@ module TaskwarriorWeb::CommandBuilder::Base
     end
 
     if tags = @params.delete(:remove_tags)
-      tags.each { |tag| string << %( -#{tag.to_s.shellescape}) } 
+      tags.each { |tag| string << %( -#{tag.to_s.shellescape}) }
     end
 
     @params.each do |attr, value|

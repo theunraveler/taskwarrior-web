@@ -1,5 +1,5 @@
 module TaskwarriorWeb
-  
+
   #################
   # MAIN TASK CLASS
   #################
@@ -69,7 +69,7 @@ module TaskwarriorWeb
     def to_s
       description.truncate(20)
     end
-    
+
     ##################################
     # CLASS METHODS FOR QUERYING TASKS
     ##################################
@@ -120,13 +120,13 @@ module TaskwarriorWeb
     # Define method_missing to implement dynamic finder methods
     def self.method_missing(method_sym, *arguments, &block)
       match = TaskDynamicFinderMatch.new(method_sym)
-      if match.match? 
+      if match.match?
         self.query(match.attribute.to_s => arguments.first.to_s)
       else
         super
       end
     end
-    
+
     # Implement respond_to? so that our dynamic finders are declared
     def self.respond_to?(method_sym, include_private = false)
       if TaskDynamicFinderMatch.new(method_sym).match?
@@ -150,7 +150,7 @@ module TaskwarriorWeb
         @attribute = $1
       end
     end
-    
+
     def match?
       @attribute != nil
     end
