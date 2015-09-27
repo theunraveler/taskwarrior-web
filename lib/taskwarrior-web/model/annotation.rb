@@ -1,13 +1,23 @@
 module TaskwarriorWeb
-  class Annotation
-    attr_accessor :task_id, :entry, :description, :_errors
+
+  class Annotation < Hash
+    attr_accessor :_errors
 
     def initialize(attributes = {})
-      attributes.each do |attr, value|
-        send("#{attr}=", value) if respond_to?(attr.to_sym)
-      end
-
+      self.merge!(attributes.select { |s| self.respond_to? s.to_sym })
       @_errors = []
+    end
+
+    def description
+      self[:description]
+    end
+
+    def entry
+      self[:entry]
+    end
+
+    def task_id
+      self[:task_id]
     end
 
     def save!
@@ -19,15 +29,16 @@ module TaskwarriorWeb
     end
 
     def is_valid?
-      @_errors << 'You must provide a description' if self.description.blank?
+      @_errors << 'You must provide a description' if self[:description].blank?
       @_errors.empty?
     end
 
     private
 
     def gen_cmd cmd
-      Command.new(cmd, self.task_id, { :description => self.description })
+      Command.new(cmd, self[:task_id], { :description => self[:description] })
     end
 
   end
+
 end
