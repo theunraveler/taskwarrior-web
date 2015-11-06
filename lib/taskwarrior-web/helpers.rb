@@ -7,7 +7,7 @@ module TaskwarriorWeb::App::Helpers
   end
 
   def format_tags(tags)
-    tags.join(', ')
+    tags.map{|tag| "<a href='javascript:void(1);' onclick='addTag(\"#{tag}\")'>#{tag}</a>"}.join(', ')
   end
 
   def colorize_date(timestamp)

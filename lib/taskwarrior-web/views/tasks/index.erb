@@ -2,6 +2,9 @@
 <% priority_map = { nil => 0, 'L' => 1, 'M' => -1, 'H' => -2 } %>
 
 <div id="listing">
+  <div id="filter">
+    <input name="tags" id="tags" />
+  </div>
   <% if @tasks.empty? and params[:status] == 'pending' %>
     <h3>Congrats, you're in the clear!</h3>
     <p><img src="/img/relax.jpg" alt="Relax" /></p>
@@ -54,7 +57,7 @@
               when 'completed', 'deleted' then '<td>' + (format_date(task.end) unless task.end.nil?) + '</td>'
               end
             %>
-            <td><%= format_tags(task.tags) unless task.tags.nil? %></td>
+            <td class='tags'><%= format_tags(task.tags) unless task.tags.nil? %></td>
             <td><%= task.priority unless task.priority.nil? %></td>
             <% if can_edit %><td><%= crud_links(task) %></td><% end %>
           </tr>
