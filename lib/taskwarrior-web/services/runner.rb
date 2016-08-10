@@ -3,6 +3,7 @@ module TaskwarriorWeb::Runner
 
   def run
     @built ||= build
+    puts "> #{TASK_BIN} #{@built}"
     `#{TASK_BIN} #{@built}`
   end
 end

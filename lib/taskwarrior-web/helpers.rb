@@ -86,4 +86,10 @@ module TaskwarriorWeb::App::Helpers
     values = [TaskwarriorWeb::Config.property('task-web.user'), TaskwarriorWeb::Config.property('task-web.passwd')]
     @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == values
   end
+
+  ##
+  # Syncronise the local task database with the server
+  def sync
+    TaskwarriorWeb::Command.new(:sync, nil, nil).run
+  end
 end
