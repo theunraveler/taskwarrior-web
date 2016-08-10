@@ -55,10 +55,12 @@ module TaskwarriorWeb::CommandBuilder::Base
     end
 
     @params.each do |attr, value|
-      if value.respond_to? :each
-        value.each { |val| string << %( #{attr.to_s}:\\"#{val.to_s.shellescape}\\") }
-      else
-        string << %( #{attr.to_s}:\\"#{value.to_s.shellescape}\\")
+      if attr != :uuid
+        if value.respond_to? :each
+          value.each { |val| string << %( #{attr.to_s}:\\"#{val.to_s.shellescape}\\") }
+        else
+          string << %( #{attr.to_s}:\\"#{value.to_s.shellescape}\\")
+        end
       end
     end
 
