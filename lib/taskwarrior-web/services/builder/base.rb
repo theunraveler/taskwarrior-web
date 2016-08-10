@@ -55,7 +55,7 @@ module TaskwarriorWeb::CommandBuilder::Base
     end
 
     @params.each do |attr, value|
-      if attr != :uuid
+      if @command != :update or attr != :uuid
         if value.respond_to? :each
           value.each { |val| string << %( #{attr.to_s}:\\"#{val.to_s.shellescape}\\") }
         else
