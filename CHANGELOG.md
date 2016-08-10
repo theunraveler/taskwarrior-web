@@ -1,3 +1,8 @@
+## v1.1.12 (10/08/16)
+
+* Fixed JSON issue as well as issues where no tasks could be updated for
+latest Ruby version
+
 ## v1.1.11 (7/15/13)
 
 * Rethinking the tasks that are included in project lists. Now, they include
