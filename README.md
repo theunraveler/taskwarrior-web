@@ -1,9 +1,10 @@
 # A Web Interface for Taskwarrior
 
+**Notice** I no longer have the time to maintain this codebase. If you are
+interested in maintaining the project, please contact me. Sorry and thanks.
+
 A lightweight, Sinatra-based web interface for the
 wonderful [Taskwarrior](http://taskwarrior.org/) todo application.
-
-![TaskwarriorWeb screenshot](https://raw.github.com/theunraveler/taskwarrior-web/gh-pages/images/screenshot.png)
 
 [![Gem Version](https://badge.fury.io/rb/taskwarrior-web.png)](http://badge.fury.io/rb/taskwarrior-web)
 [![Build Status](https://secure.travis-ci.org/theunraveler/taskwarrior-web.png)](http://travis-ci.org/theunraveler/taskwarrior-web)
