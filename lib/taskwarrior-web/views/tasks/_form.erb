@@ -20,6 +20,13 @@
 </div>
 
 <div class="control-group">
+  <label for="task-recur" class="control-label">Recurrence</label>
+  <div class="controls">
+    <input type="text" id="task-recur" name="task[recur]" value="<%= @task.recur unless @task.nil? %>" />
+  </div>
+</div>
+
+<div class="control-group">
   <label for="task-wait" class="control-label">Hide until</label>
   <div class="controls">
     <input class="date-picker" type="text" id="task-wait" name="task[wait]" value="<%= format_date(@task.wait) unless @task.nil? || @task.wait.blank? %>" data-date-format="<%= @date_format %>" />

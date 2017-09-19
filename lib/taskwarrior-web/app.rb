@@ -34,7 +34,7 @@ class TaskwarriorWeb::App < Sinatra::Base
 
   # Task routes
   get '/tasks/:status/?' do
-    pass unless params[:status].in?(%w(pending waiting completed deleted))
+    pass unless params[:status].in?(%w(pending waiting completed deleted recurring))
     @title = "Tasks"
     @tasks = if params[:status] == 'pending' && filter = TaskwarriorWeb::Config.property('task-web.filter')
       TaskwarriorWeb::Task.query(filter)
@@ -47,6 +47,8 @@ class TaskwarriorWeb::App < Sinatra::Base
       @tasks.sort_by! { |t| [-t.urgency.to_f, t.priority.nil?.to_s, t.priority.to_s, t.due.nil?.to_s, t.due.to_s, t.project.to_s] }
     when params[:status].in?(['completed', 'deleted'])
       @tasks.sort_by! { |t| [Time.parse(t.end)] }.reverse!
+    when params[:status].in?(['recurring'])
+      @tasks.sort_by! { |t| [t.description] }
     end
 
     erb :'tasks/index'

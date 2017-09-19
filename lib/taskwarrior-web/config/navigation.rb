@@ -6,6 +6,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :tasks, 'Tasks', '/tasks' do |tasks|
       tasks.dom_class = 'nav nav-pills'
       tasks.item :pending, "Pending <span class=\"badge\">#{task_count}</span>", '/tasks/pending'
+      tasks.item :recurring, 'Recurring', '/tasks/recurring'
       tasks.item :waiting, 'Waiting', '/tasks/waiting'
       tasks.item :completed, 'Completed', '/tasks/completed'
       tasks.item :deleted, 'Deleted', '/tasks/deleted'
