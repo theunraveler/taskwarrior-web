@@ -12,7 +12,7 @@ class TaskwarriorWeb::App < Sinatra::Base
   autoload :Helpers, 'taskwarrior-web/helpers'
 
   @@root = File.expand_path(File.join(File.dirname(__FILE__), '..', '..'))
-  set :root,  @@root    
+  set :root,  @@root
   set :app_file, __FILE__
   set :public_folder, File.dirname(__FILE__) + '/public'
   set :views, File.dirname(__FILE__) + '/views'
