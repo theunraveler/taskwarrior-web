@@ -24,6 +24,8 @@ RUN apk --update add --virtual task-dependencies build-base ruby-dev gnutls-dev 
 
 ADD . /taskwarrior-web
 
+USER taskwarrior-web
+
 EXPOSE 3000
 
 VOLUME /taskdata
@@ -31,4 +33,4 @@ VOLUME /taskdata
 ENV TASKRC "/taskdata/.taskrc"
 ENV TASKDATA "/taskdata"
 
-CMD ["su", "-s", "/bin/sh", "-c", "/usr/bin/env rackup -p 3000 -o 0.0.0.0 /taskwarrior-web/config.ru", "taskwarrior-web"]
+CMD ["/usr/bin/env", "rackup", "-p", "3000", "-o", "0.0.0.0", "/taskwarrior-web/config.ru"]
