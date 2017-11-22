@@ -148,6 +148,15 @@ class TaskwarriorWeb::App < Sinatra::Base
     erb :'projects/show'
   end
 
+  # ICal exports
+  get '/tasks/ical/:caltype/?' do
+    pass unless params[:caltype].in?(['due'])
+    @title = "iCal #{params[:caltype]}"
+    @tasks = TaskwarriorWeb::Task.query('status.not' => :deleted, params[:caltype]+'.any' => "")
+    content_type 'text/calendar'
+    ical_export(@tasks, params[:caltype])
+  end
+
   # Redirects
   get('/') { redirect to('/tasks/pending') }
   get('/tasks/?') { redirect to('/tasks/pending') }

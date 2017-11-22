@@ -26,6 +26,8 @@ Gem::Specification.new do |s|
   s.add_dependency('sinatra-simple-navigation')
   s.add_dependency('rack-flash3')
   s.add_dependency('json', '~> 1.8')
+  s.add_dependency('icalendar')
+  s.add_dependency('tzinfo')
 
   s.add_development_dependency('rake')
   s.add_development_dependency('rack-test')
