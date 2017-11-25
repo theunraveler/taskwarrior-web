@@ -1,5 +1,5 @@
 module TaskwarriorWeb
-  
+
   #################
   # MAIN TASK CLASS
   #################

@@ -1,4 +1,5 @@
 require 'active_support/core_ext/date/calculations'
+require 'icalendar'
 
 module TaskwarriorWeb::App::Helpers
   def format_date(timestamp)
@@ -91,5 +92,19 @@ module TaskwarriorWeb::App::Helpers
   # Syncronise the local task database with the server
   def sync
     TaskwarriorWeb::Command.new(:sync, nil, nil).run
+  end
+
+  # ICal export for tasks
+  def ical_export(tasks, datefield)
+    return unless datefield.in?(['due'])
+    cal = Icalendar::Calendar.new
+    tasks.each do |t|
+      timestamp = t.due if datefield == 'due'
+      e = Icalendar::Event.new
+      e.summary = t.description
+      e.dtstart = timestamp
+      cal.add_event(e)
+    end
+    cal.to_ical
   end
 end

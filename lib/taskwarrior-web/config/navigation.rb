@@ -1,4 +1,4 @@
-SimpleNavigation::Configuration.run do |navigation|  
+SimpleNavigation::Configuration.run do |navigation|
   navigation.selected_class = 'active'
 
   navigation.items do |primary|
@@ -15,5 +15,6 @@ SimpleNavigation::Configuration.run do |navigation|
       projects.dom_class = 'nav nav-pills'
       projects.item :overview, 'Overview', '/projects/overview'
     end
+    primary.item :ical, 'ICal export', '/tasks/ical/due'
   end
 end

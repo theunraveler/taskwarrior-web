@@ -12,7 +12,7 @@ class TaskwarriorWeb::App < Sinatra::Base
   autoload :Helpers, 'taskwarrior-web/helpers'
 
   @@root = File.expand_path(File.join(File.dirname(__FILE__), '..', '..'))
-  set :root,  @@root    
+  set :root,  @@root
   set :app_file, __FILE__
   set :public_folder, File.dirname(__FILE__) + '/public'
   set :views, File.dirname(__FILE__) + '/views'
@@ -146,6 +146,15 @@ class TaskwarriorWeb::App < Sinatra::Base
     @tasks = TaskwarriorWeb::Task.query('status.not' => :deleted, :project => @title)
       .sort_by! { |t| [t.active? ? 0 : 1, -t.urgency.to_f, t.priority.nil?.to_s, t.priority.to_s, t.due.nil?.to_s, t.due.to_s] }
     erb :'projects/show'
+  end
+
+  # ICal exports
+  get '/tasks/ical/:caltype/?' do
+    pass unless params[:caltype].in?(['due'])
+    @title = "iCal #{params[:caltype]}"
+    @tasks = TaskwarriorWeb::Task.query('status.not' => :deleted, params[:caltype]+'.any' => "")
+    content_type 'text/calendar'
+    ical_export(@tasks, params[:caltype])
   end
 
   # Redirects
