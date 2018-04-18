@@ -1,8 +1,5 @@
 # A Web Interface for Taskwarrior
 
-**Notice** I no longer have the time to maintain this codebase. If you are
-interested in maintaining the project, please contact me. Sorry and thanks.
-
 A lightweight, Sinatra-based web interface for the
 wonderful [Taskwarrior](http://taskwarrior.org/) todo application.
 
