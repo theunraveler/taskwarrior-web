@@ -3,6 +3,8 @@
 A lightweight, Sinatra-based web interface for the
 wonderful [Taskwarrior](http://taskwarrior.org/) todo application.
 
+Check out the [Live Demo](http://35.196.114.51).
+
 [![Gem Version](https://badge.fury.io/rb/taskwarrior-web.png)](http://badge.fury.io/rb/taskwarrior-web)
 [![Build Status](https://secure.travis-ci.org/theunraveler/taskwarrior-web.png)](http://travis-ci.org/theunraveler/taskwarrior-web)
 

@@ -1,0 +1,28 @@
+time 1525555889
+new [description:"Create some screenshots" due:"1525564800" entry:"1525555889" modified:"1525555889" priority:"M" project:"Dev.Taskwarrior.Web" status:"pending" tags:"hobby,dev" uuid:"baab81bd-54f0-451b-9013-55dd3abace6b"]
+---
+time 1525555947
+new [description:"Add screenshots to README" due:"1525651200" entry:"1525555947" modified:"1525555947" priority:"M" project:"Dev.Taskwarrior.Web" status:"pending" tags:"hobby,dev" uuid:"782e9bc6-4f0a-4e61-8d9c-d20968f454ab"]
+---
+time 1525555966
+old [description:"Add screenshots to README" due:"1525651200" entry:"1525555947" modified:"1525555947" priority:"M" project:"Dev.Taskwarrior.Web" status:"pending" tags:"hobby,dev" uuid:"782e9bc6-4f0a-4e61-8d9c-d20968f454ab"]
+new [description:"Add screenshots to README" due:"1525651200" entry:"1525555947" modified:"1525555966" project:"Dev.Taskwarrior.Web" status:"pending" tags:"hobby,dev" uuid:"782e9bc6-4f0a-4e61-8d9c-d20968f454ab"]
+---
+time 1525555977
+old [description:"Add screenshots to README" due:"1525651200" entry:"1525555947" modified:"1525555966" project:"Dev.Taskwarrior.Web" status:"pending" tags:"hobby,dev" uuid:"782e9bc6-4f0a-4e61-8d9c-d20968f454ab"]
+new [description:"Add screenshots to README" entry:"1525555947" modified:"1525555977" project:"Dev.Taskwarrior.Web" status:"pending" tags:"hobby,dev" uuid:"782e9bc6-4f0a-4e61-8d9c-d20968f454ab"]
+---
+time 1525555984
+old [description:"Add screenshots to README" entry:"1525555947" modified:"1525555977" project:"Dev.Taskwarrior.Web" status:"pending" tags:"hobby,dev" uuid:"782e9bc6-4f0a-4e61-8d9c-d20968f454ab"]
+new [description:"Add screenshots to README" entry:"1525555947" modified:"1525555984" priority:"M" project:"Dev.Taskwarrior.Web" status:"pending" tags:"hobby,dev" uuid:"782e9bc6-4f0a-4e61-8d9c-d20968f454ab"]
+---
+time 1525556042
+new [description:"Buy some stuff" due:"1526515200" entry:"1525556042" modified:"1525556042" project:"Home.Stuffing" status:"waiting" tags:"buy" uuid:"0084b849-93d2-43c8-bdcf-e413624b645e" wait:"1526256000"]
+---
+time 1525556077
+old [description:"Create some screenshots" due:"1525564800" entry:"1525555889" modified:"1525555889" priority:"M" project:"Dev.Taskwarrior.Web" status:"pending" tags:"hobby,dev" uuid:"baab81bd-54f0-451b-9013-55dd3abace6b"]
+new [description:"Create some screenshots" due:"1525564800" end:"1525556077" entry:"1525555889" modified:"1525556077" priority:"M" project:"Dev.Taskwarrior.Web" status:"completed" tags:"hobby,dev" uuid:"baab81bd-54f0-451b-9013-55dd3abace6b"]
+---
+time 1525556156
+new [description:"Another task" entry:"1525556156" modified:"1525556156" project:"Dev.Taskwarrior" status:"pending" uuid:"ac800c85-8674-4e78-a655-ee8e361d8d40"]
+---
