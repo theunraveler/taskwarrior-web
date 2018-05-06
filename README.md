@@ -6,6 +6,39 @@ wonderful [Taskwarrior](http://taskwarrior.org/) todo application.
 [![Gem Version](https://badge.fury.io/rb/taskwarrior-web.png)](http://badge.fury.io/rb/taskwarrior-web)
 [![Build Status](https://secure.travis-ci.org/theunraveler/taskwarrior-web.png)](http://travis-ci.org/theunraveler/taskwarrior-web)
 
+## Table of Contents
+
+* [Screenshots](#screenshots)
+* [Requirements](#requirements)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Features](#features)
+* [Reporting Bugs](#reporting-bugs)
+* [Marginalia](#marginalia)
+
+## Screenshots
+
+### Pending Tasks
+<img src="https://raw.githubusercontent.com/theunraveler/taskwarrior-web/master/docs/img/readme/pending_tasks_list.jpg">
+
+### Waiting Tasks
+<img src="https://raw.githubusercontent.com/theunraveler/taskwarrior-web/master/docs/img/readme/waiting_tasks_list.jpg">
+
+### Completed Tasks
+<img src="https://raw.githubusercontent.com/theunraveler/taskwarrior-web/master/docs/img/readme/completed_tasks_list.jpg">
+
+### New Task w/ Project Autocomplete
+<img src="https://raw.githubusercontent.com/theunraveler/taskwarrior-web/master/docs/img/readme/project_autocomplete.jpg">
+
+### Parent Project Information
+<img src="https://raw.githubusercontent.com/theunraveler/taskwarrior-web/master/docs/img/readme/parent_project_info.jpg">
+
+### Projects Overview
+<img src="https://raw.githubusercontent.com/theunraveler/taskwarrior-web/master/docs/img/readme/projects_overview.jpg">
+
+### Help Popup
+<img src="https://raw.githubusercontent.com/theunraveler/taskwarrior-web/master/docs/img/readme/help_popup.jpg">
+
 ## Requirements
 
 * `ruby` >= 1.9 (support for `ruby` < 1.9 is very unlikely, but pull requests
@@ -47,7 +80,7 @@ The current featureset includes:
 To report a bug, use the [Github issue tracker][2]. Since `taskwarrior-web`
 works with several different versions of `task`, using many different
 configurations, please include the output from `task _version` and either the
-output of `task show` or a copy of your `.taskrc` file when filing a bug. This helps me reproduce bugs easier.
+output of `task show` or a copy of your `.taskrc` file when filing a bug. This helps us reproduce bugs easier.
 
 Here is an example of a [good bug report][3].
 
