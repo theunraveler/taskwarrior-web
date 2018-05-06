@@ -4,6 +4,6 @@ services:
   app:
     build:
       context: .
-      dockerfile: docker/Dockerfile-dev
+      dockerfile: docker/Dockerfile
     ports:
     - 5678:5678
