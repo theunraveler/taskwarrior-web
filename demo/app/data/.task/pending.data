@@ -1,0 +1,3 @@
+[description:"Add screenshots to README" entry:"1525555947" modified:"1525555984" priority:"M" project:"Dev.Taskwarrior.Web" status:"pending" tags:"hobby,dev" uuid:"782e9bc6-4f0a-4e61-8d9c-d20968f454ab"]
+[description:"Buy some stuff" due:"1526515200" entry:"1525556042" modified:"1525556042" project:"Home.Stuffing" status:"waiting" tags:"buy" uuid:"0084b849-93d2-43c8-bdcf-e413624b645e" wait:"1526256000"]
+[description:"Another task" entry:"1525556156" modified:"1525556156" project:"Dev.Taskwarrior" status:"pending" uuid:"ac800c85-8674-4e78-a655-ee8e361d8d40"]
