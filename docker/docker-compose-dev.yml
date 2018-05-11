@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+    - 5678:5678

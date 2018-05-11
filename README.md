@@ -15,6 +15,7 @@ Check out the [Live Demo](http://35.196.114.51).
 * [Installation](#installation)
 * [Usage](#usage)
 * [Features](#features)
+* [Docker](#docker)
 * [Reporting Bugs](#reporting-bugs)
 * [Marginalia](#marginalia)
 
@@ -76,6 +77,22 @@ The current featureset includes:
 * [Optional HTTP Basic authentication][1].
 
 [1]: https://github.com/theunraveler/taskwarrior-web/wiki/Additional-.taskrc-options
+
+## Docker
+
+You can also run taskwarrior-web using docker.
+This approach requires [docker](https://www.docker.com) and
+[docker-compose](https://github.com/docker/compose) to be installed.
+
+The command below builds new image from the source and runs service.
+
+```sh
+make run
+```
+
+By default task-web is listening on `5678` port.
+Adjust service configuration in `docker/docker-compose.yml`.
+
 
 ## Reporting Bugs
 
