@@ -81,7 +81,7 @@ The current featureset includes:
 ## Docker
 
 You can also run taskwarrior-web using docker.
-This approach required [docker](https://www.docker.com) and
+This approach requires [docker](https://www.docker.com) and
 [docker-compose](https://github.com/docker/compose) to be installed.
 
 The command below builds new image from the source and runs service.
