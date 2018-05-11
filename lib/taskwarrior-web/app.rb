@@ -12,7 +12,7 @@ class TaskwarriorWeb::App < Sinatra::Base
   autoload :Helpers, 'taskwarrior-web/helpers'
 
   @@root = File.expand_path(File.join(File.dirname(__FILE__), '..', '..'))
-  set :root,  @@root    
+  set :root,  @@root
   set :app_file, __FILE__
   set :public_folder, File.dirname(__FILE__) + '/public'
   set :views, File.dirname(__FILE__) + '/views'
@@ -34,7 +34,7 @@ class TaskwarriorWeb::App < Sinatra::Base
 
   # Task routes
   get '/tasks/:status/?' do
-    pass unless params[:status].in?(%w(pending waiting completed deleted))
+    pass unless params[:status].in?(%w(pending waiting completed deleted recurring))
     @title = "Tasks"
     @tasks = if params[:status] == 'pending' && filter = TaskwarriorWeb::Config.property('task-web.filter')
       TaskwarriorWeb::Task.query(filter)
@@ -47,6 +47,8 @@ class TaskwarriorWeb::App < Sinatra::Base
       @tasks.sort_by! { |t| [-t.urgency.to_f, t.priority.nil?.to_s, t.priority.to_s, t.due.nil?.to_s, t.due.to_s, t.project.to_s] }
     when params[:status].in?(['completed', 'deleted'])
       @tasks.sort_by! { |t| [Time.parse(t.end)] }.reverse!
+    when params[:status].in?(['recurring'])
+      @tasks.sort_by! { |t| [t.description] }
     end
 
     erb :'tasks/index'
@@ -144,6 +146,15 @@ class TaskwarriorWeb::App < Sinatra::Base
     @tasks = TaskwarriorWeb::Task.query('status.not' => :deleted, :project => @title)
       .sort_by! { |t| [t.active? ? 0 : 1, -t.urgency.to_f, t.priority.nil?.to_s, t.priority.to_s, t.due.nil?.to_s, t.due.to_s] }
     erb :'projects/show'
+  end
+
+  # ICal exports
+  get '/tasks/ical/:caltype/?' do
+    pass unless params[:caltype].in?(['due'])
+    @title = "iCal #{params[:caltype]}"
+    @tasks = TaskwarriorWeb::Task.query('status.not' => :deleted, params[:caltype]+'.any' => "")
+    content_type 'text/calendar'
+    ical_export(@tasks, params[:caltype])
   end
 
   # Redirects

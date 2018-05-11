@@ -1,12 +1,12 @@
 module TaskwarriorWeb
-  
+
   #################
   # MAIN TASK CLASS
   #################
   class Task
 
     attr_accessor :entry, :project, :priority, :uuid, :description, :status,
-                  :due, :start, :end, :tags, :depends, :wait, :annotations,
+                  :due, :start, :end, :tags, :depends, :wait, :annotations, :recur,
                   :urgency, :_errors, :remove_tags
 
     ####################################
