@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
   s.add_dependency('rack-flash3')
   s.add_dependency('json', '~> 1.8')
 
-  s.add_development_dependency('rake')
+  s.add_development_dependency('rake', '< 11')
   s.add_development_dependency('rack-test')
   s.add_development_dependency('rspec', '~> 2')
   s.add_development_dependency('rspec-html-matchers')
