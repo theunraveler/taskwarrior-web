@@ -13,6 +13,7 @@ describe TaskwarriorWeb::App do
   before do
     allow(TaskwarriorWeb::Config).to receive(:property).with('task-web.user').and_return(nil)
     allow(TaskwarriorWeb::Config).to receive(:property).with('task-web.filter').and_return(nil)
+    allow(TaskwarriorWeb::Config).to receive(:property).with('taskd.server').and_return(nil)
     allow(TaskwarriorWeb::Runner).to receive(:run).and_return('{}')
   end
 
@@ -285,6 +286,7 @@ describe 'HTTP authentication' do
     before do
       allow(TaskwarriorWeb::Config).to receive(:property).with('task-web.user').and_return('test_user')
       allow(TaskwarriorWeb::Config).to receive(:property).with('task-web.passwd').and_return('test_pass')
+      allow(TaskwarriorWeb::Config).to receive(:property).with('taskd.server').and_return(nil)
     end
 
     it 'should ask for authentication' do
@@ -308,6 +310,8 @@ describe 'HTTP authentication' do
   context 'when no credentials are specified in .taskrc' do
     before do
       allow(TaskwarriorWeb::Config).to receive(:property).with('task-web.user').and_return(nil)
+      allow(TaskwarriorWeb::Config).to receive(:property).with('taskd.server').and_return(nil)
+
     end
 
     it 'should bypass authentication' do

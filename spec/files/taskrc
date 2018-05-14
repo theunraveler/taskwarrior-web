@@ -11,7 +11,8 @@
 # Use the command 'task show' to see all defaults and overrides
 
 # Files
-data.location=/home/vagrant/.task
+data.location=~/.task
+json.array=on
 
 # Color theme (uncomment one to use)
 #include /usr/local/Cellar/task/2.0.0/share/doc/task/rc/light-16.theme
