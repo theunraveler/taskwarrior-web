@@ -11,4 +11,4 @@ COPY app /opt/app
 
 EXPOSE 80
 
-CMD /opt/app/start.sh
+CMD crond && /opt/app/start.sh
