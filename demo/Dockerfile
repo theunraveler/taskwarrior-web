@@ -11,4 +11,4 @@ COPY app /opt/app
 
 EXPOSE 80
 
-CMD crond && /opt/app/start.sh
+CMD crond -l2 -L /var/log/crond.log && /opt/app/start.sh
