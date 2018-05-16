@@ -5,7 +5,7 @@ RUN apk add --no-cache task ruby python \
  && gem install taskwarrior-web --no-document \
  && apk del --no-cache .build-dependencies
 
-RUN echo '*/30    *       *       *       *       /opt/app/reset.sh' > /etc/crontabs/root
+RUN echo '*/30    *       *       *       *       /opt/app/restart.sh' > /etc/crontabs/root
 
 COPY app /opt/app
 
