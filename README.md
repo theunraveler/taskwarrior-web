@@ -47,6 +47,12 @@ Check out the [Live Demo](http://35.196.114.51).
 * `ruby` >= 1.9 (support for `ruby` < 1.9 is very unlikely, but pull requests
   are gladly accepted).
 
+For building native extensions on Linux could be required the following packages:
+
+ * ruby-dev
+ * make
+ * gcc
+
 ## Installation
 
 `gem install taskwarrior-web`
