@@ -1,4 +1,4 @@
-FROM alpine
+FROM alpine:3.7
 
 RUN apk add --no-cache task ruby python \
  && apk add --no-cache --virtual .build-dependencies \
