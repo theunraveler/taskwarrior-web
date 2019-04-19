@@ -41,7 +41,7 @@ module TaskwarriorWeb::Config
   }
 
   def self.version
-    @version ||= Versionomy.parse(`#{TaskwarriorWeb::Runner::TASK_BIN} _version`.strip)
+    @version ||= Versionomy.parse(`#{TaskwarriorWeb::Runner::TASK_BIN} _version`.strip.split[0])
   end
 
   def self.store
