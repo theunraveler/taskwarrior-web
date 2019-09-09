@@ -5,12 +5,12 @@
 
     <!-- Styles -->
     <% %w(bootstrap.min datepicker styles).each do |file| %>
-      <link rel="stylesheet" href="<%= url("/css/#{file}.css") %>">
+      <link rel="stylesheet" href="<%= url_for("/css/#{file}.css") %>">
     <% end %>
 
     <!-- Scripts -->
     <% %w(jquery.min bootstrap bootstrap-datepicker jquery.hotkeys jquery.dataTables.min tinycon.min application).each do |file| %>
-      <script text="text/javascript" src="<%= url("/js/#{file}.js") %>"></script>
+      <script text="text/javascript" src="<%= url_for("/js/#{file}.js") %>"></script>
     <% end %>
   </head>
 
