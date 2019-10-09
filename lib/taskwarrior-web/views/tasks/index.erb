@@ -43,7 +43,7 @@
                         <%= auto_link(annotation.description) %>
                       </td>
                       <td>
-                        <a href="/tasks/<%= task.uuid %>/annotations/<%= ERB::Util.u(annotation.description) %>"
+                        <a href="<%= url("/tasks/#{task.uuid}/annotations/#{ERB::Util.u(annotation.description)}") %>"
                            data-method="DELETE"
                            data-confirm="Are you sure you want to delete this annotation?">
                           <i class="icon-trash"></i>
@@ -54,7 +54,7 @@
                 </table>
               <% end %>
             </td>
-            <td><a href="/projects/<%= linkify(task.project) %>"><%= task.project %></a></td>
+            <td><a href="<%= url("/projects/#{linkify(task.project)}") %>"><%= task.project %></a></td>
             <td><%= format_date(task.due) unless task.due.nil? %></td>
             <%= 
               case params[:status]

@@ -23,7 +23,7 @@
   <label for="task-wait" class="control-label">Hide until</label>
   <div class="controls">
     <input class="date-picker" type="text" id="task-wait" name="task[wait]" value="<%= format_date(@task.wait) unless @task.nil? || @task.wait.blank? %>" data-date-format="<%= @date_format %>" />
-    <span class="help-block">If specified, the task will appear in the <a href="/tasks/waiting">Waiting</a> list until the given date.</span>
+    <span class="help-block">If specified, the task will appear in the <a href="<%= url('/tasks/waiting') %>">Waiting</a> list until the given date.</span>
   </div>
 </div>
 

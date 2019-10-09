@@ -67,11 +67,11 @@ module TaskwarriorWeb::App::Helpers
 
   def crud_links(task)
     string = %(<span class="crud-links">)
-    string << %(<a class="annotation-add" href="/tasks/#{task.uuid}/annotations/new"><i class="icon-comment"></i></a>)
+    string << %(<a class="annotation-add" href="#{url("/tasks/#{task.uuid}/annotations/new")}"><i class="icon-comment"></i></a>)
     string << %(&nbsp;|&nbsp;)
-    string << %(<a href="/tasks/#{task.uuid}?destination=#{ERB::Util.u(request.path_info)}"><i class="icon-pencil"></i></a>)
+    string << %(<a href="#{url("/tasks/#{task.uuid}?destination=#{ERB::Util.u(request.path_info)}")}"><i class="icon-pencil"></i></a>)
     string << %(&nbsp;|&nbsp;)
-    string << %(<a href="/tasks/#{task.uuid}?destination=#{ERB::Util.u(request.path_info)}" data-method="DELETE" data-confirm="Are you sure you want to delete this task?"><i class="icon-trash"></i></a>)
+    string << %(<a href="#{url("/tasks/#{task.uuid}?destination=#{ERB::Util.u(request.path_info)}")}" data-method="DELETE" data-confirm="Are you sure you want to delete this task?"><i class="icon-trash"></i></a>)
     string << %(</span>)
     string
   end

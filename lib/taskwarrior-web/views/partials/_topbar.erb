@@ -1,10 +1,10 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner"><div class="container">
-    <a href="/" class="brand">TaskwarriorWeb</a>
+    <a href="<%= url('/') %>" class="brand">TaskwarriorWeb</a>
     <%= render_navigation :level => 1 %>
     <ul class="nav pull-right">
       <li<% if @current_page =~ %r(^/tasks/new/?) %> class="active"<% end %>>
-        <a href="/tasks/new?destination=<%= ERB::Util.u(request.path_info) %>">
+        <a href="<%= url("/tasks/new?destination=#{ERB::Util.u(request.path_info)}") %>">
           <i class="icon-plus"></i>&nbsp;Add a Task
         </a>
       </li>
